@@ -1,0 +1,19 @@
+@font-face {
+  font-family: "NotoSans";
+  src: url("../public/fonts/NotoSans-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("../public/fonts/Inter-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Pretendard";
+  src: url("../public/fonts/Pretendard-Regular.otf");
+}
+
+
+body {
+  margin: 0;
+}
