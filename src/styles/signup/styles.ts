@@ -10,6 +10,10 @@ export const InnerContainer = styled("div")`
   padding: 40px;
   display: flex;
   flex-direction: column;
+
+  &.more-padding {
+    padding-top: 100px;
+  }
 `;
 
 export const FlexWrap = styled("div")<{ gap: number }>`
@@ -18,15 +22,32 @@ export const FlexWrap = styled("div")<{ gap: number }>`
   gap: ${(props) => props.gap}px;
 `;
 
-export const GuideText = styled("div")`
+export const Text = styled("div")`
   font-family: Pretendard, sans-serif;
-  font-size: 10px;
   font-weight: 400;
-  line-height: 12px;
-  letter-spacing: 0em;
+  letter-spacing: 0;
   text-align: center;
-  color: #bdbdbd;
 
-  position: relative;
-  bottom: -65px;
+  &.guide {
+    font-family: Pretendard, sans-serif;
+    font-size: 10px;
+    line-height: 12px;
+    color: #bdbdbd;
+
+    position: relative;
+    bottom: -20px;
+  }
+
+  &.welcome {
+    font-size: 20px;
+    line-height: 24px;
+  }
+`;
+
+export const Circle = styled("div")`
+  width: 132px;
+  height: 132px;
+  background-color: #713edc;
+  border-radius: 70px;
+  margin: auto;
 `;

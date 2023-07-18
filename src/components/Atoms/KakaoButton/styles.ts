@@ -6,15 +6,15 @@ export const StyledButton = styled(Button)`
   background-color: #fee500;
   color: rgba(0, 0, 0, 0.85);
   border: 1px solid #fee555;
-  font-family: Pretendard, sans-serif;
-  font-weight: 400;
-  font-size: 10px;
-  line-height: 11.93px;
   height: 42px;
   box-shadow: none;
   justify-content: unset;
 
   span {
+    font-family: Pretendard, sans-serif;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 11.93px;
     margin: auto;
     padding-right: 15px;
   }

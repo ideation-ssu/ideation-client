@@ -1,6 +1,6 @@
 import { styled } from "@mui/material/styles";
 
-export const Card = styled("div")`
+export const Container = styled("div")`
   width: 446.31px;
   height: 588px;
   margin: 0 auto;

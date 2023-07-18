@@ -1,16 +1,19 @@
 import React, { useState } from "react";
+import { useRouter } from "next/router";
 
 import IdeationLabel from "@/components/Atoms/IdeationLabel";
 import InputBox from "@/components/Atoms/InputBox";
 import KakaoButton from "@/components/Atoms/KakaoButton";
 import RoundButton from "@/components/Atoms/RoundButton";
 import TextCheckBox from "@/components/Molecules/TextCheckBox";
-import TitleCard from "@/components/Templates/TitleCard";
 import { Container, FlexWrap, InnerContainer } from "@/styles/login/styles";
+
+import TitleCard from "../../components/Templates/Card";
 
 function Login(): React.ReactElement {
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
+  const router = useRouter();
 
   return (
     <Container>
@@ -31,9 +34,15 @@ function Login(): React.ReactElement {
               />
             </FlexWrap>
             <TextCheckBox isChecked={true} text={"자동 로그인"} />
-            <FlexWrap gap={5}>
+            <FlexWrap gap={6}>
               <RoundButton isFilled={true} text={"로그인"} />
-              <RoundButton isFilled={false} text={"회원가입"} />
+              <RoundButton
+                isFilled={false}
+                text={"회원가입"}
+                onClick={() => {
+                  router.push("/signup");
+                }}
+              />
               <KakaoButton text={"카카오 로그인"} />
             </FlexWrap>
           </FlexWrap>
