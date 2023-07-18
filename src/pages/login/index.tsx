@@ -6,7 +6,7 @@ import RoundButton from "@/components/Atoms/RoundButton";
 import TextCheckBox from "@/components/Molecules/TextCheckBox";
 import TitleCard from "@/components/Templates/TitleCard";
 
-import { Container, FlexWrap, InnerContainer } from "./styles";
+import { Container, FlexWrap, InnerContainer } from "../../styles/login/styles";
 
 function Login(): React.ReactElement {
   const [id, setId] = useState("");

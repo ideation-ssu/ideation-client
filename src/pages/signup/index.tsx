@@ -6,7 +6,12 @@ import RoundButton from "@/components/Atoms/RoundButton";
 import RoundInputBox from "@/components/Atoms/RoundInputBox";
 import TitleCard from "@/components/Templates/TitleCard";
 
-import { Container, FlexWrap, GuideText, InnerContainer } from "./styles";
+import {
+  Container,
+  FlexWrap,
+  GuideText,
+  InnerContainer,
+} from "../../styles/signup/styles";
 
 enum pageState {
   Email, // email 입력받음
