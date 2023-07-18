@@ -1,6 +1,8 @@
 import React from "react";
 
-import { Card, StyledDriver, Text } from "./styles";
+import Driver from "@/components/Atoms/Driver";
+
+import { Card, Text } from "./styles";
 
 function TitleCard({
   children,
@@ -12,7 +14,7 @@ function TitleCard({
   return (
     <Card>
       <Text>{titleText}</Text>
-      <StyledDriver />
+      <Driver />
       {children}
     </Card>
   );

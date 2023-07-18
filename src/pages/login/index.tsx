@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 
+import IdeationLabel from "@/components/Atoms/IdeationLabel";
 import InputBox from "@/components/Atoms/InputBox";
 import RoundButton from "@/components/Atoms/RoundButton";
 import TextCheckBox from "@/components/Molecules/TextCheckBox";
 import TitleCard from "@/components/Templates/TitleCard";
 
-import { Container, FlexWrap, InnerContainer, Label } from "./styles";
+import { Container, FlexWrap, InnerContainer } from "./styles";
 
 function Login(): React.ReactElement {
   const [id, setId] = useState("");
@@ -15,7 +16,7 @@ function Login(): React.ReactElement {
     <Container>
       <TitleCard titleText={"LOGIN"}>
         <InnerContainer>
-          <Label>{"LET'S\nMAKE\nIDEATION !"}</Label>
+          <IdeationLabel />
           <FlexWrap gap={20}>
             <FlexWrap gap={25}>
               <InputBox

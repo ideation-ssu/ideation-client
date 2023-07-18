@@ -1,4 +1,3 @@
-import { Divider } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 export const Card = styled("div")`
@@ -23,8 +22,4 @@ export const Text = styled("div")`
   background-image: linear-gradient(to right, #6e72fc, #ad1deb);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-`;
-
-export const StyledDriver = styled(Divider)`
-  border-color: #eaeaea;
 `;

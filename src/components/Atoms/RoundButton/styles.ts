@@ -20,7 +20,7 @@ export const StyledButton = styled(Button)<{
   font-weight: 400;
   font-size: 10px;
   line-height: 11.93px;
-  height: 39.92px;
+  height: 42px;
   box-shadow: none;
   justify-content: unset;
 
