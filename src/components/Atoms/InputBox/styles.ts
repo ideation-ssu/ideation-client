@@ -2,7 +2,7 @@ import { styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 
 export const Input = styled(TextField)`
-  .css-1x51dt5-MuiInputBase-input-MuiInput-input {
+  .MuiInputBase-root {
     font-family: Pretendard, sans-serif;
     font-weight: 400;
     font-size: 10px;
