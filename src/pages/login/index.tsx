@@ -2,11 +2,11 @@ import React, { useState } from "react";
 
 import IdeationLabel from "@/components/Atoms/IdeationLabel";
 import InputBox from "@/components/Atoms/InputBox";
+import KakaoButton from "@/components/Atoms/KakaoButton";
 import RoundButton from "@/components/Atoms/RoundButton";
 import TextCheckBox from "@/components/Molecules/TextCheckBox";
 import TitleCard from "@/components/Templates/TitleCard";
-
-import { Container, FlexWrap, InnerContainer } from "../../styles/login/styles";
+import { Container, FlexWrap, InnerContainer } from "@/styles/login/styles";
 
 function Login(): React.ReactElement {
   const [id, setId] = useState("");
@@ -34,7 +34,7 @@ function Login(): React.ReactElement {
             <FlexWrap gap={5}>
               <RoundButton isFilled={true} text={"로그인"} />
               <RoundButton isFilled={false} text={"회원가입"} />
-              <RoundButton isKakao={true} text={"카카오 로그인"} />
+              <KakaoButton text={"카카오 로그인"} />
             </FlexWrap>
           </FlexWrap>
         </InnerContainer>

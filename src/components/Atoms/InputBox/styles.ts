@@ -9,11 +9,11 @@ export const Input = styled(TextField)`
     line-height: 11.93px;
   }
 
-  .css-v4u5dn-MuiInputBase-root-MuiInput-root:before {
+  .MuiInputBase-root.MuiInput-root:before {
     border-bottom: 1px solid #eaeaea;
   }
 
-  .css-v4u5dn-MuiInputBase-root-MuiInput-root:after {
+  .MuiInputBase-root.MuiInput-root:after {
     border-bottom: 1px solid #713edc;
   }
 `;

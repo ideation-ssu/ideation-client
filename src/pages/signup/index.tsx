@@ -2,16 +2,16 @@ import React, { useState } from "react";
 
 import Driver from "@/components/Atoms/Driver";
 import IdeationLabel from "@/components/Atoms/IdeationLabel";
+import KakaoButton from "@/components/Atoms/KakaoButton";
 import RoundButton from "@/components/Atoms/RoundButton";
 import RoundInputBox from "@/components/Atoms/RoundInputBox";
 import TitleCard from "@/components/Templates/TitleCard";
-
 import {
   Container,
   FlexWrap,
   GuideText,
   InnerContainer,
-} from "../../styles/signup/styles";
+} from "@/styles/signup/styles";
 
 enum pageState {
   Email, // email 입력받음
@@ -49,7 +49,7 @@ function SignUp(): React.ReactElement {
         </FlexWrap>
         <Driver />
         <FlexWrap gap={5}>
-          <RoundButton isKakao={true} text={"카카오로 시작하기"} />
+          <KakaoButton text={"카카오로 시작하기"} />
         </FlexWrap>
         <GuideText>
           {
