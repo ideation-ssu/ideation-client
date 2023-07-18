@@ -46,7 +46,6 @@ function SignUp(): React.ReactElement {
 
   const onNextPage = () => {
     setPage(page + 1);
-    console.log(page);
   };
 
   let Element;
