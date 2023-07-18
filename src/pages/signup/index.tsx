@@ -17,8 +17,10 @@ enum pageState {
 
 function SignUp(): React.ReactElement {
   const [page, setPage] = useState(pageState.Email);
-  const [id, setId] = useState("");
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [pw, setPw] = useState("");
+  const [pwConfirm, setPwConfirm] = useState("");
 
   const onNextPage = () => {
     setPage(page + 1);
@@ -31,8 +33,8 @@ function SignUp(): React.ReactElement {
         <FlexWrap gap={10}>
           <RoundInputBox
             placeHolder={"이메일 주소를 입력하세요"}
-            text={id}
-            setText={setId}
+            text={email}
+            setText={setEmail}
           />
           <RoundButton
             isFilled={true}
@@ -56,8 +58,8 @@ function SignUp(): React.ReactElement {
       <FlexWrap gap={150}>
         <RoundInputBox
           placeHolder={"이메일 주소를 입력하세요"}
-          text={id}
-          setText={setId}
+          text={email}
+          setText={setEmail}
         />
         <RoundButton
           isFilled={true}
@@ -71,18 +73,18 @@ function SignUp(): React.ReactElement {
       <FlexWrap gap={20}>
         <RoundInputBox
           placeHolder={"이름을 입력해주세요"}
-          text={id}
-          setText={setId}
+          text={name}
+          setText={setName}
         />
         <RoundInputBox
           placeHolder={"비밀번호를 입력해주세요"}
-          text={id}
-          setText={setId}
+          text={pw}
+          setText={setPw}
         />
         <RoundInputBox
           placeHolder={"비밀번호를 확인해주세요"}
-          text={id}
-          setText={setId}
+          text={pwConfirm}
+          setText={setPwConfirm}
         />
         <RoundButton isFilled={true} text={"다음"} onClick={onNextPage} />
       </FlexWrap>

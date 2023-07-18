@@ -5,7 +5,7 @@ import { Check } from "./styles";
 function CheckBox({ isChecked }: { isChecked: boolean }): React.ReactElement {
   return (
     <div>
-      <Check />
+      <Check isChecked={isChecked} />
     </div>
   );
 }

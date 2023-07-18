@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 
 import { Input } from "./styles";
 
@@ -11,7 +11,18 @@ function InputBox({
   text: string;
   setText: React.Dispatch<React.SetStateAction<string>>;
 }): React.ReactElement {
-  return <Input placeholder={placeHolder} variant="standard" />;
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setText(e.target.value);
+  };
+
+  return (
+    <Input
+      placeholder={placeHolder}
+      variant="standard"
+      value={text}
+      onChange={handleChange}
+    />
+  );
 }
 
 export default InputBox;
