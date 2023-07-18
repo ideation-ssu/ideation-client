@@ -1,19 +1,24 @@
 import React from "react";
 
-import { StyledButton } from "./styles";
+import KakaoSymbol from "../../../../public/icons/kakao_symbol.svg";
 
-function InputBox({
+import { KakaoImg, StyledButton } from "./styles";
+
+function RoundButton({
+  isKakao = false,
   isFilled = true,
   text,
 }: {
+  isKakao?: boolean;
   isFilled?: boolean;
   text: string;
 }): React.ReactElement {
   return (
-    <StyledButton isFilled={isFilled} variant="contained">
-      {text}
+    <StyledButton isKakao={isKakao} isFilled={isFilled} variant="contained">
+      {isKakao ? <KakaoImg src={KakaoSymbol} alt="KakaoSymbol" /> : null}
+      <span>{text}</span>
     </StyledButton>
   );
 }
 
-export default InputBox;
+export default RoundButton;
