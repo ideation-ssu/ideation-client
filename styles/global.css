@@ -4,8 +4,18 @@
 }
 
 @font-face {
+  font-family: "NotoSansSemiBold";
+  src: url("../public/fonts/NotoSans-SemiBold.ttf");
+}
+
+@font-face {
   font-family: "Inter";
   src: url("../public/fonts/Inter-Regular.ttf");
+}
+
+@font-face {
+  font-family: "InterBold";
+  src: url("../public/fonts/Inter-Bold.ttf");
 }
 
 @font-face {
