@@ -44,8 +44,12 @@ function SignUp(): React.ReactElement {
     });
   }, [page]);
 
-  const onNextPage = () => {
+  const handleNextPage = () => {
     setPage(page + 1);
+  };
+
+  const handleLoginPage = () => {
+    router.push("/login");
   };
 
   let Element;
@@ -61,7 +65,7 @@ function SignUp(): React.ReactElement {
           <RoundButton
             isFilled={true}
             text={"이메일로 계속하기"}
-            onClick={onNextPage}
+            onClick={handleNextPage}
           />
         </FlexWrap>
         <Driver />
@@ -77,17 +81,22 @@ function SignUp(): React.ReactElement {
     );
   } else if (page == pageState.Confirm_Email) {
     Element = (
-      <FlexWrap gap={150}>
+      <FlexWrap gap={35}>
         <RoundInputBox
           placeHolder={"이메일로 발송된 인증번호를 입력해주세요"}
           text={email}
           setText={setEmail}
         />
-        <RoundButton
-          isFilled={true}
-          text={"이메일로 계속하기"}
-          onClick={onNextPage}
-        />
+        <div></div>
+        <Driver />
+        <FlexWrap gap={5}>
+          <RoundButton isFilled={false} text={"인증번호 다시 보내기"} />
+          <RoundButton
+            isFilled={true}
+            text={"이메일로 계속하기"}
+            onClick={handleNextPage}
+          />
+        </FlexWrap>
       </FlexWrap>
     );
   } else if (page == pageState.Info) {
@@ -108,7 +117,16 @@ function SignUp(): React.ReactElement {
           text={pwConfirm}
           setText={setPwConfirm}
         />
-        <RoundButton isFilled={true} text={"다음"} onClick={onNextPage} />
+        <FlexWrap gap={5}>
+          <RoundButton
+            isFilled={true}
+            text={"회원가입 완료하기"}
+            onClick={handleNextPage}
+          />
+          <Text className="login" onClick={handleLoginPage}>
+            {"이미 계정이 있으신가요?"}
+          </Text>
+        </FlexWrap>
       </FlexWrap>
     );
   }

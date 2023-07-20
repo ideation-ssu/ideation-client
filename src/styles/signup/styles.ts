@@ -29,13 +29,21 @@ export const Text = styled("div")`
   text-align: center;
 
   &.guide {
-    font-family: Pretendard, sans-serif;
     font-size: 10px;
     line-height: 12px;
     color: #bdbdbd;
 
     position: relative;
     bottom: -20px;
+  }
+
+  &.login {
+    width: fit-content;
+    margin-left: auto;
+    color: #bdbdbd;
+    font-size: 10px;
+    line-height: 12px;
+    cursor: pointer;
   }
 
   &.welcome {
