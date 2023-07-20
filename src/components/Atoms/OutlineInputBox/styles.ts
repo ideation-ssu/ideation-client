@@ -1,9 +1,16 @@
 import { styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 
-export const Input = styled(TextField)`
+export const Container = styled("div")`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+`;
+
+export const Input = styled(TextField)<{ error: boolean }>`
   .MuiOutlinedInput-notchedOutline {
-    border-color: #713edc !important;
+    border-color: ${(props) =>
+      props.error ? "#f36262" : "#713edc"} !important;
   }
 
   .MuiInputBase-root {

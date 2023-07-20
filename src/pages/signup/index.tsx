@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import axios from "axios";
 
 import Driver from "@/components/Atoms/Driver";
 import IdeationLabel from "@/components/Atoms/IdeationLabel";
@@ -26,12 +27,16 @@ enum pageState {
 
 function SignUp(): React.ReactElement {
   const router = useRouter();
+  const emailRegEx =
+    /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/;
 
   const [page, setPage] = useState(pageState.Email);
   const [email, setEmail] = useState("");
+  const [authNum, setAuthNum] = useState("");
   const [name, setName] = useState("");
   const [pw, setPw] = useState("");
   const [pwConfirm, setPwConfirm] = useState("");
+  const [err, setError] = useState("");
 
   useEffect(() => {
     router.beforePopState(({ url, as, options }) => {
@@ -53,20 +58,43 @@ function SignUp(): React.ReactElement {
     router.push("/login");
   };
 
+  const confirmEmail = () => {
+    if (!email) {
+      setError("이메일을 주소를 입력하세요");
+      return;
+    }
+
+    if (!emailRegEx.test(email)) {
+      setError("이메일 형식이 올바르지 않습니다");
+      return;
+    }
+
+    const data = {
+      email: email,
+    };
+    axios
+      .post(`${process.env.NEXT_PUBLIC_BASEURL}/auth/email/send-code`, data)
+      .then((res) => {
+        if (res.data.error) setError(res.data.error.userMessage);
+        else setPage(page + 1);
+      });
+  };
+
   let Element;
   if (page == pageState.Email) {
     Element = (
-      <FlexWrap gap={35}>
-        <FlexWrap gap={10}>
+      <FlexWrap gap={25}>
+        <FlexWrap gap={15}>
           <OutlineInputBox
             placeHolder={"이메일 주소를 입력하세요"}
             text={email}
             setText={setEmail}
+            errText={err}
           />
           <RoundButton
             isFilled={true}
             text={"이메일로 계속하기"}
-            onClick={handleNextPage}
+            onClick={confirmEmail}
           />
         </FlexWrap>
         <Driver />
@@ -85,8 +113,8 @@ function SignUp(): React.ReactElement {
       <FlexWrap gap={35}>
         <OutlineInputBox
           placeHolder={"이메일로 발송된 인증번호를 입력해주세요"}
-          text={email}
-          setText={setEmail}
+          text={authNum}
+          setText={setAuthNum}
         />
         <div></div>
         <Driver />

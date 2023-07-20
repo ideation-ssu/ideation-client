@@ -34,7 +34,7 @@ export const Text = styled("div")`
     color: #bdbdbd;
 
     position: relative;
-    bottom: -20px;
+    bottom: -30px;
   }
 
   &.login {
