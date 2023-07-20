@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import IdeationLabel from "@/components/Atoms/IdeationLabel";
 import InputBox from "@/components/Atoms/InputBox";
 import KakaoButton from "@/components/Atoms/KakaoButton";
+import PasswordInputBox from "@/components/Atoms/PasswordInputBox";
 import RoundButton from "@/components/Atoms/RoundButton";
 import TextCheckBox from "@/components/Molecules/TextCheckBox";
 import { Container, FlexWrap, InnerContainer } from "@/styles/login/styles";
@@ -32,7 +33,7 @@ function Login(): React.ReactElement {
                 text={id}
                 setText={setId}
               />
-              <InputBox
+              <PasswordInputBox
                 placeHolder={"비밀번호를 입력하세요"}
                 text={pw}
                 setText={setPw}

@@ -5,7 +5,6 @@ import Driver from "@/components/Atoms/Driver";
 import IdeationLabel from "@/components/Atoms/IdeationLabel";
 import KakaoButton from "@/components/Atoms/KakaoButton";
 import RoundButton from "@/components/Atoms/RoundButton";
-import RoundInputBox from "@/components/Atoms/RoundInputBox";
 import {
   Circle,
   Container,
@@ -14,6 +13,8 @@ import {
   Text,
 } from "@/styles/signup/styles";
 
+import OutlineInputBox from "../../components/Atoms/OutlineInputBox";
+import OutlinePasswordInputBox from "../../components/Atoms/OutlinePasswordInputBox";
 import Card from "../../components/Templates/Card";
 
 enum pageState {
@@ -57,7 +58,7 @@ function SignUp(): React.ReactElement {
     Element = (
       <FlexWrap gap={35}>
         <FlexWrap gap={10}>
-          <RoundInputBox
+          <OutlineInputBox
             placeHolder={"이메일 주소를 입력하세요"}
             text={email}
             setText={setEmail}
@@ -82,7 +83,7 @@ function SignUp(): React.ReactElement {
   } else if (page == pageState.Confirm_Email) {
     Element = (
       <FlexWrap gap={35}>
-        <RoundInputBox
+        <OutlineInputBox
           placeHolder={"이메일로 발송된 인증번호를 입력해주세요"}
           text={email}
           setText={setEmail}
@@ -102,17 +103,17 @@ function SignUp(): React.ReactElement {
   } else if (page == pageState.Info) {
     Element = (
       <FlexWrap gap={20}>
-        <RoundInputBox
+        <OutlineInputBox
           placeHolder={"이름을 입력해주세요"}
           text={name}
           setText={setName}
         />
-        <RoundInputBox
+        <OutlinePasswordInputBox
           placeHolder={"비밀번호를 입력해주세요"}
           text={pw}
           setText={setPw}
         />
-        <RoundInputBox
+        <OutlinePasswordInputBox
           placeHolder={"비밀번호를 확인해주세요"}
           text={pwConfirm}
           setText={setPwConfirm}

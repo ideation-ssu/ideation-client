@@ -2,7 +2,7 @@ import React, { ChangeEvent } from "react";
 
 import { Input } from "./styles";
 
-function RoundInputBox({
+function OutlineInputBox({
   placeHolder,
   text,
   setText,
@@ -25,4 +25,4 @@ function RoundInputBox({
   );
 }
 
-export default RoundInputBox;
+export default OutlineInputBox;
