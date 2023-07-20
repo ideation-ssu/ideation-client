@@ -32,7 +32,7 @@ function SignUp(): React.ReactElement {
 
   const [page, setPage] = useState(pageState.Email);
   const [email, setEmail] = useState("");
-  const [authNum, setAuthNum] = useState("");
+  const [code, setCode] = useState("");
   const [name, setName] = useState("");
   const [pw, setPw] = useState("");
   const [pwConfirm, setPwConfirm] = useState("");
@@ -51,6 +51,7 @@ function SignUp(): React.ReactElement {
   }, [page]);
 
   const handleNextPage = () => {
+    setError("");
     setPage(page + 1);
   };
 
@@ -76,7 +77,25 @@ function SignUp(): React.ReactElement {
       .post(`${process.env.NEXT_PUBLIC_BASEURL}/auth/email/send-code`, data)
       .then((res) => {
         if (res.data.error) setError(res.data.error.userMessage);
-        else setPage(page + 1);
+        else handleNextPage();
+      });
+  };
+
+  const sendAuthNumber = () => {
+    if (!code) {
+      setError("인증번호를 입력하세요");
+      return;
+    }
+
+    const data = {
+      email: email,
+      code: code,
+    };
+    axios
+      .post(`${process.env.NEXT_PUBLIC_BASEURL}/auth/email/verify`, data)
+      .then((res) => {
+        if (res.data.error) setError(res.data.error.userMessage);
+        else handleNextPage();
       });
   };
 
@@ -113,8 +132,9 @@ function SignUp(): React.ReactElement {
       <FlexWrap gap={35}>
         <OutlineInputBox
           placeHolder={"이메일로 발송된 인증번호를 입력해주세요"}
-          text={authNum}
-          setText={setAuthNum}
+          text={code}
+          setText={setCode}
+          errText={err}
         />
         <div></div>
         <Driver />
@@ -123,7 +143,7 @@ function SignUp(): React.ReactElement {
           <RoundButton
             isFilled={true}
             text={"이메일로 계속하기"}
-            onClick={handleNextPage}
+            onClick={sendAuthNumber}
           />
         </FlexWrap>
       </FlexWrap>
