@@ -13,7 +13,12 @@ import TitleCard from "../../components/Templates/Card";
 function Login(): React.ReactElement {
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
+  const [autoLogin, setAutoLogin] = useState(false);
   const router = useRouter();
+
+  const handleAutoLogin = () => {
+    setAutoLogin(!autoLogin);
+  };
 
   return (
     <Container>
@@ -33,7 +38,11 @@ function Login(): React.ReactElement {
                 setText={setPw}
               />
             </FlexWrap>
-            <TextCheckBox isChecked={true} text={"자동 로그인"} />
+            <TextCheckBox
+              check={autoLogin}
+              setCheck={handleAutoLogin}
+              text={"자동 로그인"}
+            />
             <FlexWrap gap={6}>
               <RoundButton isFilled={true} text={"로그인"} />
               <RoundButton

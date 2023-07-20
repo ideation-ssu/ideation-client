@@ -2,10 +2,16 @@ import React from "react";
 
 import { Check } from "./styles";
 
-function CheckBox({ isChecked }: { isChecked: boolean }): React.ReactElement {
+function CheckBox({
+  check,
+  setCheck,
+}: {
+  check: boolean;
+  setCheck: () => void;
+}): React.ReactElement {
   return (
     <div>
-      <Check isChecked={isChecked} />
+      <Check isChecked={check} onClick={setCheck} />
     </div>
   );
 }

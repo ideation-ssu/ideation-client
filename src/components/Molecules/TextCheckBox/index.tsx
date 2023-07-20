@@ -5,15 +5,17 @@ import CheckBox from "@/components/Atoms/CheckBox";
 import { Container, Text } from "./styles";
 
 function TextCheckBox({
-  isChecked,
+  check,
+  setCheck,
   text,
 }: {
-  isChecked: boolean;
+  check: boolean;
+  setCheck: () => void;
   text: string;
 }): React.ReactElement {
   return (
     <Container>
-      <CheckBox isChecked={isChecked} />
+      <CheckBox check={check} setCheck={setCheck} />
       <Text>{text}</Text>
     </Container>
   );
