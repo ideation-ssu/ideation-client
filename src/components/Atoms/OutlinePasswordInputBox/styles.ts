@@ -1,9 +1,16 @@
 import OutlinedInput from "@mui/material/OutlinedInput";
 import { styled } from "@mui/material/styles";
 
-export const Input = styled(OutlinedInput)`
+export const Container = styled("div")`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+`;
+
+export const Input = styled(OutlinedInput)<{ error: boolean }>`
   .MuiOutlinedInput-notchedOutline {
-    border-color: #713edc !important;
+    border-color: ${(props) =>
+      props.error ? "#f36262" : "#713edc"} !important;
   }
 
   &.MuiOutlinedInput-root {

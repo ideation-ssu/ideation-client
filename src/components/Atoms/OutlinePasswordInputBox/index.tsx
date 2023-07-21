@@ -2,16 +2,20 @@ import React, { ChangeEvent } from "react";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 
-import { Input, PasswordIcon } from "./styles";
+import ErrorMsg from "@/components/Atoms/ErrorMsg";
+
+import { Container, Input, PasswordIcon } from "./styles";
 
 function PasswordInputBox({
   placeHolder,
   text,
   setText,
+  errText,
 }: {
   placeHolder: string;
   text: string;
   setText: React.Dispatch<React.SetStateAction<string>>;
+  errText?: string;
 }): React.ReactElement {
   const [showPassword, setShowPassword] = React.useState(false);
 
@@ -21,25 +25,29 @@ function PasswordInputBox({
   };
 
   return (
-    <Input
-      placeholder={placeHolder}
-      type={showPassword ? "text" : "password"}
-      value={text}
-      onChange={handleChange}
-      endAdornment={
-        text.length > 0 && (
-          <InputAdornment position="end">
-            <IconButton
-              aria-label="toggle password visibility"
-              onClick={handleClickShowPassword}
-              edge="end"
-            >
-              <PasswordIcon show={showPassword} />
-            </IconButton>
-          </InputAdornment>
-        )
-      }
-    ></Input>
+    <Container>
+      <Input
+        placeholder={placeHolder}
+        type={showPassword ? "text" : "password"}
+        value={text}
+        onChange={handleChange}
+        error={!!errText}
+        endAdornment={
+          text && (
+            <InputAdornment position="end">
+              <IconButton
+                aria-label="toggle password visibility"
+                onClick={handleClickShowPassword}
+                edge="end"
+              >
+                <PasswordIcon show={showPassword} />
+              </IconButton>
+            </InputAdornment>
+          )
+        }
+      ></Input>
+      {errText && <ErrorMsg errText={errText} />}
+    </Container>
   );
 }
 
