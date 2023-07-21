@@ -12,6 +12,7 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.14.0",
+    "@react-native-async-storage/async-storage": "^1.19.1",
     "axios": "^1.4.0",
     "eslint": "^8.39.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",

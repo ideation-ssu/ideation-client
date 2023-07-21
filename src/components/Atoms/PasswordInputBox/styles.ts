@@ -1,7 +1,13 @@
 import Input from "@mui/material/Input";
 import { styled } from "@mui/material/styles";
 
-export const StyledInput = styled(Input)`
+export const Container = styled("div")`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+`;
+
+export const StyledInput = styled(Input)<{ error: boolean }>`
   &.MuiInputBase-root {
     font-family: Pretendard, sans-serif;
     font-weight: 400;
@@ -10,11 +16,11 @@ export const StyledInput = styled(Input)`
   }
 
   &.MuiInputBase-root.MuiInput-root:before {
-    border-bottom: 1px solid #eaeaea;
+    border-bottom: 1px solid ${(props) => (props.error ? "#f36262" : "#eaeaea")};
   }
 
   &.MuiInputBase-root.MuiInput-root:after {
-    border-bottom: 1px solid #713edc;
+    border-bottom: 1px solid ${(props) => (props.error ? "#f36262" : "#713edc")};
   }
 `;
 

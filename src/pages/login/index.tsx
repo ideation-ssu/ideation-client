@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-import axios from "axios";
 
 import ErrorMsg from "@/components/Atoms/ErrorMsg";
 import IdeationLabel from "@/components/Atoms/IdeationLabel";
@@ -10,6 +9,7 @@ import PasswordInputBox from "@/components/Atoms/PasswordInputBox";
 import RoundButton from "@/components/Atoms/RoundButton";
 import TextCheckBox from "@/components/Molecules/TextCheckBox";
 import { Container, FlexWrap, InnerContainer } from "@/styles/login/styles";
+import { getTokens } from "@/utils/tokenUtils";
 
 import TitleCard from "../../components/Templates/Card";
 
@@ -19,23 +19,43 @@ function Login(): React.ReactElement {
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
   const [autoLogin, setAutoLogin] = useState(false);
-  const [err, setErr] = useState("");
+  const [loginErr, setLoginErr] = useState("");
+  const [emailErr, setEmailErr] = useState("");
+  const [pwErr, setPwErr] = useState("");
 
   const handleAutoLogin = () => {
     setAutoLogin(!autoLogin);
   };
 
-  const login = () => {
-    const data = {
-      email: email,
-      password: pw,
-    };
-    axios
-      .post(`${process.env.NEXT_PUBLIC_BASEURL}/auth/login`, data)
-      .then((res) => {
-        if (res.data.error) setErr("이메일 또는 비밀번호를 잘못 입력했습니다.");
-        else router.push("/");
-      });
+  const existErr = () => {
+    if (!email) {
+      setEmailErr("이메일을 입력하세요");
+      setLoginErr("");
+      setPwErr("");
+      return true;
+    }
+
+    if (!pw) {
+      setPwErr("비밀번호를 입력하세요");
+      setEmailErr("");
+      setLoginErr("");
+      return true;
+    }
+
+    setLoginErr("");
+    setEmailErr("");
+    setPwErr("");
+    return false;
+  };
+
+  const login = async () => {
+    if (existErr()) return;
+
+    if (!(await getTokens(email, pw))) {
+      setLoginErr("이메일 또는 비밀번호를 잘못 입력했습니다.");
+      return;
+    }
+    router.push("/");
   };
 
   return (
@@ -49,11 +69,13 @@ function Login(): React.ReactElement {
                 placeHolder={"이메일을 입력하세요"}
                 text={email}
                 setText={setEmail}
+                errText={emailErr}
               />
               <PasswordInputBox
                 placeHolder={"비밀번호를 입력하세요"}
                 text={pw}
                 setText={setPw}
+                errText={pwErr}
               />
             </FlexWrap>
             <TextCheckBox
@@ -61,7 +83,7 @@ function Login(): React.ReactElement {
               setCheck={handleAutoLogin}
               text={"자동 로그인"}
             />
-            {err && <ErrorMsg errText={err} />}
+            {loginErr && <ErrorMsg errText={loginErr} />}
             <FlexWrap gap={6}>
               <RoundButton isFilled={true} text={"로그인"} onClick={login} />
               <RoundButton
