@@ -6,7 +6,7 @@ import FlexWrap from "@/components/Atoms/FlexWrap";
 import KakaoButton from "@/components/Atoms/KakaoButton";
 import OutlineInputBox from "@/components/Atoms/OutlineInputBox";
 import RoundButton from "@/components/Atoms/RoundButton";
-import { Text } from "@/styles/signup/styles";
+import { Text } from "@/components/Templates/SignUp/styles";
 
 function Email({
   email,

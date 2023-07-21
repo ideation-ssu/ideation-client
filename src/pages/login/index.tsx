@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import ErrorMsg from "@/components/Atoms/ErrorMsg";
@@ -9,7 +9,7 @@ import PasswordInputBox from "@/components/Atoms/PasswordInputBox";
 import RoundButton from "@/components/Atoms/RoundButton";
 import TextCheckBox from "@/components/Molecules/TextCheckBox";
 import { Container, FlexWrap, InnerContainer } from "@/styles/login/styles";
-import { getTokens } from "@/utils/tokenUtils";
+import { isLoggedIn, login } from "@/utils/tokenUtils";
 
 import TitleCard from "../../components/Templates/Card";
 
@@ -22,6 +22,14 @@ function Login(): React.ReactElement {
   const [loginErr, setLoginErr] = useState("");
   const [emailErr, setEmailErr] = useState("");
   const [pwErr, setPwErr] = useState("");
+
+  useEffect(() => {
+    isLoggedIn().then((loggedIn) => {
+      if (loggedIn) {
+        router.push("/");
+      }
+    });
+  }, []);
 
   const handleAutoLogin = () => {
     setAutoLogin(!autoLogin);
@@ -48,10 +56,10 @@ function Login(): React.ReactElement {
     return false;
   };
 
-  const login = async () => {
+  const handleLogin = async () => {
     if (existErr()) return;
 
-    if (!(await getTokens(email, pw))) {
+    if (!(await login(email, pw, autoLogin))) {
       setLoginErr("이메일 또는 비밀번호를 잘못 입력했습니다.");
       return;
     }
@@ -85,7 +93,11 @@ function Login(): React.ReactElement {
             />
             {loginErr && <ErrorMsg errText={loginErr} />}
             <FlexWrap gap={6}>
-              <RoundButton isFilled={true} text={"로그인"} onClick={login} />
+              <RoundButton
+                isFilled={true}
+                text={"로그인"}
+                onClick={handleLogin}
+              />
               <RoundButton
                 isFilled={false}
                 text={"회원가입"}

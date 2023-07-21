@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { CookiesProvider } from "react-cookie";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+import { isLoggedIn } from "@/utils/tokenUtils";
 import loadable from "@loadable/component";
 
 const Root = loadable(() => import("./pages/index"));
@@ -30,10 +31,18 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
-root.render(
-  <React.StrictMode>
-    <CookiesProvider>
-      <RouterProvider router={router} />
-    </CookiesProvider>
-  </React.StrictMode>
-);
+function RootComponent() {
+  useEffect(() => {
+    isLoggedIn();
+  }, []);
+
+  return (
+    <React.StrictMode>
+      <CookiesProvider>
+        <RouterProvider router={router} />
+      </CookiesProvider>
+    </React.StrictMode>
+  );
+}
+
+root.render(<RootComponent />);

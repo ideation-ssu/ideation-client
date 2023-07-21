@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import FlexWrap from "@/components/Atoms/FlexWrap";
 import IdeationLabel from "@/components/Atoms/IdeationLabel";
@@ -9,7 +9,7 @@ import {
   Container,
   InnerContainer,
   Text,
-} from "@/styles/signup/styles";
+} from "@/components/Templates/SignUp/styles";
 
 function Done({ name }: { name: string }): React.ReactElement {
   return (

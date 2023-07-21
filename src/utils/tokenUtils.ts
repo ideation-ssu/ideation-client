@@ -2,7 +2,7 @@ import axios from "axios";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export const getTokens = async (email: string, pw: string) => {
+export const login = async (email: string, pw: string, auto: boolean) => {
   const data = {
     email: email,
     password: pw,
@@ -15,14 +15,14 @@ export const getTokens = async (email: string, pw: string) => {
     );
 
     if (res.data.error) return false;
-
     // accessToken 로컬에 저장
     await AsyncStorage.setItem(
       "Tokens",
       JSON.stringify({
-        accessToken: res.data.accessToken,
-        email: res.data.email,
-        name: res.data.name,
+        accessToken: res.data.data.token,
+        email: res.data.data.email,
+        name: res.data.data.name,
+        auto_login: auto,
       })
     );
 
@@ -33,17 +33,12 @@ export const getTokens = async (email: string, pw: string) => {
   }
 };
 
-export const autoLogin = async () => {
+export const isLoggedIn = async () => {
   try {
     const tokens = await getTokenFromLocal();
 
-    if (tokens && tokens.accessToken) {
-      // 토큰이 존재하면 자동 로그인 성공
-      return true;
-    } else {
-      // 토큰이 존재하지 않으면 자동 로그인 실패
-      return false;
-    }
+    if (tokens && tokens.accessToken) return true;
+    else return false;
   } catch (error) {
     console.error("자동 로그인 실패:", error);
     return false;
@@ -53,7 +48,6 @@ export const autoLogin = async () => {
 const getTokenFromLocal = async () => {
   try {
     const value = await AsyncStorage.getItem("Tokens");
-
     if (value !== null) {
       return JSON.parse(value);
     } else {
@@ -62,5 +56,15 @@ const getTokenFromLocal = async () => {
   } catch (error) {
     console.error("토큰 조회 실패:", error);
     return null;
+  }
+};
+
+export const logout = async () => {
+  try {
+    await AsyncStorage.removeItem("Tokens");
+    return true;
+  } catch (error) {
+    console.error("로그아웃 실패:", error);
+    return false;
   }
 };

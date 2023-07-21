@@ -7,13 +7,12 @@ import RoundButton from "@/components/Atoms/RoundButton";
 import AuthCode from "@/components/Templates/SignUp/AuthCode";
 import DonePage from "@/components/Templates/SignUp/Done";
 import EmailPage from "@/components/Templates/SignUp/Email";
-import UserInfoPage from "@/components/Templates/SignUp/UserInfo";
 import {
-  Circle,
   Container,
   InnerContainer,
-  Text,
-} from "@/styles/signup/styles";
+} from "@/components/Templates/SignUp/styles";
+import UserInfoPage from "@/components/Templates/SignUp/UserInfo";
+import { isLoggedIn } from "@/utils/tokenUtils";
 
 import Card from "../../components/Templates/Card";
 
@@ -35,6 +34,12 @@ function SignUp(): React.ReactElement {
   const [pwConfirm, setPwConfirm] = useState("");
 
   useEffect(() => {
+    isLoggedIn().then((loggedIn) => {
+      if (loggedIn) {
+        router.push("/");
+      }
+    });
+
     router.beforePopState(({ url, as, options }) => {
       if (page > pageState.Email && as !== router.asPath) {
         window.history.pushState("", "");

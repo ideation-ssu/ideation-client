@@ -6,7 +6,7 @@ import FlexWrap from "@/components/Atoms/FlexWrap";
 import OutlineInputBox from "@/components/Atoms/OutlineInputBox";
 import OutlinePasswordInputBox from "@/components/Atoms/OutlinePasswordInputBox";
 import RoundButton from "@/components/Atoms/RoundButton";
-import { Text } from "@/styles/signup/styles";
+import { Text } from "@/components/Templates/SignUp/styles";
 
 function UserInfo({
   email,
