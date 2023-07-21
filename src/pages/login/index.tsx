@@ -26,7 +26,7 @@ function Login(): React.ReactElement {
   useEffect(() => {
     isLoggedIn().then((loggedIn) => {
       if (loggedIn) {
-        router.push("/");
+        router.push("/main");
       }
     });
   }, []);
@@ -63,7 +63,7 @@ function Login(): React.ReactElement {
       setLoginErr("이메일 또는 비밀번호를 잘못 입력했습니다.");
       return;
     }
-    router.push("/");
+    router.push("/main");
   };
 
   return (
