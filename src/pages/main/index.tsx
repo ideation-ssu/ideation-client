@@ -1,11 +1,22 @@
 import React from "react";
 
+import FlexWrap from "@/components/Atoms/FlexWrap";
 import Workspace from "@/components/Templates/Main/Workspace";
 import {
   Container,
+  Content,
+  Filter,
+  Header,
+  ProfileImg,
+  Search,
+  SearchIcon,
+  SearchIconWrapper,
+  SearchInput,
   StyledTab,
   StyledTabs,
   TabIcon,
+  TitleBar,
+  TitleWrap,
 } from "@/styles/main/styles";
 
 function Main(): React.ReactElement {
@@ -22,29 +33,54 @@ function Main(): React.ReactElement {
           icon={<TabIcon className={"workspace"} selection={value === 0} />}
         />
         <StyledTab
-          icon={<TabIcon className={"dashboard"} selection={value === 1} />}
+          icon={<TabIcon className={"analysis"} selection={value === 1} />}
         />
         <StyledTab
-          icon={<TabIcon className={"analysis"} selection={value === 2} />}
+          icon={<TabIcon className={"dashboard"} selection={value === 2} />}
         />
-        <StyledTab label="Setting" />
-        <StyledTab label="User" />
+        <StyledTab
+          icon={<TabIcon className={"management"} selection={value === 3} />}
+        />
       </StyledTabs>
-      <TabPanel value={value} index={0}>
-        <Workspace />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        Dashboard
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        Analysis
-      </TabPanel>
-      <TabPanel value={value} index={3}>
-        Setting
-      </TabPanel>
-      <TabPanel value={value} index={4}>
-        User
-      </TabPanel>
+      <Content>
+        <FlexWrap gap={60}>
+          <Header>
+            <TitleWrap>
+              <TitleBar />
+              <span>{"My Workspace"}</span>
+            </TitleWrap>
+            <div>
+              <ProfileImg />
+            </div>
+          </Header>
+          <Header>
+            <Filter>
+              <span>{"필터 기능"}</span>
+            </Filter>
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <SearchInput
+                placeholder="Search…"
+                inputProps={{ "aria-label": "search" }}
+              />
+            </Search>
+          </Header>
+        </FlexWrap>
+        <TabPanel value={value} index={0}>
+          <Workspace />
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          Analysis
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          Dashboard
+        </TabPanel>
+        <TabPanel value={value} index={3}>
+          Management
+        </TabPanel>
+      </Content>
     </Container>
   );
 }

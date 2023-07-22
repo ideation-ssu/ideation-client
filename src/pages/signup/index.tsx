@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-import FlexWrap from "@/components/Atoms/FlexWrap";
 import IdeationLabel from "@/components/Atoms/IdeationLabel";
-import RoundButton from "@/components/Atoms/RoundButton";
 import AuthCode from "@/components/Templates/SignUp/AuthCode";
 import DonePage from "@/components/Templates/SignUp/Done";
 import EmailPage from "@/components/Templates/SignUp/Email";
