@@ -7,11 +7,11 @@ export const Container = styled("div")`
   gap: 5px;
 `;
 
-export const Input = styled(TextField)<{ error: boolean }>`
+export const Input = styled(TextField)<{ error: boolean; fontsize: number }>`
   .MuiInputBase-root {
     font-family: Pretendard, sans-serif;
     font-weight: 400;
-    font-size: 10px;
+    font-size: ${(props) => props.fontsize}px;
     line-height: 11.93px;
   }
 

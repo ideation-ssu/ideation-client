@@ -9,11 +9,13 @@ function InputBox({
   text,
   setText,
   errText,
+  fontSize = 10,
 }: {
   placeHolder: string;
   text: string;
   setText: React.Dispatch<React.SetStateAction<string>>;
   errText?: string;
+  fontSize?: number;
 }): React.ReactElement {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
@@ -27,6 +29,7 @@ function InputBox({
         value={text}
         onChange={handleChange}
         error={!!errText}
+        fontsize={fontSize}
       />
       {errText && <ErrorMsg errText={errText} />}
     </Container>
