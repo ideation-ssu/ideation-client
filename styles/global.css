@@ -23,6 +23,11 @@
   src: url("../public/fonts/Pretendard-Regular.otf");
 }
 
+@font-face {
+  font-family: "PretendardMedium";
+  src: url("../public/fonts/Pretendard-Medium.otf");
+}
+
 
 body {
   margin: 0;

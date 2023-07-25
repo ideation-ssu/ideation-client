@@ -1,10 +1,11 @@
 import React from "react";
 
-import ProjectRegModal from "@/components/Atoms/ProjectRegModal";
 import {
   PlusIcon,
   StyledGrid,
 } from "@/components/Templates/Main/Workspace/styles";
+
+import ProjectRegModal from "../../../Molecules/ProjectRegModal";
 
 function Workspace(): React.ReactElement {
   const [open, setOpen] = React.useState(false);

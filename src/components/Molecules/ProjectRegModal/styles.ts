@@ -61,3 +61,8 @@ export const SubTitleBar = styled("div")`
   height: 25px;
   background: linear-gradient(90deg, #713edc 0%, #6e72fc 100%);
 `;
+
+export const ButtonWrap = styled("div")`
+  width: 487px;
+  margin: 50px auto;
+`;

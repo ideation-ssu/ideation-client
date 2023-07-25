@@ -29,7 +29,7 @@ function InputBox({
         value={text}
         onChange={handleChange}
         error={!!errText}
-        fontsize={fontSize}
+        fontSize={fontSize}
       />
       {errText && <ErrorMsg errText={errText} />}
     </Container>

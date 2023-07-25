@@ -4,6 +4,7 @@ import { styled } from "@mui/material/styles";
 export const StyledButton = styled(Button)<{
   filled: string;
 }>`
+  width: 100%;
   background-color: ${(props) =>
     props.filled === "true" ? "#713edc" : "#ffffff"};
   color: ${(props) => (props.filled === "true" ? "#ffffff" : "#713edc")};
