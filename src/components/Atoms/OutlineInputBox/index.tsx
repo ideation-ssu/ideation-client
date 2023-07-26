@@ -9,11 +9,13 @@ function OutlineInputBox({
   text,
   setText,
   errText,
+  autoComplete,
 }: {
   placeHolder: string;
   text: string;
   setText: React.Dispatch<React.SetStateAction<string>>;
   errText?: string;
+  autoComplete: string;
 }): React.ReactElement {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
@@ -25,6 +27,7 @@ function OutlineInputBox({
         placeholder={placeHolder}
         variant="outlined"
         value={text}
+        autoComplete={autoComplete}
         onChange={handleChange}
         error={!!errText}
       />

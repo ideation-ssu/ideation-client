@@ -89,36 +89,39 @@ function UserInfo({
   };
 
   return (
-    <FlexWrap gap={20}>
-      <OutlineInputBox
-        placeHolder={"이름을 입력해주세요"}
-        text={name}
-        setText={setName}
-        errText={err}
-      />
-      <OutlinePasswordInputBox
-        placeHolder={"비밀번호를 입력해주세요"}
-        text={pw}
-        setText={setPw}
-        errText={pwErr}
-      />
-      <OutlinePasswordInputBox
-        placeHolder={"비밀번호를 확인해주세요"}
-        text={pwConfirm}
-        setText={setPwConfirm}
-        errText={pwConfirmErr}
-      />
-      <FlexWrap gap={5}>
-        <RoundButton
-          isFilled={true}
-          text={"회원가입 완료하기"}
-          onClick={registerUser}
+    <form>
+      <FlexWrap gap={20}>
+        <OutlineInputBox
+          placeHolder={"이름을 입력해주세요"}
+          text={name}
+          setText={setName}
+          autoComplete={"name"}
+          errText={err}
         />
-        <Text className="login" onClick={handleLoginPage}>
-          {"이미 계정이 있으신가요?"}
-        </Text>
+        <OutlinePasswordInputBox
+          placeHolder={"비밀번호를 입력해주세요"}
+          text={pw}
+          setText={setPw}
+          errText={pwErr}
+        />
+        <OutlinePasswordInputBox
+          placeHolder={"비밀번호를 확인해주세요"}
+          text={pwConfirm}
+          setText={setPwConfirm}
+          errText={pwConfirmErr}
+        />
+        <FlexWrap gap={5}>
+          <RoundButton
+            isFilled={true}
+            text={"회원가입 완료하기"}
+            onClick={registerUser}
+          />
+          <Text className="login" onClick={handleLoginPage}>
+            {"이미 계정이 있으신가요?"}
+          </Text>
+        </FlexWrap>
       </FlexWrap>
-    </FlexWrap>
+    </form>
   );
 }
 

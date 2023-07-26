@@ -72,20 +72,23 @@ function Login(): React.ReactElement {
         <InnerContainer>
           <IdeationLabel />
           <FlexWrap gap={20}>
-            <FlexWrap gap={25}>
-              <InputBox
-                placeHolder={"이메일을 입력하세요"}
-                text={email}
-                setText={setEmail}
-                errText={emailErr}
-              />
-              <PasswordInputBox
-                placeHolder={"비밀번호를 입력하세요"}
-                text={pw}
-                setText={setPw}
-                errText={pwErr}
-              />
-            </FlexWrap>
+            <form>
+              <FlexWrap gap={25}>
+                <InputBox
+                  placeHolder={"이메일을 입력하세요"}
+                  text={email}
+                  setText={setEmail}
+                  errText={emailErr}
+                  autoComplete={"username"}
+                />
+                <PasswordInputBox
+                  placeHolder={"비밀번호를 입력하세요"}
+                  text={pw}
+                  setText={setPw}
+                  errText={pwErr}
+                />
+              </FlexWrap>
+            </form>
             <TextCheckBox
               check={autoLogin}
               setCheck={handleAutoLogin}

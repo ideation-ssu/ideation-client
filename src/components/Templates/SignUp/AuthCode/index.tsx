@@ -43,6 +43,7 @@ function Email({
         placeHolder={"이메일로 발송된 인증번호를 입력해주세요"}
         text={code}
         setText={setCode}
+        autoComplete={"code"}
         errText={err}
       />
       <div></div>

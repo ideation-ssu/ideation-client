@@ -8,6 +8,7 @@ export const Container = styled("div")`
 `;
 
 export const Input = styled(OutlinedInput)<{ error: boolean }>`
+  width: 100%;
   .MuiOutlinedInput-notchedOutline {
     border-color: ${(props) =>
       props.error ? "#f36262" : "#713edc"} !important;

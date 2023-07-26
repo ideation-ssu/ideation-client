@@ -29,6 +29,7 @@ function InputBox({
       <StyledInput
         placeholder={placeHolder}
         type={showPassword ? "text" : "password"}
+        autoComplete={"new-password"}
         value={text}
         onChange={handleChange}
         error={!!errText}

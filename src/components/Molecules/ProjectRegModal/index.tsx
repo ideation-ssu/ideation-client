@@ -80,6 +80,7 @@ function ProjectRegModal({
                 text={name}
                 setText={setName}
                 errText={err}
+                autoComplete={"name"}
                 fontSize={15}
               />
             </Line>
@@ -95,6 +96,7 @@ function ProjectRegModal({
                 placeHolder={""}
                 text={desc}
                 setText={setDesc}
+                autoComplete={"desc"}
                 fontSize={15}
               />
             </Line>

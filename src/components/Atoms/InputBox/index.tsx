@@ -9,12 +9,14 @@ function InputBox({
   text,
   setText,
   errText,
+  autoComplete,
   fontSize = 10,
 }: {
   placeHolder: string;
   text: string;
   setText: React.Dispatch<React.SetStateAction<string>>;
   errText?: string;
+  autoComplete: string;
   fontSize?: number;
 }): React.ReactElement {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -27,6 +29,7 @@ function InputBox({
         placeholder={placeHolder}
         variant="standard"
         value={text}
+        autoComplete={autoComplete}
         onChange={handleChange}
         error={!!errText}
         fontSize={fontSize}

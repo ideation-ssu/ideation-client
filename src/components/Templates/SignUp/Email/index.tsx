@@ -51,6 +51,7 @@ function Email({
           placeHolder={"이메일 주소를 입력하세요"}
           text={email}
           setText={setEmail}
+          autoComplete={"email"}
           errText={err}
         />
         <RoundButton

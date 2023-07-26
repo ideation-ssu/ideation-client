@@ -8,6 +8,8 @@ export const Container = styled("div")`
 `;
 
 export const StyledInput = styled(Input)<{ error: boolean }>`
+  width: 100%;
+
   &.MuiInputBase-root {
     font-family: Pretendard, sans-serif;
     font-weight: 400;
