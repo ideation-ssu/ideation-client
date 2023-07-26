@@ -1,5 +1,5 @@
 // pages/_document.js
-
+import React from "react";
 import Document, { Head, Html, Main, NextScript } from "next/document";
 
 class MyDocument extends Document {

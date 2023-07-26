@@ -38,7 +38,7 @@ function SignUp(): React.ReactElement {
       }
     });
 
-    router.beforePopState(({ url, as, options }) => {
+    router.beforePopState(({ as }) => {
       if (page > pageState.Email && as !== router.asPath) {
         window.history.pushState("", "");
         router.push(router.asPath);
