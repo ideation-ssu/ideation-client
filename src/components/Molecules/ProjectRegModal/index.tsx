@@ -3,6 +3,7 @@ import axios from "axios";
 import dayjs, { Dayjs } from "dayjs";
 
 import Calendar from "@/components/Atoms/Calendar";
+import ConfirmModal from "@/components/Atoms/ConfirmModal";
 import Driver from "@/components/Atoms/Driver";
 import InputBox from "@/components/Atoms/InputBox";
 import RoundButton from "@/components/Atoms/RoundButton";
@@ -34,6 +35,11 @@ function ProjectRegModal({
   const [isPublic, setIsPublic] = useState(false);
   const [err, setErr] = useState("");
 
+  // modal
+  const [confirmModalOpen, setConfirmModalOpen] = React.useState(false);
+  const handleConfirmOpen = () => setConfirmModalOpen(true);
+  const handleConfirmClose = () => setConfirmModalOpen(false);
+
   useEffect(() => {
     getToken();
   }, []);
@@ -58,7 +64,6 @@ function ProjectRegModal({
       dueDate: dayjs(dueDate).format("YYYY-MM-DD"),
       isPublic: isPublic,
     };
-    console.log(data);
 
     axios
       .post(`${process.env.NEXT_PUBLIC_BASEURL}/project`, data, {
@@ -70,9 +75,14 @@ function ProjectRegModal({
         if (res.data.error) setErr(res.data.error.userMessage);
         else {
           setErr("");
-          console.log("success");
+          handleConfirmOpen();
         }
       });
+  };
+
+  const closeAllModal = () => {
+    handleConfirmClose();
+    handleClose();
   };
 
   return (
@@ -146,6 +156,7 @@ function ProjectRegModal({
               isFilled={true}
               onClick={createProject}
             />
+            <ConfirmModal open={confirmModalOpen} handleClose={closeAllModal} />
           </ButtonWrap>
         </Content>
       </Container>
