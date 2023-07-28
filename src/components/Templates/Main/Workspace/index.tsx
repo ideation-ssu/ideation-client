@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import {
+  Category,
   PlusIcon,
   StyledGrid,
 } from "@/components/Templates/Main/Workspace/styles";
@@ -11,6 +12,7 @@ import ProjectRegModal from "../../ProjectRegModal";
 
 function Workspace(): React.ReactElement {
   const [token, setToken] = useState("");
+  const colorMap = ["#ff9160", "#f5c527", "#00b18c", "#37cde7", "#ad1deb"];
 
   // project creation modal
   const [projectOpen, setProjectOpen] = React.useState(false);
@@ -53,7 +55,7 @@ function Workspace(): React.ReactElement {
         </StyledGrid>
         {Array.from(Array(16)).map((_, index) => (
           <StyledGrid key={index}>
-            <div>test</div>
+            <Category color={colorMap[Math.floor(Math.random() * 5)]} />
           </StyledGrid>
         ))}
       </StyledGrid>

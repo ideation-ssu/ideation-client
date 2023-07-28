@@ -12,10 +12,13 @@ export const StyledGrid = styled(Grid)`
   width: 283px;
   height: 142px;
   gap: 25px;
-  background-color: yellowgreen;
+  background-color: white;
+  border-radius: 5px;
 
   &.container {
     width: 100%;
+    height: 70vh;
+    overflow: hidden;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -44,4 +47,12 @@ export const PlusIcon = styled("div")`
   background-size: cover;
   width: 45px;
   height: 45px;
+`;
+
+export const Category = styled("div")<{ color: string }>`
+  width: 17px;
+  height: 100%;
+  background-color: ${(props) => props.color};
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
 `;
