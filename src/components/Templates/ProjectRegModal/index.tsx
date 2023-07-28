@@ -8,7 +8,6 @@ import Driver from "@/components/Atoms/Driver";
 import InputBox from "@/components/Atoms/InputBox";
 import RoundButton from "@/components/Atoms/RoundButton";
 import SwitchButton from "@/components/Atoms/SwitchButton";
-import { getTokenFromLocal } from "@/utils/tokenUtils";
 
 import {
   ButtonWrap,
@@ -22,13 +21,14 @@ import {
 } from "./styles";
 
 function ProjectRegModal({
+  token,
   open,
   handleClose,
 }: {
+  token: string;
   open: boolean;
   handleClose: () => void;
 }): React.ReactElement {
-  const [token, setToken] = useState("");
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
   const [dueDate, setDueDate] = useState<Dayjs>(dayjs().add(1, "day"));
@@ -39,18 +39,6 @@ function ProjectRegModal({
   const [confirmModalOpen, setConfirmModalOpen] = React.useState(false);
   const handleConfirmOpen = () => setConfirmModalOpen(true);
   const handleConfirmClose = () => setConfirmModalOpen(false);
-
-  useEffect(() => {
-    getToken();
-  }, []);
-
-  const getToken = () => {
-    getTokenFromLocal().then((token) => {
-      if (token) {
-        setToken(token.accessToken);
-      } else console.log("no token");
-    });
-  };
 
   const createProject = () => {
     if (!name) {

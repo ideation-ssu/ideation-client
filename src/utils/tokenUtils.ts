@@ -15,6 +15,7 @@ export const login = async (email: string, pw: string, auto: boolean) => {
     );
 
     if (res.data.error) return false;
+
     // accessToken 로컬에 저장
     await AsyncStorage.setItem(
       "Tokens",

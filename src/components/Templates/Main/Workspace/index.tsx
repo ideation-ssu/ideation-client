@@ -1,22 +1,53 @@
-import React from "react";
+import React, { useState } from "react";
 
 import {
   PlusIcon,
   StyledGrid,
 } from "@/components/Templates/Main/Workspace/styles";
+import { getTokenFromLocal } from "@/utils/tokenUtils";
 
-import ProjectRegModal from "../../../Molecules/ProjectRegModal";
+import LoginModal from "../../LoginModal";
+import ProjectRegModal from "../../ProjectRegModal";
 
 function Workspace(): React.ReactElement {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [token, setToken] = useState("");
+
+  // project creation modal
+  const [projectOpen, setProjectOpen] = React.useState(false);
+  const projectModalOpen = () => setProjectOpen(true);
+  const projectModalClose = () => setProjectOpen(false);
+
+  // login modal
+  const [loginOpen, setLoginOpen] = React.useState(false);
+  const loginModalOpen = () => setLoginOpen(true);
+  const loginModalClose = () => setLoginOpen(false);
+
+  const getToken = async () => {
+    const token = await getTokenFromLocal();
+    if (token) {
+      setToken(token.accessToken);
+      return token.accessToken;
+    }
+    return null;
+  };
+
+  const openModal = async () => {
+    const fetchedToken = await getToken();
+
+    if (fetchedToken) projectModalOpen();
+    else loginModalOpen();
+  };
 
   return (
     <>
-      <ProjectRegModal open={open} handleClose={handleClose} />
+      <ProjectRegModal
+        token={token}
+        open={projectOpen}
+        handleClose={projectModalClose}
+      />
+      <LoginModal open={loginOpen} handleClose={loginModalClose} />
       <StyledGrid container className={"container"}>
-        <StyledGrid className={"add-project"} onClick={handleOpen}>
+        <StyledGrid className={"add-project"} onClick={openModal}>
           <PlusIcon />
           <span>{"프로젝트 생성하기"}</span>
         </StyledGrid>

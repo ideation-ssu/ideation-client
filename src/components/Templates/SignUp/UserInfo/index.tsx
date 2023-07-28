@@ -7,6 +7,7 @@ import OutlineInputBox from "@/components/Atoms/OutlineInputBox";
 import OutlinePasswordInputBox from "@/components/Atoms/OutlinePasswordInputBox";
 import RoundButton from "@/components/Atoms/RoundButton";
 import { Text } from "@/components/Templates/SignUp/styles";
+import { login } from "@/utils/tokenUtils";
 
 function UserInfo({
   email,
@@ -81,10 +82,12 @@ function UserInfo({
       passwordCheck: pwConfirm,
     };
     axios
-      .post(`${process.env.NEXT_PUBLIC_BASEURL}/auth/email/verify`, data)
-      .then((res) => {
+      .post(`${process.env.NEXT_PUBLIC_BASEURL}/auth/register`, data)
+      .then(async (res) => {
         if (res.data.error) setError(res.data.error.userMessage);
-        else nextPage();
+        else {
+          if (await login(email, pw, true)) nextPage();
+        }
       });
   };
 

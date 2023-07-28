@@ -8,8 +8,8 @@ export const StyledModal = styled(Modal)`
 `;
 
 export const Container = styled("div")`
-  width: 615px;
-  height: 479px;
+  width: 446.31px;
+  height: 588px;
   background-color: white;
   border-radius: 10px;
 `;
