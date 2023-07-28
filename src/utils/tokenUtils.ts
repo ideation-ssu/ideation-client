@@ -45,7 +45,7 @@ export const isLoggedIn = async () => {
   }
 };
 
-const getTokenFromLocal = async () => {
+export const getTokenFromLocal = async () => {
   try {
     const value = await AsyncStorage.getItem("Tokens");
     if (value !== null) {

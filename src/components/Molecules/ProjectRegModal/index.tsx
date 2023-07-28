@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import dayjs, { Dayjs } from "dayjs";
 
@@ -7,6 +7,7 @@ import Driver from "@/components/Atoms/Driver";
 import InputBox from "@/components/Atoms/InputBox";
 import RoundButton from "@/components/Atoms/RoundButton";
 import SwitchButton from "@/components/Atoms/SwitchButton";
+import { getTokenFromLocal } from "@/utils/tokenUtils";
 
 import {
   ButtonWrap,
@@ -26,11 +27,24 @@ function ProjectRegModal({
   open: boolean;
   handleClose: () => void;
 }): React.ReactElement {
+  const [token, setToken] = useState("");
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
   const [dueDate, setDueDate] = useState<Dayjs>(dayjs().add(1, "day"));
   const [isPublic, setIsPublic] = useState(false);
   const [err, setErr] = useState("");
+
+  useEffect(() => {
+    getToken();
+  }, []);
+
+  const getToken = () => {
+    getTokenFromLocal().then((token) => {
+      if (token) {
+        setToken(token.accessToken);
+      } else console.log("no token");
+    });
+  };
 
   const createProject = () => {
     if (!name) {
@@ -44,9 +58,14 @@ function ProjectRegModal({
       dueDate: dayjs(dueDate).format("YYYY-MM-DD"),
       isPublic: isPublic,
     };
+    console.log(data);
 
     axios
-      .post(`${process.env.NEXT_PUBLIC_BASEURL}/project`, data)
+      .post(`${process.env.NEXT_PUBLIC_BASEURL}/project`, data, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
       .then((res) => {
         if (res.data.error) setErr(res.data.error.userMessage);
         else {

@@ -83,7 +83,7 @@ export const StyledPaper = styled(Paper)`
       font-family: PretendardMedium, sans-serif;
     }
 
-    span:first-of-type {
+    span:last-of-type {
       color: #f36262;
     }
     span:first-of-type {
@@ -97,7 +97,7 @@ export const StyledPaper = styled(Paper)`
       font-family: PretendardMedium, sans-serif;
     }
 
-    button:first-of-type:not(:disabled) {
+    button:last-of-type:not(:disabled) {
       color: #f36262;
     }
     button:first-of-type:not(:disabled) {
