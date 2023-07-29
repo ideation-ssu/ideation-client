@@ -20,7 +20,10 @@ function Workspace(): React.ReactElement {
   // project creation modal
   const [projectOpen, setProjectOpen] = React.useState(false);
   const projectModalOpen = () => setProjectOpen(true);
-  const projectModalClose = () => setProjectOpen(false);
+  const projectModalClose = () => {
+    setProjectOpen(false);
+    fetchProjects();
+  };
 
   // login modal
   const [loginOpen, setLoginOpen] = React.useState(false);
@@ -29,16 +32,28 @@ function Workspace(): React.ReactElement {
 
   useEffect(() => {
     getToken();
-    axios
-      .get(`${process.env.NEXT_PUBLIC_BASEURL}/project`, {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      })
-      .then((res) => {
-        if (res) setProjects(res.data.data.projects);
-      });
-  }, [projects]);
+    fetchProjects();
+  }, []);
+
+  const fetchProjects = async () => {
+    try {
+      const token = await getTokenFromLocal();
+      if (token) {
+        setToken(token.accessToken);
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BASEURL}/project`,
+          {
+            headers: {
+              Authorization: "Bearer " + token.accessToken,
+            },
+          }
+        );
+        setProjects(response.data.data.projects);
+      }
+    } catch (error) {
+      console.error("Error fetching projects:", error);
+    }
+  };
 
   const getToken = async () => {
     const token = await getTokenFromLocal();
