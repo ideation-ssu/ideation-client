@@ -5,7 +5,7 @@ import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 
 export const Container = styled("div")`
-  height: 100dvh;
+  height: 100vh;
   display: flex;
   background-color: #f5f5f5;
   overflow: hidden;

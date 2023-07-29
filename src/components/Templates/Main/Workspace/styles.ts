@@ -2,7 +2,7 @@ import Grid from "@mui/material/Grid";
 import { styled } from "@mui/material/styles";
 
 export const Container = styled("div")`
-  height: 100dvh;
+  height: 100vh;
   display: flex;
   align-items: center;
 `;
@@ -11,17 +11,16 @@ export const StyledGrid = styled(Grid)`
   display: flex;
   width: 283px;
   height: 142px;
-  gap: 25px;
   background-color: white;
   border-radius: 5px;
 
   &.container {
     width: 100%;
     height: 70vh;
-    overflow: hidden;
+    overflow-y: scroll;
+    gap: 25px;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     margin-top: 30px;
     margin-left: 0;
     background-color: transparent;
@@ -49,10 +48,44 @@ export const PlusIcon = styled("div")`
   height: 45px;
 `;
 
-export const Category = styled("div")<{ color: string }>`
+const colorMap = ["ff9160", "f5c527", "00b18c", "37cde7", "ad1deb"];
+export const Category = styled("div")`
   width: 17px;
   height: 100%;
-  background-color: ${(props) => props.color};
+  // background-color: #${(props) => colorMap[props.colorvalue]};
+  background-color: yellow;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
+`;
+
+export const Content = styled("div")`
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  gap: 9px;
+
+  span {
+    font-family: Inter, sans-serif;
+    &.title {
+      font-size: 20px;
+    }
+    &.desc {
+      font-size: 12px;
+    }
+  }
+`;
+
+export const DDay = styled("div")`
+  width: 72.54px;
+  height: 21px;
+  border-radius: 5px;
+  background: rgba(245, 197, 39, 0.2);
+  text-align: center;
+  padding: 2px 5px;
+
+  span {
+    font-family: Inter, sans-serif;
+    font-size: 12px;
+    margin: 0;
+  }
 `;
