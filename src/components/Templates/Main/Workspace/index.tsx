@@ -36,7 +36,7 @@ function Workspace(): React.ReactElement {
         },
       })
       .then((res) => {
-        setProjects(res.data.data.projects);
+        if (res.data.data.projects) setProjects(res.data.data.projects);
       });
   }, [projects]);
 
