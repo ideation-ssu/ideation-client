@@ -15,7 +15,13 @@ import ProjectRegModal from "../../ProjectRegModal";
 
 function Workspace(): React.ReactElement {
   const [token, setToken] = useState("");
-  const [projects, setProjects] = useState([]);
+
+  interface Project {
+    dday: number;
+    name: string;
+    desc: string;
+  }
+  const [projects, setProjects] = useState<Project[]>([]);
 
   // project creation modal
   const [projectOpen, setProjectOpen] = React.useState(false);
