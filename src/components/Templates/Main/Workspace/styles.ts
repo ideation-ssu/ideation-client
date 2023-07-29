@@ -52,7 +52,6 @@ const colorMap = ["ff9160", "f5c527", "00b18c", "37cde7", "ad1deb"];
 export const Category = styled("div")`
   width: 17px;
   height: 100%;
-  // background-color: #${(props) => colorMap[props.colorvalue]};
   background-color: yellow;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
