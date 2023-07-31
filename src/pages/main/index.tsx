@@ -5,7 +5,6 @@ import Workspace from "@/components/Templates/Main/Workspace";
 import {
   Container,
   Content,
-  Filter,
   Header,
   ProfileImg,
   Search,
@@ -54,9 +53,6 @@ function Main(): React.ReactElement {
             </div>
           </Header>
           <Header>
-            <Filter>
-              <span>{"필터 기능"}</span>
-            </Filter>
             <Search>
               <SearchIconWrapper>
                 <SearchIcon />

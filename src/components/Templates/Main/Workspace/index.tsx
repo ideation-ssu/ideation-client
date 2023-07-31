@@ -8,6 +8,8 @@ import {
   PlusIcon,
   StyledGrid,
 } from "@/components/Templates/Main/Workspace/styles";
+import NewIdeaModal from "@/components/Templates/NewIdeaModal";
+import newIdeaModal from "@/components/Templates/NewIdeaModal";
 import { getTokenFromLocal } from "@/utils/tokenUtils";
 
 import LoginModal from "../../LoginModal";
@@ -16,12 +18,24 @@ import ProjectRegModal from "../../ProjectRegModal";
 function Workspace(): React.ReactElement {
   const [token, setToken] = useState("");
 
+  interface Joiner {
+    id: number;
+    projectId: number;
+    userId: number;
+    userName: string;
+    role: string;
+    status: string;
+    createdAt: string;
+  }
+
   interface Project {
     dday: number;
     name: string;
     desc: string;
+    joiners: Joiner[];
   }
   const [projects, setProjects] = useState<Project[]>([]);
+  const [selectProject, setSelectProject] = useState<Project>();
 
   // project creation modal
   const [projectOpen, setProjectOpen] = React.useState(false);
@@ -35,6 +49,11 @@ function Workspace(): React.ReactElement {
   const [loginOpen, setLoginOpen] = React.useState(false);
   const loginModalOpen = () => setLoginOpen(true);
   const loginModalClose = () => setLoginOpen(false);
+
+  // new idea modal
+  const [newIdeaOpen, setNewIdeaOpen] = React.useState(false);
+  const handlenewIdeaOpen = () => setNewIdeaOpen(true);
+  const handlenewIdeaClose = () => setNewIdeaOpen(false);
 
   useEffect(() => {
     getToken();
@@ -85,23 +104,46 @@ function Workspace(): React.ReactElement {
         handleClose={projectModalClose}
       />
       <LoginModal open={loginOpen} handleClose={loginModalClose} />
+
       <StyledGrid container className={"container"} spacing={1}>
         <StyledGrid className={"add-project"} onClick={openModal}>
           <PlusIcon />
           <span>{"프로젝트 생성하기"}</span>
         </StyledGrid>
+
+        <NewIdeaModal
+          token={token}
+          open={newIdeaOpen}
+          handleClose={handlenewIdeaClose}
+          joiner={
+            selectProject
+              ? selectProject.joiners.map((info) => {
+                  return info.userName.toString();
+                })
+              : []
+          }
+        />
+
         {projects &&
           projects.map((project, index) => (
-            <StyledGrid key={index}>
-              <Category />
-              <Content>
-                <DDay>
-                  <span>{`D-${project.dday}`}</span>
-                </DDay>
-                <span className={"title"}>{project.name}</span>
-                <span className={"desc"}>{project.desc}</span>
-              </Content>
-            </StyledGrid>
+            <>
+              <StyledGrid
+                key={index}
+                onClick={() => {
+                  setSelectProject(project);
+                  handlenewIdeaOpen();
+                }}
+              >
+                <Category />
+                <Content>
+                  <DDay>
+                    <span>{`D-${project.dday}`}</span>
+                  </DDay>
+                  <span className={"title"}>{project.name}</span>
+                  <span className={"desc"}>{project.desc}</span>
+                </Content>
+              </StyledGrid>
+            </>
           ))}
       </StyledGrid>
     </>

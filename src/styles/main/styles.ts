@@ -114,20 +114,6 @@ export const ProfileImg = styled("div")`
   height: 53px;
 `;
 
-export const Filter = styled("div")`
-  display: flex;
-  align-items: center;
-  padding-left: 10px;
-  width: 409px;
-  height: 41px;
-  background-color: #d9d9d9;
-  span {
-    font-family: Pretendard, sans-serif;
-    font-size: 15px;
-    font-weight: 400;
-  }
-`;
-
 export const Search = styled("div")`
   width: 420px;
   height: 41px;
