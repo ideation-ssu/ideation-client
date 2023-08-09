@@ -17,7 +17,6 @@ export const StyledGrid = styled(Grid)`
   &.container {
     width: 100%;
     height: 70vh;
-    overflow-y: scroll;
     gap: 25px;
     display: flex;
     flex-direction: row;

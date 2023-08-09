@@ -143,3 +143,10 @@ export const SearchInput = styled(InputBase)`
   font-size: 18px;
   padding-left: 10px;
 `;
+
+export const ProcessCard = styled("div")`
+  width: 386px;
+  height: 584px;
+  border-radius: 5px;
+  background-color: #ffffff;
+`;
