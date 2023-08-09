@@ -9,8 +9,8 @@ import {
   PlusIcon,
   StyledGrid,
 } from "@/components/Templates/Main/Workspace/styles";
-import NewIdeaModal from "@/components/Templates/NewIdeaModal";
 import newIdeaModal from "@/components/Templates/NewIdeaModal";
+import NewIdeaModal from "@/components/Templates/NewIdeaModal";
 import { getTokenFromLocal } from "@/utils/tokenUtils";
 
 import LoginModal from "../../LoginModal";
@@ -104,31 +104,21 @@ function Workspace(): React.ReactElement {
 
   return (
     <>
-      <ProjectRegModal
-        token={token}
-        open={projectOpen}
-        handleClose={projectModalClose}
-      />
       <LoginModal open={loginOpen} handleClose={loginModalClose} />
 
       <StyledGrid container className={"container"} spacing={1}>
-        <StyledGrid className={"add-project"} onClick={openModal}>
-          <PlusIcon />
-          <span>{"프로젝트 생성하기"}</span>
-        </StyledGrid>
-
-        {/*<NewIdeaModal*/}
-        {/*  token={token}*/}
-        {/*  open={newIdeaOpen}*/}
-        {/*  handleClose={handlenewIdeaClose}*/}
-        {/*  joiner={*/}
-        {/*    selectProject*/}
-        {/*      ? selectProject.joiners.map((info) => {*/}
-        {/*          return info.userName;*/}
-        {/*        })*/}
-        {/*      : []*/}
-        {/*  }*/}
-        {/*/>*/}
+        <NewIdeaModal
+          token={token}
+          open={newIdeaOpen}
+          handleClose={handlenewIdeaClose}
+          joiner={
+            selectProject
+              ? selectProject.joiners.map((info) => {
+                  return info.userName;
+                })
+              : []
+          }
+        />
 
         {projects &&
           projects.map((project, index) => (

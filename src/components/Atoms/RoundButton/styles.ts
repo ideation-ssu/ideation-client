@@ -3,12 +3,14 @@ import { styled } from "@mui/material/styles";
 
 export const StyledButton = styled(Button)<{
   filled: string;
+  main: string;
 }>`
   width: 100%;
   background-color: ${(props) =>
-    props.filled === "true" ? "#713edc" : "#ffffff"};
-  color: ${(props) => (props.filled === "true" ? "#ffffff" : "#713edc")};
-  border: 1px solid #713edc;
+    props.filled === "true" ? (props.main ? "#00b18c" : "#713edc") : "#ffffff"};
+  color: ${(props) =>
+    props.filled === "true" ? "#ffffff" : props.main ? "#00b18c" : "#713edc"};
+  border: 1px solid ${(props) => (props.main ? "#00b18c" : "#713edc")};
   height: 42px;
   box-shadow: none;
   justify-content: unset;
