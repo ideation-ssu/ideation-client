@@ -15,7 +15,6 @@ export const Text = styled("div")`
   align-items: center;
   justify-content: center;
 
-  font-family: NotoSansSemiBold, sans-serif;
   font-weight: 600;
   font-size: 20px;
   line-height: 24px;

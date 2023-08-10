@@ -95,7 +95,6 @@ export const TitleWrap = styled("div")`
   align-items: flex-end;
   span {
     padding-left: 10px;
-    font-family: Pretendard, sans-serif;
     font-size: 24px;
     font-weight: 600;
   }
@@ -137,7 +136,6 @@ export const SearchIconWrapper = styled("div")`
 `;
 
 export const SearchInput = styled(InputBase)`
-  font-family: Pretendard, sans-serif;
   font-size: 18px;
   padding-left: 10px;
 `;

@@ -17,7 +17,6 @@ export const InnerContainer = styled("div")`
 `;
 
 export const Text = styled("div")`
-  font-family: Pretendard, sans-serif;
   font-weight: 400;
   letter-spacing: 0;
   text-align: center;

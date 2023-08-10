@@ -11,8 +11,6 @@ const Login = loadable(() => import("./pages/login"));
 const SignUp = loadable(() => import("./pages/signup"));
 const Main = loadable(() => import("./pages/main"));
 
-import "./index.css";
-
 const router = createBrowserRouter([
   {
     path: "/",

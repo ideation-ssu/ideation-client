@@ -11,7 +11,6 @@ export const StyledInput = styled(Input)<{ error: boolean }>`
   width: 100%;
 
   &.MuiInputBase-root {
-    font-family: Pretendard, sans-serif;
     font-weight: 400;
     font-size: 10px;
     line-height: 11.93px;

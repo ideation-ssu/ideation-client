@@ -8,44 +8,18 @@ import {
   DropResult,
 } from "react-beautiful-dnd";
 
-import {
-  Category,
-  Content,
-  DDay,
-  PlusIcon,
-  StyledGrid,
-} from "@/components/Templates/Main/Workspace/styles";
 import newIdeaModal from "@/components/Templates/NewIdeaModal";
 import NewIdeaModal from "@/components/Templates/NewIdeaModal";
-import { ProcessCard } from "@/styles/idea/styles";
 import { getTokenFromLocal } from "@/utils/tokenUtils";
 
 import LoginModal from "../../LoginModal";
 import ProjectRegModal from "../../ProjectRegModal";
 
-function Workspace(): React.ReactElement | null {
+import { CardContainer, Container, ProcessCard, StatusTitle } from "./styles";
+
+function List(): React.ReactElement | null {
   const router = useRouter();
   const [token, setToken] = useState("");
-
-  interface Joiner {
-    id: number;
-    projectId: number;
-    userId: number;
-    userName: string;
-    role: string;
-    status: string;
-    createdAt: string;
-  }
-
-  interface Project {
-    dday: number;
-    name: string;
-    desc: string;
-    joiners: Joiner[];
-  }
-
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [selectProject, setSelectProject] = useState<Project>();
 
   // animation (drop & down)
   const [animationEnabled, setAnimationEnabled] = useState<boolean>(false);
@@ -81,27 +55,13 @@ function Workspace(): React.ReactElement | null {
   };
   const [cardList, setCardList] = useState<CardList>(initialCardList);
 
-  // project creation modal
-  const [projectOpen, setProjectOpen] = React.useState(false);
-  const projectModalOpen = () => setProjectOpen(true);
-  const projectModalClose = () => {
-    setProjectOpen(false);
-    fetchProjects();
-  };
-
   // login modal
   const [loginOpen, setLoginOpen] = React.useState(false);
   const loginModalOpen = () => setLoginOpen(true);
   const loginModalClose = () => setLoginOpen(false);
 
-  // new idea modal
-  const [newIdeaOpen, setNewIdeaOpen] = React.useState(false);
-  const handlenewIdeaOpen = () => setNewIdeaOpen(true);
-  const handlenewIdeaClose = () => setNewIdeaOpen(false);
-
   useEffect(() => {
     getToken();
-    fetchProjects();
 
     const animation = requestAnimationFrame(() => setAnimationEnabled(true));
     return () => {
@@ -110,26 +70,6 @@ function Workspace(): React.ReactElement | null {
     };
   }, []);
 
-  const fetchProjects = async () => {
-    try {
-      const token = await getTokenFromLocal();
-      if (token) {
-        setToken(token.accessToken);
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_BASEURL}/project`,
-          {
-            headers: {
-              Authorization: "Bearer " + token.accessToken,
-            },
-          }
-        );
-        setProjects(response.data.data.projects);
-      }
-    } catch (error) {
-      console.error("Error fetching projects:", error);
-    }
-  };
-
   const getToken = async () => {
     const token = await getTokenFromLocal();
     if (token) {
@@ -137,17 +77,6 @@ function Workspace(): React.ReactElement | null {
       return token.accessToken;
     }
     return null;
-  };
-
-  const openModal = async () => {
-    const fetchedToken = await getToken();
-
-    if (fetchedToken) projectModalOpen();
-    else loginModalOpen();
-  };
-
-  const goIdeaPage = () => {
-    router.push("/idea");
   };
 
   if (!animationEnabled) return null;
@@ -159,7 +88,6 @@ function Workspace(): React.ReactElement | null {
 
     const sourceStatus = source.droppableId;
     const destStatus = destination.droppableId;
-    const draggedCardId = source.index.toString();
 
     const updatedCardList = { ...cardList };
     const [draggedCard] = updatedCardList[sourceStatus].splice(source.index, 1);
@@ -172,36 +100,19 @@ function Workspace(): React.ReactElement | null {
     <>
       <LoginModal open={loginOpen} handleClose={loginModalClose} />
 
-      <StyledGrid container className={"container"} spacing={1}>
-        <NewIdeaModal
-          token={token}
-          open={newIdeaOpen}
-          handleClose={handlenewIdeaClose}
-          joiner={
-            selectProject
-              ? selectProject.joiners.map((info) => {
-                  return info.userName;
-                })
-              : []
-          }
-        />
-        <ProcessCard></ProcessCard>
+      <Container container className={"container"} spacing={1}>
         <DragDropContext onDragEnd={onDragEnd}>
-          <div style={{ display: "flex" }}>
+          <CardContainer>
             {statuses.map((status) => (
               <Droppable key={status.id} droppableId={status.id}>
                 {(provided) => (
-                  <div
+                  <ProcessCard
                     ref={provided.innerRef}
                     {...provided.droppableProps}
-                    style={{
-                      width: "300px",
-                      padding: "16px",
-                      border: "1px solid #ddd",
-                      margin: "16px",
-                    }}
                   >
-                    <h2>{status.title}</h2>
+                    <StatusTitle className={status.id}>
+                      {status.title}
+                    </StatusTitle>
                     {cardList[status.id].map((card, index) => (
                       <Draggable
                         key={card.id}
@@ -229,15 +140,15 @@ function Workspace(): React.ReactElement | null {
                       </Draggable>
                     ))}
                     {provided.placeholder}
-                  </div>
+                  </ProcessCard>
                 )}
               </Droppable>
             ))}
-          </div>
+          </CardContainer>
         </DragDropContext>
-      </StyledGrid>
+      </Container>
     </>
   );
 }
 
-export default Workspace;
+export default List;

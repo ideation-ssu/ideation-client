@@ -9,7 +9,6 @@ export const Container = styled("div")`
 `;
 
 export const Error = styled("div")`
-  font-family: Pretendard, sans-serif;
   font-size: 10px;
   text-align: right;
   color: #f36262;

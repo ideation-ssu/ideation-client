@@ -10,7 +10,6 @@ export const Container = styled("div")`
 
 export const Input = styled(TextField)<{ error: boolean; fontSize: number }>`
   .MuiInputBase-root {
-    font-family: Pretendard, sans-serif;
     font-weight: 400;
     font-size: ${(props) => props.fontSize}px;
     line-height: 11.93px;

@@ -7,10 +7,19 @@ export const StyledButton = styled(Button)<{
 }>`
   width: 100%;
   background-color: ${(props) =>
-    props.filled === "true" ? (props.main ? "#00b18c" : "#713edc") : "#ffffff"};
+    props.filled === "true"
+      ? props.main === "true"
+        ? "#713edc"
+        : "#00b18c"
+      : "#ffffff"};
   color: ${(props) =>
-    props.filled === "true" ? "#ffffff" : props.main ? "#00b18c" : "#713edc"};
-  border: 1px solid ${(props) => (props.main ? "#00b18c" : "#713edc")};
+    props.filled === "true"
+      ? "#ffffff"
+      : props.main === "true"
+      ? "#713edc"
+      : "#00b18c"};
+  border: 1px solid
+    ${(props) => (props.main === "true" ? "#713edc" : "#00b18c")};
   height: 42px;
   box-shadow: none;
   justify-content: unset;
@@ -25,7 +34,16 @@ export const StyledButton = styled(Button)<{
 
   &:hover {
     background-color: ${(props) =>
-      props.filled === "true" ? "#713edc" : "#ffffff"};
-    color: ${(props) => (props.filled === "true" ? "#ffffff" : "#713edc")};
+      props.filled === "true"
+        ? props.main === "true"
+          ? "#713edc"
+          : "#00b18c"
+        : "#ffffff"};
+    color: ${(props) =>
+      props.filled === "true"
+        ? "#ffffff"
+        : props.main === "true"
+        ? "#713edc"
+        : "#00b18c"};
   }
 `;

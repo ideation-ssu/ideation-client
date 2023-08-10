@@ -139,14 +139,6 @@ export const SearchIconWrapper = styled("div")`
 `;
 
 export const SearchInput = styled(InputBase)`
-  font-family: Pretendard, sans-serif;
   font-size: 18px;
   padding-left: 10px;
-`;
-
-export const ProcessCard = styled("div")`
-  width: 386px;
-  height: 584px;
-  border-radius: 5px;
-  background-color: #ffffff;
 `;

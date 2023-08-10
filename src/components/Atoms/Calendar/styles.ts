@@ -74,14 +74,10 @@ export const StyledPaper = styled(Paper)`
   .MuiPickersCalendarHeader-labelContainer {
     margin: auto;
     text-align: center;
-    font-family: PretendardMedium, sans-serif;
   }
 
   .MuiDayCalendar-header {
     gap: 3px;
-    span {
-      font-family: PretendardMedium, sans-serif;
-    }
 
     span:last-of-type {
       color: #f36262;
@@ -93,9 +89,6 @@ export const StyledPaper = styled(Paper)`
 
   .MuiDayCalendar-weekContainer {
     gap: 3px;
-    button {
-      font-family: PretendardMedium, sans-serif;
-    }
 
     button:last-of-type:not(:disabled) {
       color: #f36262;

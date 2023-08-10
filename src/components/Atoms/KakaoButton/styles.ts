@@ -11,7 +11,6 @@ export const StyledButton = styled(Button)`
   justify-content: unset;
 
   span {
-    font-family: Pretendard, sans-serif;
     font-weight: 400;
     font-size: 10px;
     line-height: 11.93px;

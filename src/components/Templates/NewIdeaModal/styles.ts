@@ -1,4 +1,3 @@
-import { Autocomplete } from "@mui/material";
 import Modal from "@mui/material/Modal";
 import { styled } from "@mui/material/styles";
 
@@ -19,7 +18,6 @@ export const Title = styled("div")`
   padding: 20px;
   text-align: center;
   span {
-    font-family: NotoSansSemiBold, sans-serif;
     font-size: 20px;
     background: linear-gradient(88deg, #6e72fc 0%, #ad1deb 100%);
     background-clip: text;
@@ -49,7 +47,6 @@ export const Line = styled("div")<{ rate: number }>`
   align-items: center;
 
   span {
-    font-family: Pretendard, sans-serif;
     font-size: 20px;
     padding-left: 10px;
     background: linear-gradient(88deg, #6e72fc 0%, #713edc 100%);

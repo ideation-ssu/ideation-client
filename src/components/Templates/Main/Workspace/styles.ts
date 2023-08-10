@@ -33,7 +33,6 @@ export const StyledGrid = styled(Grid)`
     background-color: #7b40f2;
     cursor: pointer;
     span {
-      font-family: Pretendard, sans-serif;
       font-size: 15px;
       color: #ffffff;
     }
@@ -63,7 +62,6 @@ export const Content = styled("div")`
   gap: 9px;
 
   span {
-    font-family: Inter, sans-serif;
     &.title {
       font-size: 20px;
     }
@@ -82,7 +80,6 @@ export const DDay = styled("div")`
   padding: 2px 5px;
 
   span {
-    font-family: Inter, sans-serif;
     font-size: 12px;
     margin: 0;
   }

@@ -5,7 +5,6 @@ export const Label = styled("div")<{ colorful: string }>`
   padding-bottom: ${(props) => (props.colorful === "true" ? "0" : "40px")};
 
   white-space: pre-wrap;
-  font-family: InterBold, sans-serif;
   font-weight: 700;
   font-size: 30px;
   line-height: 36.31px;

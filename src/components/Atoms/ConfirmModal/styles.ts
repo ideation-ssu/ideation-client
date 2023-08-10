@@ -19,7 +19,6 @@ export const Container = styled("div")`
 `;
 
 export const Message = styled("div")`
-  font-family: PretendardMedium, sans-serif;
   font-size: 20px;
   text-align: center;
 `;
