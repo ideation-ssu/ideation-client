@@ -2,33 +2,17 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 
-import FlexWrap from "@/components/Atoms/FlexWrap";
-import RoundButton from "@/components/Atoms/RoundButton";
 import IdeaList from "@/components/Templates/Idea/IdeaList";
-import NewIdeaModal from "@/components/Templates/NewIdeaModal";
+import JoinerList from "@/components/Templates/Idea/JoinerList";
+import { Joiner } from "@/interfaces/idea";
 import {
-  ButtonWrap,
   Container,
   Content,
-  Header,
-  ProfileImg,
-  Search,
-  SearchIcon,
-  SearchIconWrapper,
-  SearchInput,
   StyledTab,
   StyledTabs,
   TabIcon,
 } from "@/styles/idea/styles";
 import { getTokenFromLocal } from "@/utils/tokenUtils";
-
-interface Joiner {
-  userId: number;
-  userName: string;
-  userEmail: string;
-  joinerStatus: string;
-  joinerRole: string;
-}
 
 function Idea(): React.ReactElement {
   const router = useRouter();
@@ -39,11 +23,6 @@ function Idea(): React.ReactElement {
   const [token, setToken] = useState("");
   const [tab, setTab] = useState(0);
   const [joiners, setJoiners] = useState<Joiner[]>([]);
-
-  // new idea modal
-  const [newIdeaOpen, setNewIdeaOpen] = React.useState(false);
-  const handlenewIdeaOpen = () => setNewIdeaOpen(true);
-  const handlenewIdeaClose = () => setNewIdeaOpen(false);
 
   useEffect(() => {
     fetchJoiners();
@@ -87,7 +66,7 @@ function Idea(): React.ReactElement {
       <StyledTabs orientation="vertical" value={tab} onChange={handleTabChange}>
         <StyledTab
           icon={<TabIcon className={"idealist"} selection={tab === 0} />}
-          label={"Idea IdeaList"}
+          label={"Idea List"}
         />
         <StyledTab
           icon={<TabIcon className={"analysis"} selection={tab === 1} />}
@@ -103,43 +82,8 @@ function Idea(): React.ReactElement {
         />
       </StyledTabs>
       <Content>
-        <FlexWrap gap={60}>
-          <Header className={"profile"}>
-            <ProfileImg />
-          </Header>
-          <Header className={"search"}>
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <SearchInput
-                placeholder="Search…"
-                inputProps={{ "aria-label": "search" }}
-              />
-            </Search>
-            <ButtonWrap>
-              <RoundButton
-                text={"아이디어 정렬"}
-                isFilled={false}
-                isMainClr={false}
-              />
-              <RoundButton
-                text={"아이디어 생성하기 +"}
-                isFilled={true}
-                isMainClr={false}
-                onClick={handlenewIdeaOpen}
-              />
-              <NewIdeaModal
-                token={token}
-                open={newIdeaOpen}
-                handleClose={handlenewIdeaClose}
-                joiner={joiners.map((joiner: Joiner) => joiner.userName)}
-              />
-            </ButtonWrap>
-          </Header>
-        </FlexWrap>
         <TabPanel value={tab} index={0}>
-          <IdeaList />
+          <IdeaList joiners={joiners} />
         </TabPanel>
         <TabPanel value={tab} index={1}>
           Analysis
@@ -148,7 +92,7 @@ function Idea(): React.ReactElement {
           Dashboard
         </TabPanel>
         <TabPanel value={tab} index={3}>
-          Management
+          <JoinerList joiners={joiners} />
         </TabPanel>
       </Content>
     </Container>

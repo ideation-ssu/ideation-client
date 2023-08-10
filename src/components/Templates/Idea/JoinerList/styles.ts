@@ -27,7 +27,7 @@ export const Header = styled("div")`
 export const ButtonWrap = styled("div")`
   display: flex;
   flex-direction: row;
-  width: 261px;
+  width: 118px;
   gap: 10px;
 `;
 
@@ -63,44 +63,4 @@ export const SearchIconWrapper = styled("div")`
 export const SearchInput = styled(InputBase)`
   font-size: 18px;
   padding-left: 10px;
-`;
-
-export const CardContainer = styled("div")`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-`;
-
-export const ProcessCard = styled("div")`
-  width: 356px;
-  height: 554px;
-  padding: 15px;
-  border-radius: 5px;
-  background-color: #ffffff;
-`;
-
-export const StatusTitle = styled("div")`
-  height: 23px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 4px;
-
-  &.not_started {
-    width: 103px;
-    color: #e94e7c;
-    background: rgba(233, 78, 124, 0.04);
-  }
-
-  &.progress {
-    width: 88px;
-    color: #f79942;
-    background: rgba(245, 161, 83, 0.04);
-  }
-
-  &.done {
-    width: 57px;
-    color: #4fb1f9;
-    background: rgba(83, 177, 245, 0.04);
-  }
 `;

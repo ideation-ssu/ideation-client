@@ -6,9 +6,37 @@ import {
   DropResult,
 } from "react-beautiful-dnd";
 
-import { CardContainer, Container, ProcessCard, StatusTitle } from "./styles";
+import FlexWrap from "@/components/Atoms/FlexWrap";
+import RoundButton from "@/components/Atoms/RoundButton";
+import NewIdeaModal from "@/components/Templates/NewIdeaModal";
+import { Joiner } from "@/interfaces/idea";
 
-function IdeaList(): React.ReactElement | null {
+import {
+  ButtonWrap,
+  CardContainer,
+  Container,
+  Header,
+  ProcessCard,
+  ProfileImg,
+  Search,
+  SearchIcon,
+  SearchIconWrapper,
+  SearchInput,
+  StatusTitle,
+} from "./styles";
+
+function IdeaList({
+  joiners,
+}: {
+  joiners: Joiner[];
+}): React.ReactElement | null {
+  const [token, setToken] = useState("");
+
+  // new idea modal
+  const [newIdeaOpen, setNewIdeaOpen] = React.useState(false);
+  const handlenewIdeaOpen = () => setNewIdeaOpen(true);
+  const handlenewIdeaClose = () => setNewIdeaOpen(false);
+
   // animation (drop & down)
   const [animationEnabled, setAnimationEnabled] = useState<boolean>(false);
 
@@ -70,6 +98,41 @@ function IdeaList(): React.ReactElement | null {
 
   return (
     <Container container className={"container"} spacing={1}>
+      <FlexWrap gap={60}>
+        <Header className={"profile"}>
+          <ProfileImg />
+        </Header>
+        <Header className={"search"}>
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <SearchInput
+              placeholder="Search…"
+              inputProps={{ "aria-label": "search" }}
+            />
+          </Search>
+          <ButtonWrap>
+            <RoundButton
+              text={"아이디어 정렬"}
+              isFilled={false}
+              isMainClr={false}
+            />
+            <RoundButton
+              text={"아이디어 생성하기 +"}
+              isFilled={true}
+              isMainClr={false}
+              onClick={handlenewIdeaOpen}
+            />
+            <NewIdeaModal
+              token={token}
+              open={newIdeaOpen}
+              handleClose={handlenewIdeaClose}
+              joiner={joiners.map((joiner: Joiner) => joiner.userName)}
+            />
+          </ButtonWrap>
+        </Header>
+      </FlexWrap>
       <DragDropContext onDragEnd={onDragEnd}>
         <CardContainer>
           {statuses.map((status) => (
