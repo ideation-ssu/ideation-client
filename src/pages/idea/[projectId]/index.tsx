@@ -4,7 +4,7 @@ import axios from "axios";
 
 import FlexWrap from "@/components/Atoms/FlexWrap";
 import RoundButton from "@/components/Atoms/RoundButton";
-import IdeaList from "@/components/Templates/Idea/List";
+import IdeaList from "@/components/Templates/Idea/IdeaList";
 import NewIdeaModal from "@/components/Templates/NewIdeaModal";
 import {
   ButtonWrap,
@@ -87,7 +87,7 @@ function Idea(): React.ReactElement {
       <StyledTabs orientation="vertical" value={tab} onChange={handleTabChange}>
         <StyledTab
           icon={<TabIcon className={"idealist"} selection={tab === 0} />}
-          label={"Idea List"}
+          label={"Idea IdeaList"}
         />
         <StyledTab
           icon={<TabIcon className={"analysis"} selection={tab === 1} />}
