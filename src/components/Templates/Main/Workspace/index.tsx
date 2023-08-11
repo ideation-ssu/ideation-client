@@ -9,12 +9,10 @@ import {
   PlusIcon,
   StyledGrid,
 } from "@/components/Templates/Main/Workspace/styles";
-import NewIdeaModal from "@/components/Templates/NewIdeaModal";
-import newIdeaModal from "@/components/Templates/NewIdeaModal";
-import { getTokenFromLocal } from "@/utils/tokenUtils";
+import { getToken, isLoggedIn } from "@/utils/tokenUtils";
 
-import LoginModal from "../../LoginModal";
-import ProjectRegModal from "../../ProjectRegModal";
+import LoginModal from "../../../Molecules/LoginModal";
+import ProjectRegModal from "../../../Molecules/ProjectRegModal";
 
 interface Project {
   id: number;
@@ -25,7 +23,6 @@ interface Project {
 
 function Workspace(): React.ReactElement {
   const router = useRouter();
-  const [token, setToken] = useState("");
 
   const [projects, setProjects] = useState<Project[]>([]);
 
@@ -34,7 +31,7 @@ function Workspace(): React.ReactElement {
   const projectModalOpen = () => setProjectOpen(true);
   const projectModalClose = () => {
     setProjectOpen(false);
-    fetchProjects();
+    getProjects();
   };
 
   // login modal
@@ -43,42 +40,19 @@ function Workspace(): React.ReactElement {
   const loginModalClose = () => setLoginOpen(false);
 
   useEffect(() => {
-    fetchProjects();
+    getProjects();
   }, []);
 
-  const fetchProjects = async () => {
-    try {
-      const token = await getToken();
-      if (token) {
-        setToken(token.accessToken);
-        const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_BASEURL}/project`,
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        );
-        setProjects(res.data.data.projects);
-      }
-    } catch (error) {
-      console.error("Error fetching projects:", error);
-    }
-  };
+  const getProjects = () => {
+    console.log(isLoggedIn());
 
-  const getToken = async () => {
-    const token = await getTokenFromLocal();
-    if (token) {
-      setToken(token.accessToken);
-      return token.accessToken;
-    }
-    return null;
+    axios.get(`${process.env.NEXT_PUBLIC_BASEURL}/project`).then((res) => {
+      setProjects(res.data.data.projects);
+    });
   };
 
   const openModal = async () => {
-    const fetchedToken = await getToken();
-
-    if (fetchedToken) projectModalOpen();
+    if (isLoggedIn()) projectModalOpen();
     else loginModalOpen();
   };
 
@@ -88,11 +62,7 @@ function Workspace(): React.ReactElement {
 
   return (
     <>
-      <ProjectRegModal
-        token={token}
-        open={projectOpen}
-        handleClose={projectModalClose}
-      />
+      <ProjectRegModal open={projectOpen} handleClose={projectModalClose} />
       <LoginModal open={loginOpen} handleClose={loginModalClose} />
 
       <StyledGrid container className={"container"} spacing={1}>

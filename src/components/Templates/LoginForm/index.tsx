@@ -31,11 +31,7 @@ function LoginForm({
   const [pwErr, setPwErr] = useState("");
 
   useEffect(() => {
-    isLoggedIn().then((loggedIn) => {
-      if (loggedIn) {
-        router.push("/main");
-      }
-    });
+    if (isLoggedIn()) router.push("/main");
   }, []);
 
   const handleAutoLogin = () => {
@@ -66,7 +62,7 @@ function LoginForm({
   const handleLogin = async () => {
     if (existErr()) return;
 
-    if (!(await login(email, pw, autoLogin))) {
+    if (!login(email, pw, autoLogin)) {
       setLoginErr("이메일 또는 비밀번호를 잘못 입력했습니다.");
       return;
     }

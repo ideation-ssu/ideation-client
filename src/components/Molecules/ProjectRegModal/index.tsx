@@ -21,11 +21,9 @@ import {
 } from "./styles";
 
 function ProjectRegModal({
-  token,
   open,
   handleClose,
 }: {
-  token: string;
   open: boolean;
   handleClose: () => void;
 }): React.ReactElement {
@@ -54,11 +52,7 @@ function ProjectRegModal({
     };
 
     axios
-      .post(`${process.env.NEXT_PUBLIC_BASEURL}/project`, data, {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      })
+      .post(`${process.env.NEXT_PUBLIC_BASEURL}/project`, data)
       .then((res) => {
         if (res.data.error) setErr(res.data.error.userMessage);
         else {

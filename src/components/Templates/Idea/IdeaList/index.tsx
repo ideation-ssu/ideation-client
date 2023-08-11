@@ -8,8 +8,9 @@ import {
 
 import FlexWrap from "@/components/Atoms/FlexWrap";
 import RoundButton from "@/components/Atoms/RoundButton";
-import NewIdeaModal from "@/components/Templates/NewIdeaModal";
 import { Joiner } from "@/interfaces/idea";
+
+import NewIdeaModal from "../../../Molecules/NewIdeaModal";
 
 import {
   ButtonWrap,
@@ -33,9 +34,9 @@ function IdeaList({
   const [token, setToken] = useState("");
 
   // new idea modal
-  const [newIdeaOpen, setNewIdeaOpen] = React.useState(false);
-  const handlenewIdeaOpen = () => setNewIdeaOpen(true);
-  const handlenewIdeaClose = () => setNewIdeaOpen(false);
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   // animation (drop & down)
   const [animationEnabled, setAnimationEnabled] = useState<boolean>(false);
@@ -122,13 +123,13 @@ function IdeaList({
               text={"아이디어 생성하기 +"}
               isFilled={true}
               isMainClr={false}
-              onClick={handlenewIdeaOpen}
+              onClick={handleOpen}
             />
             <NewIdeaModal
               token={token}
-              open={newIdeaOpen}
-              handleClose={handlenewIdeaClose}
-              joiner={joiners.map((joiner: Joiner) => joiner.userName)}
+              open={open}
+              handleClose={handleClose}
+              joiner={joiners?.map((joiner: Joiner) => joiner.userName)}
             />
           </ButtonWrap>
         </Header>

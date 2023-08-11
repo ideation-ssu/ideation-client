@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
+import ProjectRegModal from "@/components/Molecules/ProjectRegModal";
+import SignUpModal from "@/components/Molecules/SignUpModal";
 import LoginForm from "@/components/Templates/LoginForm";
-import ProjectRegModal from "@/components/Templates/ProjectRegModal";
-import SignUpModal from "@/components/Templates/SignUpModal";
-import { getTokenFromLocal } from "@/utils/tokenUtils";
+import { isLoggedIn } from "@/utils/tokenUtils";
 
 import { Container, StyledModal } from "./styles";
 
@@ -14,8 +14,6 @@ function LoginModal({
   open: boolean;
   handleClose: () => void;
 }): React.ReactElement {
-  const [token, setToken] = useState("");
-
   // login modal
   const [projectOpen, setProjectOpen] = React.useState(false);
   const handleProjectOpen = () => setProjectOpen(true);
@@ -23,19 +21,14 @@ function LoginModal({
 
   const openCreateProjectModal = async () => {
     handleClose();
-    getTokenFromLocal().then((token) => {
-      if (token) {
-        setToken(token.accessToken);
-        handleProjectOpen();
-      }
-    });
+    handleProjectOpen();
   };
 
   // signup modal
   const [signUpOpen, setSignUpOpen] = React.useState(false);
   const signUpModalOpen = () => {
     handleClose();
-    setSignUpOpen(true);
+    if (isLoggedIn()) setSignUpOpen(true);
   };
   const signUpModalClose = () => setSignUpOpen(false);
 
@@ -56,11 +49,7 @@ function LoginModal({
       </StyledModal>
 
       <SignUpModal open={signUpOpen} handleClose={signUpModalClose} />
-      <ProjectRegModal
-        token={token}
-        open={projectOpen}
-        handleClose={handleProjectClose}
-      />
+      <ProjectRegModal open={projectOpen} handleClose={handleProjectClose} />
     </>
   );
 }

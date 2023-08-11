@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 
-import ProjectRegModal from "@/components/Templates/ProjectRegModal";
-import { getTokenFromLocal } from "@/utils/tokenUtils";
+import ProjectRegModal from "@/components/Molecules/ProjectRegModal";
 
-import SignupForm from "../SignUpForm";
+import SignupForm from "../../Templates/SignUpForm";
 
 import { Container, StyledModal } from "./styles";
 
@@ -19,23 +18,14 @@ function SignUpModal({
   const handleProjectOpen = () => setProjectOpen(true);
   const handleProjectClose = () => setProjectOpen(false);
 
-  const openCreateProjectModal = async () => {
+  const openCreateProjectModal = () => {
     handleClose();
-    getTokenFromLocal().then((token) => {
-      if (token) {
-        setToken(token.accessToken);
-        handleProjectOpen();
-      }
-    });
+    handleProjectOpen();
   };
 
   return (
     <>
-      <ProjectRegModal
-        token={token}
-        open={projectOpen}
-        handleClose={handleProjectClose}
-      />
+      <ProjectRegModal open={projectOpen} handleClose={handleProjectClose} />
       <StyledModal
         open={open}
         onClose={handleClose}

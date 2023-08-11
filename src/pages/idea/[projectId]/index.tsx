@@ -12,7 +12,7 @@ import {
   StyledTabs,
   TabIcon,
 } from "@/styles/idea/styles";
-import { getTokenFromLocal } from "@/utils/tokenUtils";
+import { getToken } from "@/utils/tokenUtils";
 
 function Idea(): React.ReactElement {
   const router = useRouter();
@@ -20,41 +20,21 @@ function Idea(): React.ReactElement {
   const projectId: number =
     typeof query.projectId === "string" ? parseInt(query.projectId) : -1;
 
-  const [token, setToken] = useState("");
   const [tab, setTab] = useState(0);
   const [joiners, setJoiners] = useState<Joiner[]>([]);
 
   useEffect(() => {
-    fetchJoiners();
+    getJoiners();
   }, [projectId]);
 
-  const getToken = async () => {
-    const token = await getTokenFromLocal();
-    if (token) {
-      setToken(token.accessToken);
-      return token.accessToken;
-    }
-    return null;
-  };
-
-  const fetchJoiners = async () => {
-    try {
-      const token = await getToken();
-      if (token && projectId > -1) {
-        setToken(token.accessToken);
-        const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_BASEURL}/project/joiner/${projectId}`,
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        );
-        setJoiners(res.data.data.joiners);
-      }
-    } catch (error) {
-      console.error("Error fetching joiners:", error);
-    }
+  const getJoiners = () => {
+    const token = getToken();
+    console.log(token);
+    axios
+      .get(`${process.env.NEXT_PUBLIC_BASEURL}/project/joiner/${projectId}`)
+      .then((res) => {
+        setJoiners(res.data.joiners);
+      });
   };
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -92,7 +72,7 @@ function Idea(): React.ReactElement {
           Dashboard
         </TabPanel>
         <TabPanel value={tab} index={3}>
-          <JoinerList joiners={joiners} />
+          <JoinerList projectId={projectId} joiners={joiners} />
         </TabPanel>
       </Content>
     </Container>

@@ -69,10 +69,11 @@ export const CardContainer = styled("div")`
   width: 100%;
   display: flex;
   justify-content: space-between;
+  gap: 20px;
 `;
 
 export const ProcessCard = styled("div")`
-  width: 356px;
+  width: 33%;
   height: 554px;
   padding: 15px;
   border-radius: 5px;

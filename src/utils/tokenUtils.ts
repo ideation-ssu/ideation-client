@@ -1,71 +1,40 @@
 import axios from "axios";
 
-import AsyncStorage from "@react-native-async-storage/async-storage";
+function setToken(token: string) {
+  localStorage.setItem("token", token);
+  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+}
 
-export const login = async (email: string, pw: string, auto: boolean) => {
+function clearToken() {
+  localStorage.removeItem("token");
+  axios.defaults.headers.common.Authorization = void 0;
+}
+
+export function getToken() {
+  return localStorage.getItem("token");
+}
+
+export const login = (email: string, pw: string, auto: boolean) => {
   const data = {
     email: email,
     password: pw,
   };
 
-  try {
-    const res = await axios.post(
-      `${process.env.NEXT_PUBLIC_BASEURL}/auth/login`,
-      data
-    );
+  axios
+    .post(`${process.env.NEXT_PUBLIC_BASEURL}/auth/login`, data)
+    .then((res) => {
+      if (res.data.error) return false;
 
-    if (res.data.error) return false;
+      setToken(res.data.data.token);
+    });
 
-    // accessToken 로컬에 저장
-    await AsyncStorage.setItem(
-      "Tokens",
-      JSON.stringify({
-        accessToken: res.data.data.token,
-        email: res.data.data.email,
-        name: res.data.data.name,
-        auto_login: auto,
-      })
-    );
-
-    return true;
-  } catch (error) {
-    console.error("로그인 요청 실패:", error);
-    return false;
-  }
+  return true;
 };
 
-export const isLoggedIn = async () => {
-  try {
-    const tokens = await getTokenFromLocal();
-
-    if (tokens && tokens.accessToken) return true;
-    else return false;
-  } catch (error) {
-    console.error("자동 로그인 실패:", error);
-    return false;
-  }
+export const isLoggedIn = () => {
+  return !!getToken();
 };
 
-export const getTokenFromLocal = async () => {
-  try {
-    const value = await AsyncStorage.getItem("Tokens");
-    if (value !== null) {
-      return JSON.parse(value);
-    } else {
-      return null;
-    }
-  } catch (error) {
-    console.error("토큰 조회 실패:", error);
-    return null;
-  }
-};
-
-export const logout = async () => {
-  try {
-    await AsyncStorage.removeItem("Tokens");
-    return true;
-  } catch (error) {
-    console.error("로그아웃 실패:", error);
-    return false;
-  }
+export const logout = () => {
+  clearToken();
 };
