@@ -4,9 +4,14 @@ import OutlineInputBox from "@/components/Atoms/OutlineInputBox";
 
 import { CancelButton, Container, Tag } from "./styles";
 
-function HashTag(): React.ReactElement {
+function HashTag({
+  tags,
+  setTags,
+}: {
+  tags: string[];
+  setTags: React.Dispatch<React.SetStateAction<string[]>>;
+}): React.ReactElement {
   const [text, setText] = useState<string>("");
-  const [tags, setTags] = useState<string[]>(["테스트"]);
 
   const addHashTag = (e: KeyboardEvent<HTMLInputElement>) => {
     const finish = ["Enter", "NumpadEnter"];

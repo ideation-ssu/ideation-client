@@ -9,6 +9,7 @@ import InputBox from "@/components/Atoms/InputBox";
 import MultiComboBox from "@/components/Atoms/MultiComboBox";
 import RadioGroup from "@/components/Atoms/RadioGroup";
 import RoundButton from "@/components/Atoms/RoundButton";
+import TextArea from "@/components/Atoms/TextArea";
 
 import {
   AsignIcon,
@@ -20,7 +21,6 @@ import {
   HashIcon,
   Line,
   StyledModal,
-  SubTitleBar,
   Title,
   TitleIcon,
 } from "./styles";
@@ -39,6 +39,7 @@ function NewIdeaModal({
   const [name, setName] = useState<string>("");
   const [desc, setDesc] = useState<string>("");
   const [category, setCategory] = useState<string>(categorys[0]);
+  const [tags, setTags] = useState<string[]>([]);
   const [dueDate, setDueDate] = useState<Dayjs>(dayjs().add(1, "day"));
   const [isPublic, setIsPublic] = useState(false);
   const [err, setErr] = useState("");
@@ -136,9 +137,14 @@ function NewIdeaModal({
               <HashIcon />
             </Line>
             <Line rate={11}>
-              <HashTag />
+              <HashTag tags={tags} setTags={setTags} />
             </Line>
           </Grid>
+
+          <Grid>
+            <TextArea />
+          </Grid>
+
           <ButtonWrap>
             <RoundButton
               text={"프로젝트 생성"}

@@ -14,7 +14,6 @@ export const Tag = styled("div")`
   align-items: center;
   gap: 8px;
   margin-left: 6px;
-  padding: 1px;
 
   background-color: #fff;
   border: 1px solid transparent;
