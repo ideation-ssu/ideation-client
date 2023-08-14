@@ -10,6 +10,7 @@ const Root = loadable(() => import("./pages/index"));
 const Login = loadable(() => import("./pages/login"));
 const SignUp = loadable(() => import("./pages/signup"));
 const Main = loadable(() => import("./pages/main"));
+const Join = loadable(() => import("./pages/join"));
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
   {
     path: "/main",
     element: <Main />,
+  },
+  {
+    path: "/join",
+    element: <Join />,
   },
 ]);
 

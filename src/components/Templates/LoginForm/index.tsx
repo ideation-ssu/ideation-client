@@ -15,9 +15,11 @@ import TitleCard from "../../Molecules/Card";
 import { FlexWrap, InnerContainer } from "./styles";
 
 function LoginForm({
+  isInvited,
   handleLoginAfter,
   handleSignUp,
 }: {
+  isInvited?: boolean;
   handleLoginAfter: () => void;
   handleSignUp: () => void;
 }): React.ReactElement {
@@ -31,7 +33,7 @@ function LoginForm({
   const [pwErr, setPwErr] = useState("");
 
   useEffect(() => {
-    if (isLoggedIn()) router.push("/main");
+    if (!isInvited && isLoggedIn()) router.push("/main");
   }, []);
 
   const handleAutoLogin = () => {

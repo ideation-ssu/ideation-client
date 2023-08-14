@@ -18,13 +18,15 @@ import {
 
 function JoinerList({
   projectId,
+  code,
   joiners,
 }: {
   projectId: number;
+  code: string;
   joiners: Joiner[];
 }): React.ReactElement | null {
   // invite team members
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState<boolean>(!!code);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -53,6 +55,7 @@ function JoinerList({
             />
             <InviteTeamModal
               projectId={projectId}
+              code={code}
               open={open}
               handleClose={handleClose}
             />

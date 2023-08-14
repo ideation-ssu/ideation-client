@@ -47,7 +47,7 @@ function Workspace(): React.ReactElement {
     console.log(isLoggedIn());
 
     axios.get(`${process.env.NEXT_PUBLIC_BASEURL}/project`).then((res) => {
-      setProjects(res.data.data.projects);
+      setProjects(res.data.data?.projects);
     });
   };
 

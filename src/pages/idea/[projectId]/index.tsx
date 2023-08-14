@@ -12,15 +12,15 @@ import {
   StyledTabs,
   TabIcon,
 } from "@/styles/idea/styles";
-import { getToken } from "@/utils/tokenUtils";
 
 function Idea(): React.ReactElement {
   const router = useRouter();
   const { query } = router;
   const projectId: number =
     typeof query.projectId === "string" ? parseInt(query.projectId) : -1;
+  const code: string = query.code as string;
 
-  const [tab, setTab] = useState(0);
+  const [tab, setTab] = useState(!code ? 0 : 3);
   const [joiners, setJoiners] = useState<Joiner[]>([]);
 
   useEffect(() => {
@@ -28,8 +28,6 @@ function Idea(): React.ReactElement {
   }, [projectId]);
 
   const getJoiners = () => {
-    const token = getToken();
-    console.log(token);
     axios
       .get(`${process.env.NEXT_PUBLIC_BASEURL}/project/joiner/${projectId}`)
       .then((res) => {
@@ -72,7 +70,7 @@ function Idea(): React.ReactElement {
           Dashboard
         </TabPanel>
         <TabPanel value={tab} index={3}>
-          <JoinerList projectId={projectId} joiners={joiners} />
+          <JoinerList projectId={projectId} joiners={joiners} code={code} />
         </TabPanel>
       </Content>
     </Container>
