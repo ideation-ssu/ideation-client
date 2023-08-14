@@ -11,13 +11,17 @@ export const StyledTextField = styled(TextField)`
   .MuiInputBase-root {
     padding: 0;
     input {
+      font-family: Pretendard, sans-serif;
       font-size: 12px;
-      padding: 7.5px 10px 7.5px 10px !important;
     }
     span {
       font-size: 12px;
       padding: 8px;
     }
+  }
+
+  .MuiOutlinedInput-root > .MuiAutocomplete-input {
+    padding: 4px 10px 7.5px 10px;
   }
 
   .MuiChip-root {

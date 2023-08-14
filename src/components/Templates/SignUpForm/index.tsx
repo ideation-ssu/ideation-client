@@ -32,11 +32,9 @@ function SignUp({
   const [pwConfirm, setPwConfirm] = useState("");
 
   useEffect(() => {
-    isLoggedIn().then((loggedIn) => {
-      if (page != pageState.Done && loggedIn) {
-        router.push("/");
-      }
-    });
+    if (page != pageState.Done && isLoggedIn()) {
+      router.push("/");
+    }
 
     router.beforePopState(({ as }) => {
       if (page > pageState.Email && as !== router.asPath) {

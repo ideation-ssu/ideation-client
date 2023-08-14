@@ -2,21 +2,22 @@ import React, { useState } from "react";
 import axios from "axios";
 import dayjs, { Dayjs } from "dayjs";
 
-import Calendar from "@/components/Atoms/Calendar";
 import ConfirmModal from "@/components/Atoms/ConfirmModal";
 import Driver from "@/components/Atoms/Driver";
+import HashTag from "@/components/Atoms/HashTag";
 import InputBox from "@/components/Atoms/InputBox";
 import MultiComboBox from "@/components/Atoms/MultiComboBox";
+import RadioGroup from "@/components/Atoms/RadioGroup";
 import RoundButton from "@/components/Atoms/RoundButton";
-import SwitchButton from "@/components/Atoms/SwitchButton";
 
 import {
   AsignIcon,
   ButtonWrap,
+  CategoryIcon,
   Container,
   Content,
-  FieldIcon,
   Grid,
+  HashIcon,
   Line,
   StyledModal,
   SubTitleBar,
@@ -25,18 +26,19 @@ import {
 } from "./styles";
 
 function NewIdeaModal({
-  token,
   open,
   handleClose,
   joiner,
 }: {
-  token: string;
   open: boolean;
   handleClose: () => void;
   joiner: string[];
 }): React.ReactElement {
-  const [name, setName] = useState("");
-  const [desc, setDesc] = useState("");
+  const categorys: string[] = ["인문", "자연", "예술", "사회", "기타"];
+
+  const [name, setName] = useState<string>("");
+  const [desc, setDesc] = useState<string>("");
+  const [category, setCategory] = useState<string>(categorys[0]);
   const [dueDate, setDueDate] = useState<Dayjs>(dayjs().add(1, "day"));
   const [isPublic, setIsPublic] = useState(false);
   const [err, setErr] = useState("");
@@ -60,11 +62,7 @@ function NewIdeaModal({
     };
 
     axios
-      .post(`${process.env.NEXT_PUBLIC_BASEURL}/project`, data, {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      })
+      .post(`${process.env.NEXT_PUBLIC_BASEURL}/project`, data)
       .then((res) => {
         if (res.data.error) setErr(res.data.error.userMessage);
         else {
@@ -114,7 +112,7 @@ function NewIdeaModal({
             </Line>
             <Line rate={11}>
               <MultiComboBox
-                placeholder={"연관 사용자 추가"}
+                placeholder={"연관 담당자 추가"}
                 options={joiner}
               />
             </Line>
@@ -122,20 +120,23 @@ function NewIdeaModal({
 
           <Grid>
             <Line rate={1}>
-              <FieldIcon />
+              <CategoryIcon />
             </Line>
             <Line rate={11}>
-              <Calendar date={dueDate} setDate={setDueDate} />
+              <RadioGroup
+                options={categorys}
+                selectedVal={category}
+                setSelectedVal={setCategory}
+              />
             </Line>
           </Grid>
 
           <Grid>
-            <Line rate={1.3}>
-              <SubTitleBar />
-              <span>{"프로젝트 공개 여부"}</span>
+            <Line rate={1}>
+              <HashIcon />
             </Line>
-            <Line rate={2.5}>
-              <SwitchButton checked={isPublic} setChecked={setIsPublic} />
+            <Line rate={11}>
+              <HashTag />
             </Line>
           </Grid>
           <ButtonWrap>

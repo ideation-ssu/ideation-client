@@ -31,7 +31,7 @@ function Idea(): React.ReactElement {
     axios
       .get(`${process.env.NEXT_PUBLIC_BASEURL}/project/joiner/${projectId}`)
       .then((res) => {
-        setJoiners(res.data.joiners);
+        setJoiners(res.data.data?.joiners);
       });
   };
 

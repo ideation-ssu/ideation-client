@@ -31,13 +31,10 @@ function IdeaList({
 }: {
   joiners: Joiner[];
 }): React.ReactElement | null {
-  const [token, setToken] = useState("");
-
   // new idea modal
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
   // animation (drop & down)
   const [animationEnabled, setAnimationEnabled] = useState<boolean>(false);
 
@@ -126,7 +123,6 @@ function IdeaList({
               onClick={handleOpen}
             />
             <NewIdeaModal
-              token={token}
               open={open}
               handleClose={handleClose}
               joiner={joiners?.map((joiner: Joiner) => joiner.userName)}

@@ -13,7 +13,7 @@ function MultiComboBox({
     <StyledComboBox
       multiple
       id="tags-outlined"
-      options={options}
+      options={options ? options : []}
       filterSelectedOptions
       renderInput={(params) => (
         <StyledTextField {...params} placeholder={placeholder} />
