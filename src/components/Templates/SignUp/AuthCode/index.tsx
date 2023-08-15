@@ -5,6 +5,7 @@ import Driver from "@/components/Atoms/Driver";
 import FlexWrap from "@/components/Atoms/FlexWrap";
 import OutlineInputBox from "@/components/Atoms/OutlineInputBox";
 import RoundButton from "@/components/Atoms/RoundButton";
+import { getToken } from "@/utils/tokenUtils";
 
 function Email({
   email,
@@ -29,8 +30,13 @@ function Email({
       email: email,
       code: code,
     };
+
     axios
-      .post(`${process.env.NEXT_PUBLIC_BASEURL}/auth/email/verify`, data)
+      .post(`${process.env.NEXT_PUBLIC_BASEURL}/auth/email/verify`, data, {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      })
       .then((res) => {
         if (res.data.error) setError(res.data.error.userMessage);
         else nextPage();

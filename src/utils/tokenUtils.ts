@@ -21,7 +21,11 @@ export const login = (email: string, pw: string, auto: boolean) => {
   };
 
   axios
-    .post(`${process.env.NEXT_PUBLIC_BASEURL}/auth/login`, data)
+    .post(`${process.env.NEXT_PUBLIC_BASEURL}/auth/login`, data, {
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
+    })
     .then((res) => {
       if (res.data.error) return false;
 

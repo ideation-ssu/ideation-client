@@ -3,6 +3,7 @@ import axios from "axios";
 
 import OutlineInputBox from "@/components/Atoms/OutlineInputBox";
 import RoundButton from "@/components/Atoms/RoundButton";
+import { getToken } from "@/utils/tokenUtils";
 
 import { ButtonWrap, Container, Content, StyledModal, Title } from "./styles";
 
@@ -24,15 +25,22 @@ function InviteTeamModal({
       email: email,
       projectId: projectId,
     };
-
     axios
-      .post(`${process.env.NEXT_PUBLIC_BASEURL}/project/invite`, data)
+      .post(`${process.env.NEXT_PUBLIC_BASEURL}/project/invite`, data, {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      })
       .then((res) => console.log(res));
   };
 
   const handleCopyLink = () => {
     axios
-      .get(`${process.env.NEXT_PUBLIC_BASEURL}/project/invite/${projectId}`)
+      .get(`${process.env.NEXT_PUBLIC_BASEURL}/project/invite/${projectId}`, {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      })
       .then((res) => {
         navigator.clipboard.writeText(res.data.data.inviteLink);
       });
@@ -44,7 +52,11 @@ function InviteTeamModal({
     };
 
     axios
-      .post(`${process.env.NEXT_PUBLIC_BASEURL}/project/invite-accept`, data)
+      .post(`${process.env.NEXT_PUBLIC_BASEURL}/project/invite-accept`, data, {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      })
       .then((res) => {
         handleClose();
       });

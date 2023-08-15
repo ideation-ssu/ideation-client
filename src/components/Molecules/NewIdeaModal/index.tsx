@@ -1,8 +1,8 @@
 import React, { useState } from "react";
+import { useRouter } from "next/router";
 import axios from "axios";
-import dayjs, { Dayjs } from "dayjs";
 
-import ConfirmModal from "@/components/Atoms/ConfirmModal";
+import ComboBox from "@/components/Atoms/ComboBox";
 import Driver from "@/components/Atoms/Driver";
 import HashTag from "@/components/Atoms/HashTag";
 import InputBox from "@/components/Atoms/InputBox";
@@ -10,6 +10,9 @@ import MultiComboBox from "@/components/Atoms/MultiComboBox";
 import RadioGroup from "@/components/Atoms/RadioGroup";
 import RoundButton from "@/components/Atoms/RoundButton";
 import TextArea from "@/components/Atoms/TextArea";
+import { IdeaStatus } from "@/enums/ideaStatus";
+import { Joiner } from "@/interfaces/idea";
+import { getToken } from "@/utils/tokenUtils";
 
 import {
   AsignIcon,
@@ -28,53 +31,70 @@ import {
 function NewIdeaModal({
   open,
   handleClose,
-  joiner,
+  joiners,
 }: {
   open: boolean;
   handleClose: () => void;
-  joiner: string[];
+  joiners: Joiner[];
 }): React.ReactElement {
-  const categorys: string[] = ["인문", "자연", "예술", "사회", "기타"];
+  const router = useRouter();
+  const { query } = router;
+  const projectId: number =
+    typeof query.projectId === "string" ? parseInt(query.projectId) : -1;
 
-  const [name, setName] = useState<string>("");
-  const [desc, setDesc] = useState<string>("");
+  const categorys: string[] = ["인문", "자연", "예술", "사회", "기타"];
+  const statusOptions: string[] = Object.values(IdeaStatus);
+
+  const [title, setTitle] = useState<string>("");
+  const [relatedUser, setRelatedUser] = useState<string[]>([]);
   const [category, setCategory] = useState<string>(categorys[0]);
   const [tags, setTags] = useState<string[]>([]);
-  const [dueDate, setDueDate] = useState<Dayjs>(dayjs().add(1, "day"));
-  const [isPublic, setIsPublic] = useState(false);
+  const [content, setContent] = useState<string>("");
+  const [status, setStatus] = useState<string>("");
   const [err, setErr] = useState("");
 
-  // modal
-  const [confirmModalOpen, setConfirmModalOpen] = React.useState(false);
-  const handleConfirmOpen = () => setConfirmModalOpen(true);
-  const handleConfirmClose = () => setConfirmModalOpen(false);
-
-  const createProject = () => {
-    if (!name) {
-      setErr("프로젝트 이름을 입력하세요");
+  const createIdea = () => {
+    if (!title) {
+      setErr("아이디어 제목을 입력하세요");
       return;
     }
 
+    const relatedIds: number[] = relatedUser.flatMap((user) => {
+      const matchingJoiners = joiners.filter(
+        (joiner) => joiner.userName === user
+      );
+      return matchingJoiners.map((joiner) => joiner.userId);
+    });
+
+    const ideaStatus: string | undefined = Object.keys(IdeaStatus).find(
+      (key) => IdeaStatus[key as keyof typeof IdeaStatus] === status
+    ) as string;
+
     const data = {
-      name: name,
-      desc: desc,
-      dueDate: dayjs(dueDate).format("YYYY-MM-DD"),
-      isPublic: isPublic,
+      title: title,
+      status: ideaStatus,
+      category: category,
+      content: content,
+      projectId: projectId,
+      hashTags: tags,
+      relatedUserIds: relatedIds,
     };
 
     axios
-      .post(`${process.env.NEXT_PUBLIC_BASEURL}/project`, data)
+      .post(`${process.env.NEXT_PUBLIC_BASEURL}/idea`, data, {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      })
       .then((res) => {
         if (res.data.error) setErr(res.data.error.userMessage);
         else {
           setErr("");
-          handleConfirmOpen();
         }
       });
   };
 
   const closeAllModal = () => {
-    handleConfirmClose();
     handleClose();
   };
 
@@ -98,10 +118,10 @@ function NewIdeaModal({
             <Line rate={11}>
               <InputBox
                 placeHolder={""}
-                text={name}
-                setText={setName}
+                text={title}
+                setText={setTitle}
                 errText={err}
-                autoComplete={"name"}
+                autoComplete={"title"}
                 fontSize={15}
               />
             </Line>
@@ -113,8 +133,11 @@ function NewIdeaModal({
             </Line>
             <Line rate={11}>
               <MultiComboBox
+                value={relatedUser}
+                setValue={setRelatedUser}
                 placeholder={"연관 담당자 추가"}
-                options={joiner}
+                options={joiners?.map((joiner: Joiner) => joiner.userName)}
+                width={250}
               />
             </Line>
           </Grid>
@@ -142,16 +165,35 @@ function NewIdeaModal({
           </Grid>
 
           <Grid>
-            <TextArea />
+            <TextArea
+              placeholder={"* 내용을 입력하세요."}
+              text={content}
+              setText={setContent}
+            />
           </Grid>
 
           <ButtonWrap>
-            <RoundButton
-              text={"프로젝트 생성"}
-              isFilled={true}
-              onClick={createProject}
-            />
-            <ConfirmModal open={confirmModalOpen} handleClose={closeAllModal} />
+            <div className={"idea-status"}>
+              <ComboBox
+                value={status}
+                setValue={setStatus}
+                placeholder={"아이디어 상태"}
+                options={statusOptions}
+                width={150}
+              />
+            </div>
+            <div className={"idea-submit"}>
+              <RoundButton
+                text={"임시저장"}
+                isFilled={false}
+                onClick={createIdea}
+              />
+              <RoundButton
+                text={"제출하기"}
+                isFilled={true}
+                onClick={createIdea}
+              />
+            </div>
           </ButtonWrap>
         </Content>
       </Container>

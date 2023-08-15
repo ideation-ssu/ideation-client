@@ -2,10 +2,28 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 
-export const StyledComboBox = styled(Autocomplete)``;
+export const StyledComboBox = styled(Autocomplete)<{ width: number }>`
+  width: ${(props) => (props.width ? `${props.width}px` : "100%")};
+
+  .MuiOutlinedInput-root {
+    padding: 0;
+  }
+
+  .MuiOutlinedInput-root > .MuiAutocomplete-input {
+    padding: 7px 0 7px 10px;
+  }
+
+  .MuiOutlinedInput-notchedOutline {
+    top: 0;
+  }
+
+  .MuiAutocomplete-endAdornment {
+    top: 2px;
+  }
+`;
 
 export const StyledTextField = styled(TextField)`
-  width: 350px;
+  width: 100%;
   height: 32px;
 
   .MuiInputBase-root {
@@ -18,10 +36,6 @@ export const StyledTextField = styled(TextField)`
       font-size: 12px;
       padding: 8px;
     }
-  }
-
-  .MuiOutlinedInput-root > .MuiAutocomplete-input {
-    padding: 4px 10px 7.5px 10px;
   }
 
   .MuiChip-root {

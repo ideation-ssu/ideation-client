@@ -6,6 +6,7 @@ export const StyledButton = styled(Button)<{
   main: string;
 }>`
   width: 100%;
+  height: 100%;
   background-color: ${(props) =>
     props.filled === "true"
       ? props.main === "true"
@@ -20,7 +21,6 @@ export const StyledButton = styled(Button)<{
       : "#00b18c"};
   border: 1px solid
     ${(props) => (props.main === "true" ? "#713edc" : "#00b18c")};
-  height: 42px;
   box-shadow: none;
   justify-content: unset;
 

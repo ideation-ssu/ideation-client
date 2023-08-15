@@ -7,6 +7,7 @@ import KakaoButton from "@/components/Atoms/KakaoButton";
 import OutlineInputBox from "@/components/Atoms/OutlineInputBox";
 import RoundButton from "@/components/Atoms/RoundButton";
 import { Text } from "@/components/Templates/SignUp/styles";
+import { getToken } from "@/utils/tokenUtils";
 
 function Email({
   email,
@@ -36,8 +37,13 @@ function Email({
     const data = {
       email: email,
     };
+
     axios
-      .post(`${process.env.NEXT_PUBLIC_BASEURL}/auth/email/send-code`, data)
+      .post(`${process.env.NEXT_PUBLIC_BASEURL}/auth/email/send-code`, data, {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      })
       .then((res) => {
         if (res.data.error) setError(res.data.error.userMessage);
         else nextPage();

@@ -12,6 +12,7 @@ import {
   StyledTabs,
   TabIcon,
 } from "@/styles/idea/styles";
+import { getToken } from "@/utils/tokenUtils";
 
 function Idea(): React.ReactElement {
   const router = useRouter();
@@ -29,7 +30,11 @@ function Idea(): React.ReactElement {
 
   const getJoiners = () => {
     axios
-      .get(`${process.env.NEXT_PUBLIC_BASEURL}/project/joiner/${projectId}`)
+      .get(`${process.env.NEXT_PUBLIC_BASEURL}/project/joiner/${projectId}`, {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      })
       .then((res) => {
         setJoiners(res.data.data?.joiners);
       });

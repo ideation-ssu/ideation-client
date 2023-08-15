@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
+import axios from "axios";
 import { CookiesProvider } from "react-cookie";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import { isLoggedIn } from "@/utils/tokenUtils";
+import { getToken, isLoggedIn } from "@/utils/tokenUtils";
 import loadable from "@loadable/component";
 
 const Root = loadable(() => import("./pages/index"));
@@ -41,7 +42,11 @@ const root = ReactDOM.createRoot(
 
 function RootComponent() {
   useEffect(() => {
-    isLoggedIn();
+    const token = getToken();
+    console.log(token);
+    if (token) {
+      axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+    }
   }, []);
 
   return (

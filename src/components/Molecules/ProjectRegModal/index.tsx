@@ -8,6 +8,7 @@ import Driver from "@/components/Atoms/Driver";
 import InputBox from "@/components/Atoms/InputBox";
 import RoundButton from "@/components/Atoms/RoundButton";
 import SwitchButton from "@/components/Atoms/SwitchButton";
+import { getToken } from "@/utils/tokenUtils";
 
 import {
   ButtonWrap,
@@ -52,7 +53,11 @@ function ProjectRegModal({
     };
 
     axios
-      .post(`${process.env.NEXT_PUBLIC_BASEURL}/project`, data)
+      .post(`${process.env.NEXT_PUBLIC_BASEURL}/project`, data, {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      })
       .then((res) => {
         if (res.data.error) setErr(res.data.error.userMessage);
         else {

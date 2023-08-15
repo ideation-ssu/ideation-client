@@ -44,9 +44,15 @@ function Workspace(): React.ReactElement {
   }, []);
 
   const getProjects = () => {
-    axios.get(`${process.env.NEXT_PUBLIC_BASEURL}/project`).then((res) => {
-      setProjects(res.data.data?.projects);
-    });
+    axios
+      .get(`${process.env.NEXT_PUBLIC_BASEURL}/project`, {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      })
+      .then((res) => {
+        setProjects(res.data.data?.projects);
+      });
   };
 
   const openModal = async () => {

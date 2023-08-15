@@ -56,15 +56,22 @@ export const Line = styled("div")<{ rate: number }>`
   }
 `;
 
-export const SubTitleBar = styled("div")`
-  width: 3px;
-  height: 25px;
-  background: linear-gradient(90deg, #713edc 0%, #6e72fc 100%);
-`;
-
 export const ButtonWrap = styled("div")`
-  width: 487px;
-  margin: 50px auto;
+  width: 100%;
+  height: 32px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  .idea-status,
+  .idea-submit {
+    width: 230px;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  }
 `;
 
 export const TitleIcon = styled("div")`

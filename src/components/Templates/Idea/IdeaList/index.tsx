@@ -125,7 +125,7 @@ function IdeaList({
             <NewIdeaModal
               open={open}
               handleClose={handleClose}
-              joiner={joiners?.map((joiner: Joiner) => joiner.userName)}
+              joiners={joiners}
             />
           </ButtonWrap>
         </Header>

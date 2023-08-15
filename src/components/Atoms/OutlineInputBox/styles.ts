@@ -8,7 +8,7 @@ export const Container = styled("div")`
   gap: 5px;
 `;
 
-export const Input = styled(TextField)<{ error: boolean; normal: boolean }>`
+export const Input = styled(TextField)<{ error: boolean; normal: string }>`
   &.MuiTextField-root {
     height: 100%;
   }
@@ -16,7 +16,11 @@ export const Input = styled(TextField)<{ error: boolean; normal: boolean }>`
   .MuiOutlinedInput-notchedOutline {
     top: 0;
     border-color: ${(props) =>
-      props.error ? "#f36262" : props.normal ? "#9f9f9f" : "#713edc"};
+      props.error
+        ? "#f36262"
+        : props.normal === "true"
+        ? "#9f9f9f"
+        : "#713edc"};
 
     legend {
       display: none;

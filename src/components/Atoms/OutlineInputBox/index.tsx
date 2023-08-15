@@ -34,7 +34,7 @@ function OutlineInputBox({
         autoComplete={autoComplete}
         onChange={handleChange}
         error={!!errText}
-        normal={isNormal}
+        normal={isNormal ? "true" : "false"}
         onKeyUp={onKeyUp}
       />
       {errText && <ErrorMsg errText={errText} />}

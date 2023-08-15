@@ -17,7 +17,6 @@ import {
   TitleBar,
   TitleWrap,
 } from "@/styles/main/styles";
-
 function Main(): React.ReactElement {
   const [value, setValue] = React.useState(0);
 
