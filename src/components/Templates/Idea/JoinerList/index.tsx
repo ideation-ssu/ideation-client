@@ -7,7 +7,13 @@ import { Joiner } from "@/interfaces/idea";
 
 import {
   ButtonWrap,
+  Card,
+  CardContainer,
+  ColorBar,
   Container,
+  Content,
+  CrownIcon,
+  GridBox,
   Header,
   ProfileImg,
   Search,
@@ -32,7 +38,7 @@ function JoinerList({
 
   return (
     <Container container className={"container"} spacing={1}>
-      <FlexWrap gap={60}>
+      <FlexWrap gap={35}>
         <Header className={"profile"}>
           <ProfileImg />
         </Header>
@@ -61,10 +67,22 @@ function JoinerList({
             />
           </ButtonWrap>
         </Header>
-
-        {joiners?.map((value, index) => {
-          return <div key={index}>{value.userName}</div>;
-        })}
+        <GridBox>
+          {joiners?.map((value, index) => {
+            return (
+              <CardContainer key={index}>
+                {value.joinerRole === "OWNER" && <CrownIcon />}
+                <Card>
+                  <ColorBar />
+                  <Content>
+                    <span className={"name"}>{value.userName}</span>
+                    <span className={"email"}>{value.userEmail}</span>
+                  </Content>
+                </Card>
+              </CardContainer>
+            );
+          })}
+        </GridBox>
       </FlexWrap>
     </Container>
   );

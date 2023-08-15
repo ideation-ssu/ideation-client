@@ -5,7 +5,7 @@ import { styled } from "@mui/material/styles";
 
 export const Container = styled(Grid)`
   width: 100%;
-  height: 70vh;
+  height: 100vh;
   gap: 25px;
   display: flex;
   flex-direction: row;
@@ -63,4 +63,67 @@ export const SearchIconWrapper = styled("div")`
 export const SearchInput = styled(InputBase)`
   font-size: 18px;
   padding-left: 10px;
+`;
+
+export const GridBox = styled("div")`
+  width: 94%;
+  height: 70%;
+  display: flex;
+  flex-direction: row;
+  gap: 25px;
+  margin-top: 30px;
+  margin-left: 0;
+  padding: 30px;
+  border-radius: 5px;
+  background-color: #fff;
+`;
+
+export const CardContainer = styled("div")`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 127px;
+`;
+
+export const Card = styled("div")`
+  width: 300px;
+  height: 95px;
+  display: flex;
+  flex-direction: row;
+  border-radius: 5px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+`;
+
+export const ColorBar = styled("div")`
+  width: 17px;
+  height: 100%;
+  background-color: yellow;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+`;
+
+export const Content = styled("div")`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 15px;
+
+  span {
+    &.name {
+      font-size: 20px;
+    }
+
+    &.email {
+      font-size: 12px;
+    }
+  }
+`;
+
+export const CrownIcon = styled("div")`
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='32' viewBox='0 0 28 32' fill='none'%3E%3Cpath d='M28 0L20.2222 8.42105L14 0L7.77778 8.42105L0 0V21.8947H28V0ZM3.11111 32H24.8889C25.714 32 26.5053 31.6451 27.0888 31.0134C27.6722 30.3817 28 29.5249 28 28.6316V25.2632H14H0V28.6316C0 29.5249 0.327777 30.3817 0.911223 31.0134C1.49467 31.6451 2.28599 32 3.11111 32Z' fill='%23D9D9D9'/%3E%3C/svg%3E");
+  background-size: cover;
+  width: 28px;
+  height: 32px;
+  margin-left: 15px;
 `;
