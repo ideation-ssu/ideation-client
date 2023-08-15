@@ -6,7 +6,7 @@ export const StyledButton = styled(Button)<{
   main: string;
 }>`
   width: 100%;
-  height: 100%;
+  height: 42px;
   background-color: ${(props) =>
     props.filled === "true"
       ? props.main === "true"
