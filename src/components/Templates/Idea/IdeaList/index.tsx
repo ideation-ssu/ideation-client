@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import axios from "axios";
 import {
   DragDropContext,
   Draggable,
@@ -8,7 +9,8 @@ import {
 
 import FlexWrap from "@/components/Atoms/FlexWrap";
 import RoundButton from "@/components/Atoms/RoundButton";
-import { Joiner } from "@/interfaces/idea";
+import { IdeaStatus, IIdeaByStatus, Joiner } from "@/interfaces/idea";
+import { getToken } from "@/utils/tokenUtils";
 
 import NewIdeaModal from "../../../Molecules/NewIdeaModal";
 
@@ -28,8 +30,12 @@ import {
 
 function IdeaList({
   joiners,
+  ideas,
+  setIdeas,
 }: {
   joiners: Joiner[];
+  ideas: IIdeaByStatus;
+  setIdeas: Dispatch<SetStateAction<IIdeaByStatus>>;
 }): React.ReactElement | null {
   // new idea modal
   const [open, setOpen] = React.useState(false);
@@ -37,37 +43,6 @@ function IdeaList({
   const handleClose = () => setOpen(false);
   // animation (drop & down)
   const [animationEnabled, setAnimationEnabled] = useState<boolean>(false);
-
-  interface Card {
-    id: string;
-    title: string;
-  }
-
-  interface CardList {
-    [key: string]: Card[];
-  }
-
-  interface Status {
-    id: string;
-    title: string;
-  }
-
-  const statuses: Status[] = [
-    { id: "not_started", title: "Not Started" },
-    { id: "progress", title: "In Progress" },
-    { id: "done", title: "Done" },
-  ];
-
-  const initialCardList: CardList = {
-    not_started: [
-      { id: "1", title: "Card 1" },
-      { id: "2", title: "Card 2" },
-      { id: "3", title: "Card 3" },
-    ],
-    progress: [],
-    done: [],
-  };
-  const [cardList, setCardList] = useState<CardList>(initialCardList);
 
   useEffect(() => {
     const animation = requestAnimationFrame(() => setAnimationEnabled(true));
@@ -84,14 +59,33 @@ function IdeaList({
 
     if (!destination) return;
 
-    const sourceStatus = source.droppableId;
-    const destStatus = destination.droppableId;
+    const sourceStatus = source.droppableId as keyof IIdeaByStatus;
+    const destStatus = destination.droppableId as keyof IIdeaByStatus;
+    const updatedIdeas = { ...ideas };
+    const [draggedIdea] = updatedIdeas[sourceStatus].splice(source.index, 1);
 
-    const updatedCardList = { ...cardList };
-    const [draggedCard] = updatedCardList[sourceStatus].splice(source.index, 1);
-    updatedCardList[destStatus].splice(destination.index, 0, draggedCard);
-
-    setCardList(updatedCardList);
+    const data = {
+      status: destStatus,
+    };
+    axios
+      .put(
+        `${process.env.NEXT_PUBLIC_BASEURL}/idea/${draggedIdea.id}/status`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+          },
+        }
+      )
+      .then((res) => {
+        if (res.data.error) {
+          updatedIdeas[sourceStatus].splice(source.index, 0, draggedIdea);
+          setIdeas(updatedIdeas);
+          return;
+        }
+        updatedIdeas[destStatus].splice(destination.index, 0, draggedIdea);
+        setIdeas(updatedIdeas);
+      });
   };
 
   return (
@@ -132,47 +126,50 @@ function IdeaList({
       </FlexWrap>
       <DragDropContext onDragEnd={onDragEnd}>
         <CardContainer>
-          {statuses.map((status) => (
-            <Droppable key={status.id} droppableId={status.id}>
-              {(provided) => (
-                <ProcessCard
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
-                >
-                  <StatusTitle className={status.id}>
-                    {status.title}
-                  </StatusTitle>
-                  {cardList[status.id].map((card, index) => (
-                    <Draggable
-                      key={card.id}
-                      draggableId={card.id}
-                      index={index}
-                    >
-                      {(provided) => (
-                        <div
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          ref={provided.innerRef}
-                          style={{
-                            userSelect: "none",
-                            padding: "8px",
-                            margin: "8px",
-                            backgroundColor: "white",
-                            border: "1px solid #ddd",
-                            borderRadius: "4px",
-                            ...provided.draggableProps.style,
-                          }}
+          {ideas &&
+            IdeaStatus.map((status) => (
+              <Droppable key={status.title} droppableId={status.id}>
+                {(provided) => (
+                  <ProcessCard
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                  >
+                    <StatusTitle className={status.id}>
+                      {status.title}
+                    </StatusTitle>
+                    {ideas[status.id as keyof IIdeaByStatus].map(
+                      (idea, index) => (
+                        <Draggable
+                          key={idea.id.toString()}
+                          draggableId={idea.id.toString()}
+                          index={index}
                         >
-                          {card.title}
-                        </div>
-                      )}
-                    </Draggable>
-                  ))}
-                  {provided.placeholder}
-                </ProcessCard>
-              )}
-            </Droppable>
-          ))}
+                          {(provided) => (
+                            <div
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              ref={provided.innerRef}
+                              style={{
+                                userSelect: "none",
+                                padding: "8px",
+                                margin: "8px",
+                                backgroundColor: "white",
+                                border: "1px solid #ddd",
+                                borderRadius: "4px",
+                                ...provided.draggableProps.style,
+                              }}
+                            >
+                              {idea.title}
+                            </div>
+                          )}
+                        </Draggable>
+                      )
+                    )}
+                    {provided.placeholder}
+                  </ProcessCard>
+                )}
+              </Droppable>
+            ))}
         </CardContainer>
       </DragDropContext>
     </Container>

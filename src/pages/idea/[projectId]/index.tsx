@@ -4,7 +4,7 @@ import axios from "axios";
 
 import IdeaList from "@/components/Templates/Idea/IdeaList";
 import JoinerList from "@/components/Templates/Idea/JoinerList";
-import { Joiner } from "@/interfaces/idea";
+import { IIdea, IIdeaByStatus, Joiner } from "@/interfaces/idea";
 import {
   Container,
   Content,
@@ -22,10 +22,16 @@ function Idea(): React.ReactElement {
   const code: string = query.code as string;
 
   const [tab, setTab] = useState(!code ? 0 : 3);
+  const [ideas, setIdeas] = useState<IIdeaByStatus>({
+    NOT_STARTED: [],
+    IN_PROGRESS: [],
+    DONE: [],
+  });
   const [joiners, setJoiners] = useState<Joiner[]>([]);
 
   useEffect(() => {
     getJoiners();
+    getIdeas();
   }, [projectId]);
 
   const getJoiners = () => {
@@ -37,6 +43,18 @@ function Idea(): React.ReactElement {
       })
       .then((res) => {
         setJoiners(res.data.data?.joiners);
+      });
+  };
+
+  const getIdeas = () => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_BASEURL}/idea/${projectId}`, {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      })
+      .then((res) => {
+        setIdeas(res.data.data);
       });
   };
 
@@ -66,7 +84,7 @@ function Idea(): React.ReactElement {
       </StyledTabs>
       <Content>
         <TabPanel value={tab} index={0}>
-          <IdeaList joiners={joiners} />
+          <IdeaList joiners={joiners} ideas={ideas} setIdeas={setIdeas} />
         </TabPanel>
         <TabPanel value={tab} index={1}>
           Analysis

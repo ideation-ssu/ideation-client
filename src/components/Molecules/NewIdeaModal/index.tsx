@@ -10,8 +10,7 @@ import MultiComboBox from "@/components/Atoms/MultiComboBox";
 import RadioGroup from "@/components/Atoms/RadioGroup";
 import RoundButton from "@/components/Atoms/RoundButton";
 import TextArea from "@/components/Atoms/TextArea";
-import { IdeaStatus } from "@/enums/ideaStatus";
-import { Joiner } from "@/interfaces/idea";
+import { IdeaStatus, Joiner } from "@/interfaces/idea";
 import { getToken } from "@/utils/tokenUtils";
 
 import {
@@ -43,7 +42,7 @@ function NewIdeaModal({
     typeof query.projectId === "string" ? parseInt(query.projectId) : -1;
 
   const categorys: string[] = ["인문", "자연", "예술", "사회", "기타"];
-  const statusOptions: string[] = Object.values(IdeaStatus);
+  const statusOptions: string[] = IdeaStatus.map((status) => status.title);
 
   const [title, setTitle] = useState<string>("");
   const [relatedUser, setRelatedUser] = useState<string[]>([]);
@@ -66,9 +65,7 @@ function NewIdeaModal({
       return matchingJoiners.map((joiner) => joiner.userId);
     });
 
-    const ideaStatus: string | undefined = Object.keys(IdeaStatus).find(
-      (key) => IdeaStatus[key as keyof typeof IdeaStatus] === status
-    ) as string;
+    const ideaStatus = IdeaStatus.find((idea) => idea.title === status)?.id;
 
     const data = {
       title: title,

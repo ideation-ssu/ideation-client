@@ -5,3 +5,34 @@ export interface Joiner {
   joinerStatus: string;
   joinerRole: string;
 }
+
+export interface IIdea {
+  id: number;
+  userId: number;
+  relatedUserIds: number[];
+  projectId: number;
+  title: string;
+  category: string;
+  content: string;
+  hashTags: string[];
+  isLiked: boolean;
+  likeCount: number;
+  status: string;
+}
+
+export interface IIdeaByStatus {
+  NOT_STARTED: IIdea[];
+  IN_PROGRESS: IIdea[];
+  DONE: IIdea[];
+}
+
+export interface IStatus {
+  id: string;
+  title: string;
+}
+
+export const IdeaStatus: IStatus[] = [
+  { id: "NOT_STARTED", title: "Not Started" },
+  { id: "IN_PROGRESS", title: "In Progress" },
+  { id: "DONE", title: "Done" },
+];

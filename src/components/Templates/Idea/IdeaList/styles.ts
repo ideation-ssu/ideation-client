@@ -80,6 +80,8 @@ export const ProcessCard = styled("div")`
   background-color: #ffffff;
 `;
 
+export const IdeaContent = styled("div")``;
+
 export const StatusTitle = styled("div")`
   height: 23px;
   display: flex;
