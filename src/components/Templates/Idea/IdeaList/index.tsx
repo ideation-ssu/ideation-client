@@ -9,16 +9,18 @@ import {
 
 import FlexWrap from "@/components/Atoms/FlexWrap";
 import RoundButton from "@/components/Atoms/RoundButton";
+import IdeaDetailModal from "@/components/Molecules/IdeaDetailModal";
+import NewIdeaModal from "@/components/Molecules/NewIdeaModal";
 import { IdeaStatus, IIdeaByStatus, Joiner } from "@/interfaces/idea";
 import { getToken } from "@/utils/tokenUtils";
-
-import NewIdeaModal from "../../../Molecules/NewIdeaModal";
 
 import {
   ButtonWrap,
   CardContainer,
   Container,
+  DragIcon,
   Header,
+  Idea,
   ProcessCard,
   ProfileImg,
   Search,
@@ -38,9 +40,15 @@ function IdeaList({
   setIdeas: Dispatch<SetStateAction<IIdeaByStatus>>;
 }): React.ReactElement | null {
   // new idea modal
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [newIdeaOpen, setNewIdeaOpen] = React.useState(false);
+  const handleNewIdeaOpen = () => setNewIdeaOpen(true);
+  const handleNewIdeaClose = () => setNewIdeaOpen(false);
+
+  // idea detail modal
+  const [ideaDetailOpen, setIdeaDetailOpen] = React.useState(false);
+  const handleIdeaDetailOpen = () => setIdeaDetailOpen(true);
+  const handleIdeaDetailClose = () => setIdeaDetailOpen(false);
+
   // animation (drop & down)
   const [animationEnabled, setAnimationEnabled] = useState<boolean>(false);
 
@@ -114,11 +122,16 @@ function IdeaList({
               text={"아이디어 생성하기 +"}
               isFilled={true}
               isMainClr={false}
-              onClick={handleOpen}
+              onClick={handleNewIdeaOpen}
             />
             <NewIdeaModal
-              open={open}
-              handleClose={handleClose}
+              open={newIdeaOpen}
+              handleClose={handleNewIdeaClose}
+              joiners={joiners}
+            />
+            <IdeaDetailModal
+              open={ideaDetailOpen}
+              handleClose={handleIdeaDetailClose}
               joiners={joiners}
             />
           </ButtonWrap>
@@ -145,22 +158,15 @@ function IdeaList({
                           index={index}
                         >
                           {(provided) => (
-                            <div
+                            <Idea
                               {...provided.draggableProps}
                               {...provided.dragHandleProps}
                               ref={provided.innerRef}
-                              style={{
-                                userSelect: "none",
-                                padding: "8px",
-                                margin: "8px",
-                                backgroundColor: "white",
-                                border: "1px solid #ddd",
-                                borderRadius: "4px",
-                                ...provided.draggableProps.style,
-                              }}
+                              onClick={handleIdeaDetailOpen}
                             >
+                              <DragIcon />
                               {idea.title}
-                            </div>
+                            </Idea>
                           )}
                         </Draggable>
                       )

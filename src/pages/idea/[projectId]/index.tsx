@@ -78,8 +78,12 @@ function Idea(): React.ReactElement {
           label={"브레인 스토밍"}
         />
         <StyledTab
-          icon={<TabIcon className={"management"} selection={tab === 3} />}
+          icon={<TabIcon className={"joiner-list"} selection={tab === 3} />}
           label={"참여자 리스트"}
+        />
+        <StyledTab
+          icon={<TabIcon className={"vote"} selection={tab === 4} />}
+          label={"투표하기"}
         />
       </StyledTabs>
       <Content>
@@ -87,13 +91,16 @@ function Idea(): React.ReactElement {
           <IdeaList joiners={joiners} ideas={ideas} setIdeas={setIdeas} />
         </TabPanel>
         <TabPanel value={tab} index={1}>
-          Analysis
+          통계 및 분석
         </TabPanel>
         <TabPanel value={tab} index={2}>
-          Dashboard
+          브레인 스토밍
         </TabPanel>
         <TabPanel value={tab} index={3}>
           <JoinerList projectId={projectId} joiners={joiners} code={code} />
+        </TabPanel>
+        <TabPanel value={tab} index={4}>
+          투표하기
         </TabPanel>
       </Content>
     </Container>
