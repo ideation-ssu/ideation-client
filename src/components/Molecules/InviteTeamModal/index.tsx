@@ -31,7 +31,9 @@ function InviteTeamModal({
           Authorization: `Bearer ${getToken()}`,
         },
       })
-      .then((res) => console.log(res));
+      .then((res) => {
+        handleClose();
+      });
   };
 
   const handleCopyLink = () => {
@@ -43,6 +45,7 @@ function InviteTeamModal({
       })
       .then((res) => {
         navigator.clipboard.writeText(res.data.data.inviteLink);
+        handleClose();
       });
   };
 
