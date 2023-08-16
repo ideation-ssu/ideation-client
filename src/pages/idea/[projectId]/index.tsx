@@ -32,7 +32,7 @@ function Idea(): React.ReactElement {
   useEffect(() => {
     getJoiners();
     getIdeas();
-  }, [projectId]);
+  }, [projectId, ideas]);
 
   const getJoiners = () => {
     axios

@@ -87,12 +87,9 @@ function NewIdeaModal({
         if (res.data.error) setErr(res.data.error.userMessage);
         else {
           setErr("");
+          handleClose();
         }
       });
-  };
-
-  const closeAllModal = () => {
-    handleClose();
   };
 
   return (
