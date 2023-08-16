@@ -4,10 +4,11 @@ import axios from "axios";
 
 import IdeaList from "@/components/Templates/Idea/IdeaList";
 import JoinerList from "@/components/Templates/Idea/JoinerList";
-import { IIdea, IIdeaByStatus, Joiner } from "@/interfaces/idea";
+import { IIdeaByStatus, Joiner } from "@/interfaces/idea";
 import {
   Container,
   Content,
+  Logo,
   StyledTab,
   StyledTabs,
   TabIcon,
@@ -65,41 +66,42 @@ function Idea(): React.ReactElement {
   return (
     <Container>
       <StyledTabs orientation="vertical" value={tab} onChange={handleTabChange}>
+        <Logo>{"ideation"}</Logo>
         <StyledTab
-          icon={<TabIcon className={"idealist"} selection={tab === 0} />}
+          icon={<TabIcon className={"idealist"} selection={tab === 1} />}
           label={"Idea List"}
         />
         <StyledTab
-          icon={<TabIcon className={"analysis"} selection={tab === 1} />}
+          icon={<TabIcon className={"analysis"} selection={tab === 2} />}
           label={"통계 및 분석"}
         />
         <StyledTab
-          icon={<TabIcon className={"brainstorming"} selection={tab === 2} />}
+          icon={<TabIcon className={"brainstorming"} selection={tab === 3} />}
           label={"브레인 스토밍"}
         />
         <StyledTab
-          icon={<TabIcon className={"joiner-list"} selection={tab === 3} />}
+          icon={<TabIcon className={"joiner-list"} selection={tab === 4} />}
           label={"참여자 리스트"}
         />
         <StyledTab
-          icon={<TabIcon className={"vote"} selection={tab === 4} />}
+          icon={<TabIcon className={"vote"} selection={tab === 5} />}
           label={"투표하기"}
         />
       </StyledTabs>
       <Content>
-        <TabPanel value={tab} index={0}>
+        <TabPanel value={tab} index={1}>
           <IdeaList joiners={joiners} ideas={ideas} setIdeas={setIdeas} />
         </TabPanel>
-        <TabPanel value={tab} index={1}>
+        <TabPanel value={tab} index={2}>
           통계 및 분석
         </TabPanel>
-        <TabPanel value={tab} index={2}>
+        <TabPanel value={tab} index={3}>
           브레인 스토밍
         </TabPanel>
-        <TabPanel value={tab} index={3}>
+        <TabPanel value={tab} index={4}>
           <JoinerList projectId={projectId} joiners={joiners} code={code} />
         </TabPanel>
-        <TabPanel value={tab} index={4}>
+        <TabPanel value={tab} index={5}>
           투표하기
         </TabPanel>
       </Content>
