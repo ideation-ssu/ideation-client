@@ -22,7 +22,7 @@ function Idea(): React.ReactElement {
     typeof query.projectId === "string" ? parseInt(query.projectId) : -1;
   const code: string = query.code as string;
 
-  const [tab, setTab] = useState(!code ? 0 : 3);
+  const [tab, setTab] = useState(!code ? 1 : 3);
   const [ideas, setIdeas] = useState<IIdeaByStatus>({
     NOT_STARTED: [],
     IN_PROGRESS: [],
