@@ -71,7 +71,6 @@ export const GridBox = styled("div")`
   display: flex;
   flex-direction: row;
   gap: 25px;
-  margin-top: 30px;
   margin-left: 0;
   padding: 30px;
   border-radius: 5px;

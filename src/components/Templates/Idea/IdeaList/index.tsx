@@ -98,7 +98,7 @@ function IdeaList({
 
   return (
     <Container container className={"container"} spacing={1}>
-      <FlexWrap gap={60}>
+      <FlexWrap gap={35}>
         <Header className={"profile"}>
           <ProfileImg />
         </Header>

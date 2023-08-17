@@ -5,7 +5,7 @@ import { styled } from "@mui/material/styles";
 
 export const Container = styled(Grid)`
   width: 100%;
-  height: 70vh;
+  height: 100vh;
   gap: 25px;
   display: flex;
   flex-direction: row;
