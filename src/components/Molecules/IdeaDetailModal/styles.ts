@@ -7,30 +7,57 @@ export const StyledModal = styled(Modal)`
   align-items: center;
 `;
 
-export const Container = styled("div")`
+export const ModalWrap = styled("div")`
   width: 668px;
   height: 679px;
-  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
   border-radius: 10px;
 `;
 
+export const Container = styled("div")`
+  width: 600px;
+  height: 521px;
+`;
+
+export const Category = styled("div")`
+  width: 66px;
+  height: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  background-color: #7b40f2;
+  color: #fff;
+`;
+
 export const Title = styled("div")`
-  padding: 20px;
-  text-align: center;
-  span {
-    font-size: 20px;
-    background: linear-gradient(88deg, #6e72fc 0%, #ad1deb 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
+  font-size: 14px;
+  font-weight: bold;
+  color: #6e6e6e;
+  padding-left: 3px;
+`;
+
+export const Name = styled("div")`
+  height: 40px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 12px;
+  color: #000;
+`;
+
+export const Date = styled("div")`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 `;
 
 export const Content = styled("div")`
   display: flex;
   flex-direction: column;
-  gap: 25px;
-  padding: 50px 40px 0;
 `;
 
 export const Grid = styled("div")`

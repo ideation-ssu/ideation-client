@@ -11,7 +11,7 @@ import FlexWrap from "@/components/Atoms/FlexWrap";
 import RoundButton from "@/components/Atoms/RoundButton";
 import IdeaDetailModal from "@/components/Molecules/IdeaDetailModal";
 import NewIdeaModal from "@/components/Molecules/NewIdeaModal";
-import { IdeaStatus, IIdeaByStatus, Joiner } from "@/interfaces/idea";
+import { IdeaStatus, IIdea, IIdeaByStatus, Joiner } from "@/interfaces/idea";
 import { getToken } from "@/utils/tokenUtils";
 
 import {
@@ -52,6 +52,21 @@ function IdeaList({
   // animation (drop & down)
   const [animationEnabled, setAnimationEnabled] = useState<boolean>(false);
 
+  const initialIdea: IIdea = {
+    id: 0,
+    userId: 0,
+    relatedUserIds: [],
+    projectId: 0,
+    title: "",
+    category: "",
+    content: "",
+    hashTags: [],
+    isLiked: false,
+    likeCount: 0,
+    status: "",
+  };
+  const [selectedIdea, setSelectedIdea] = useState<IIdea>(initialIdea);
+
   useEffect(() => {
     const animation = requestAnimationFrame(() => setAnimationEnabled(true));
     return () => {
@@ -61,6 +76,18 @@ function IdeaList({
   }, []);
 
   if (!animationEnabled) return null;
+
+  const getDetailIdea = (ideaId: number) => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_BASEURL}/idea/detail/${ideaId}`, {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      })
+      .then((res) => {
+        setSelectedIdea(res.data.data);
+      });
+  };
 
   const onDragEnd = (result: DropResult) => {
     const { source, destination } = result;
@@ -132,6 +159,7 @@ function IdeaList({
             <IdeaDetailModal
               open={ideaDetailOpen}
               handleClose={handleIdeaDetailClose}
+              idea={selectedIdea}
               joiners={joiners}
             />
           </ButtonWrap>
@@ -162,7 +190,10 @@ function IdeaList({
                               {...provided.draggableProps}
                               {...provided.dragHandleProps}
                               ref={provided.innerRef}
-                              onClick={handleIdeaDetailOpen}
+                              onClick={() => {
+                                handleIdeaDetailOpen();
+                                getDetailIdea(idea.id);
+                              }}
                             >
                               <DragIcon />
                               {idea.title}
