@@ -30,10 +30,12 @@ import {
 function NewIdeaModal({
   open,
   handleClose,
+  updateIdeaList,
   joiners,
 }: {
   open: boolean;
   handleClose: () => void;
+  updateIdeaList: () => void;
   joiners: Joiner[];
 }): React.ReactElement {
   const router = useRouter();
@@ -88,6 +90,7 @@ function NewIdeaModal({
         else {
           setErr("");
           handleClose();
+          updateIdeaList();
         }
       });
   };

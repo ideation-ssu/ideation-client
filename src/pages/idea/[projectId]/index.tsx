@@ -9,6 +9,7 @@ import {
   Container,
   Content,
   Logo,
+  Panel,
   StyledTab,
   StyledTabs,
   TabIcon,
@@ -33,7 +34,7 @@ function Idea(): React.ReactElement {
   useEffect(() => {
     getJoiners();
     getIdeas();
-  }, [projectId, ideas]);
+  }, [projectId]);
 
   const getJoiners = () => {
     axios
@@ -90,7 +91,12 @@ function Idea(): React.ReactElement {
       </StyledTabs>
       <Content>
         <TabPanel value={tab} index={1}>
-          <IdeaList joiners={joiners} ideas={ideas} setIdeas={setIdeas} />
+          <IdeaList
+            joiners={joiners}
+            ideas={ideas}
+            setIdeas={setIdeas}
+            updateIdeaList={getIdeas}
+          />
         </TabPanel>
         <TabPanel value={tab} index={2}>
           통계 및 분석
@@ -121,14 +127,14 @@ function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
 
   return (
-    <div
+    <Panel
       role="tabpanel"
       hidden={value !== index}
       id={`vertical-tabpanel-${index}`}
       aria-labelledby={`vertical-tab-${index}`}
       {...other}
     >
-      {value === index && <div>{children}</div>}
-    </div>
+      {value === index && <>{children}</>}
+    </Panel>
   );
 }

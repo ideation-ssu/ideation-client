@@ -5,12 +5,12 @@ import { styled } from "@mui/material/styles";
 
 export const Container = styled(Grid)`
   width: 100%;
-  height: 100vh;
+  height: 100%;
   gap: 25px;
   display: flex;
-  flex-direction: row;
-  margin-top: 30px;
+  flex-direction: column;
   margin-left: 0;
+  margin-top: 0;
   background-color: transparent;
 `;
 
@@ -69,12 +69,12 @@ export const CardContainer = styled("div")`
   width: 100%;
   display: flex;
   justify-content: space-between;
+  flex: 1;
   gap: 20px;
 `;
 
 export const ProcessCard = styled("div")`
   width: 33%;
-  height: 554px;
   padding: 15px;
   border-radius: 5px;
   background-color: #ffffff;
@@ -83,7 +83,6 @@ export const ProcessCard = styled("div")`
 `;
 
 export const Idea = styled("div")`
-  width: 90%;
   height: 95px;
   display: flex;
   gap: 8px;

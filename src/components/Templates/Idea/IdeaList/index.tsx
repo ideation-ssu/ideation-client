@@ -11,7 +11,13 @@ import FlexWrap from "@/components/Atoms/FlexWrap";
 import RoundButton from "@/components/Atoms/RoundButton";
 import IdeaDetailModal from "@/components/Molecules/IdeaDetailModal";
 import NewIdeaModal from "@/components/Molecules/NewIdeaModal";
-import { IdeaStatus, IIdea, IIdeaByStatus, Joiner } from "@/interfaces/idea";
+import {
+  Comment,
+  IdeaStatus,
+  IIdea,
+  IIdeaByStatus,
+  Joiner,
+} from "@/interfaces/idea";
 import { getToken } from "@/utils/tokenUtils";
 
 import {
@@ -34,10 +40,12 @@ function IdeaList({
   joiners,
   ideas,
   setIdeas,
+  updateIdeaList,
 }: {
   joiners: Joiner[];
   ideas: IIdeaByStatus;
   setIdeas: Dispatch<SetStateAction<IIdeaByStatus>>;
+  updateIdeaList: () => void;
 }): React.ReactElement | null {
   // new idea modal
   const [newIdeaOpen, setNewIdeaOpen] = React.useState(false);
@@ -52,20 +60,8 @@ function IdeaList({
   // animation (drop & down)
   const [animationEnabled, setAnimationEnabled] = useState<boolean>(false);
 
-  const initialIdea: IIdea = {
-    id: 0,
-    userId: 0,
-    relatedUserIds: [],
-    projectId: 0,
-    title: "",
-    category: "",
-    content: "",
-    hashTags: [],
-    isLiked: false,
-    likeCount: 0,
-    status: "",
-  };
-  const [selectedIdea, setSelectedIdea] = useState<IIdea>(initialIdea);
+  const [selectedIdea, setSelectedIdea] = useState<IIdea>();
+  const [comments, setComments] = useState<Comment[]>();
 
   useEffect(() => {
     const animation = requestAnimationFrame(() => setAnimationEnabled(true));
@@ -86,6 +82,20 @@ function IdeaList({
       })
       .then((res) => {
         setSelectedIdea(res.data.data);
+      });
+  };
+
+  const getComments = (ideaId: number) => {
+    axios
+      .post(`${process.env.NEXT_PUBLIC_BASEURL}/idea/${ideaId}/comment`, {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      })
+      .then((res) => {
+        setComments(res.data.data);
+        console.log(ideaId);
+        console.log(res.data.data);
       });
   };
 
@@ -154,14 +164,19 @@ function IdeaList({
             <NewIdeaModal
               open={newIdeaOpen}
               handleClose={handleNewIdeaClose}
+              updateIdeaList={updateIdeaList}
               joiners={joiners}
             />
-            <IdeaDetailModal
-              open={ideaDetailOpen}
-              handleClose={handleIdeaDetailClose}
-              idea={selectedIdea}
-              joiners={joiners}
-            />
+            {selectedIdea && (
+              <IdeaDetailModal
+                open={ideaDetailOpen}
+                handleClose={handleIdeaDetailClose}
+                idea={selectedIdea}
+                setIdea={setSelectedIdea}
+                comments={comments}
+                joiners={joiners}
+              />
+            )}
           </ButtonWrap>
         </Header>
       </FlexWrap>
@@ -193,6 +208,7 @@ function IdeaList({
                               onClick={() => {
                                 handleIdeaDetailOpen();
                                 getDetailIdea(idea.id);
+                                getComments(idea.id);
                               }}
                             >
                               <DragIcon />

@@ -9,6 +9,7 @@ export interface Joiner {
 export interface IIdea {
   id: number;
   userId: number;
+  userName: string;
   relatedUserIds: number[];
   projectId: number;
   title: string;
@@ -18,6 +19,7 @@ export interface IIdea {
   isLiked: boolean;
   likeCount: number;
   status: string;
+  createdAt: string;
 }
 
 export interface IIdeaByStatus {
@@ -36,3 +38,12 @@ export const IdeaStatus: IStatus[] = [
   { id: "IN_PROGRESS", title: "In Progress" },
   { id: "DONE", title: "Done" },
 ];
+
+export interface Comment {
+  id: number;
+  comment: string;
+  commentType: string;
+  userName: string;
+  createdAt: string;
+  replies: Comment[];
+}

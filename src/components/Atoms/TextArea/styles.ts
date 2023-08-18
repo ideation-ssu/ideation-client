@@ -12,6 +12,8 @@ export const StyledTextArea = styled(TextareaAutosize)`
   box-sizing: border-box;
   font-size: 14px;
   font-family: Pretendard, sans-serif;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
   &:focus {
     outline: none;
     border: 2px solid #7b40f2;

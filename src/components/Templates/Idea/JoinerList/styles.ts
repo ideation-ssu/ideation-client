@@ -9,7 +9,6 @@ export const Container = styled(Grid)`
   gap: 25px;
   display: flex;
   flex-direction: row;
-  margin-top: 30px;
   margin-left: 0;
   background-color: transparent;
 `;
@@ -67,7 +66,7 @@ export const SearchInput = styled(InputBase)`
 
 export const GridBox = styled("div")`
   width: 94%;
-  height: 70%;
+  height: 65%;
   display: flex;
   flex-direction: row;
   gap: 25px;

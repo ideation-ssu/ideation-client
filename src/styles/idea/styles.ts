@@ -28,6 +28,11 @@ export const Logo = styled("div")`
   color: #eaeaea;
 `;
 
+export const Panel = styled("div")`
+  width: 100%;
+  height: 100%;
+`;
+
 export const StyledTabs = styled(Tabs)`
   &.MuiTabs-root {
     height: 100%;
