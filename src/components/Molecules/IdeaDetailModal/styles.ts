@@ -140,7 +140,3 @@ export const StyledTabs = styled(Tabs)`
     background-color: #6e6e6e;
   }
 `;
-
-export const Panel = styled("div")`
-  padding: 13px 5px;
-`;

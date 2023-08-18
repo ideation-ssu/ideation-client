@@ -60,8 +60,7 @@ function IdeaList({
   // animation (drop & down)
   const [animationEnabled, setAnimationEnabled] = useState<boolean>(false);
 
-  const [selectedIdea, setSelectedIdea] = useState<IIdea>();
-  const [comments, setComments] = useState<Comment[]>();
+  const [selectedIdeaId, setSelectedIdeaId] = useState<number>();
 
   useEffect(() => {
     const animation = requestAnimationFrame(() => setAnimationEnabled(true));
@@ -72,32 +71,6 @@ function IdeaList({
   }, []);
 
   if (!animationEnabled) return null;
-
-  const getDetailIdea = (ideaId: number) => {
-    axios
-      .get(`${process.env.NEXT_PUBLIC_BASEURL}/idea/detail/${ideaId}`, {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      })
-      .then((res) => {
-        setSelectedIdea(res.data.data);
-      });
-  };
-
-  const getComments = (ideaId: number) => {
-    axios
-      .post(`${process.env.NEXT_PUBLIC_BASEURL}/idea/${ideaId}/comment`, {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      })
-      .then((res) => {
-        setComments(res.data.data);
-        console.log(ideaId);
-        console.log(res.data.data);
-      });
-  };
 
   const onDragEnd = (result: DropResult) => {
     const { source, destination } = result;
@@ -167,14 +140,11 @@ function IdeaList({
               updateIdeaList={updateIdeaList}
               joiners={joiners}
             />
-            {selectedIdea && (
+            {selectedIdeaId && (
               <IdeaDetailModal
                 open={ideaDetailOpen}
                 handleClose={handleIdeaDetailClose}
-                idea={selectedIdea}
-                setIdea={setSelectedIdea}
-                comments={comments}
-                joiners={joiners}
+                selectedIdeaId={selectedIdeaId}
               />
             )}
           </ButtonWrap>
@@ -207,8 +177,7 @@ function IdeaList({
                               ref={provided.innerRef}
                               onClick={() => {
                                 handleIdeaDetailOpen();
-                                getDetailIdea(idea.id);
-                                getComments(idea.id);
+                                setSelectedIdeaId(idea.id);
                               }}
                             >
                               <DragIcon />
