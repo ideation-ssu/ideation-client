@@ -13,6 +13,7 @@ export const CommentContainer = styled("div")`
   flex-direction: column;
   gap: 10px;
   overflow-y: auto;
+  overflow-x: hidden;
 `;
 
 export const CommentWrap = styled("div")`
@@ -22,6 +23,14 @@ export const CommentWrap = styled("div")`
   gap: 5px;
   font-size: 10px;
   color: #313131;
+
+  .comment {
+    cursor: pointer;
+  }
+`;
+
+export const Reply = styled("div")`
+  margin-left: 20px;
 `;
 
 export const CommentInfo = styled("div")`
@@ -54,10 +63,18 @@ export const CommentLabel = styled("div")<{ isComment: boolean }>`
   border-radius: 2px;
 `;
 
-export const InputWrap = styled("div")`
-  display: flex;
+export const InputWrap = styled("div")<{ isshow: boolean }>`
   flex-direction: row;
-  margin-top: 15px;
+
+  &.reply {
+    display: ${(props) => (props.isshow ? "flex" : "none")};
+    width: 80%;
+  }
+
+  &.comment {
+    display: flex;
+    margin-top: 15px;
+  }
 `;
 
 export const StyledInputBox = styled(TextField)`

@@ -13,6 +13,7 @@ import {
   InputButton,
   InputWrap,
   Panel,
+  Reply,
   StyledInputBox,
 } from "./styles";
 
@@ -26,21 +27,47 @@ interface TabPanelProps {
 }
 function IdeaCommentPanel(props: TabPanelProps) {
   const { children, id, tab, type, comments, updateComment, ...other } = props;
-  const [text, setText] = useState<string>("");
+  const [comment, setComment] = useState<string>("");
+  const [reply, setReply] = useState<string>("");
+  const [selectCommentId, setSelectCommentId] = useState<number>(-1);
 
-  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setText(event.target.value);
+  console.log(comments);
+
+  const handleOnClick = (id: number) => {
+    if (id === selectCommentId) setSelectCommentId(-1);
+    else setSelectCommentId(id);
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+  const handleOnChangeComment = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setComment(event.target.value);
+  };
+
+  const handleKeyDownComment = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === "Enter") {
       addComment();
     }
   };
 
+  const handleOnChangeReply = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setReply(event.target.value);
+  };
+
+  const handleKeyDownReply = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "Enter") {
+      addReply();
+    }
+  };
+
+  interface CommentData {
+    comment: string;
+    commentType: string;
+    parentCommentId?: number;
+  }
   const addComment = () => {
-    const data = {
-      comment: text,
+    const data: CommentData = {
+      comment: comment,
       commentType: type === CommentType.Comment ? "COMMENT" : "FEEDBACK ",
     };
 
@@ -51,9 +78,30 @@ function IdeaCommentPanel(props: TabPanelProps) {
         },
       })
       .then((res) => {
-        setText("");
+        setComment("");
         updateComment();
-        console.log(res.data);
+      });
+  };
+
+  const addReply = () => {
+    const data: CommentData = {
+      comment: reply,
+      commentType: type === CommentType.Comment ? "COMMENT" : "FEEDBACK ",
+    };
+
+    if (selectCommentId >= 0) {
+      data.parentCommentId = selectCommentId;
+    }
+
+    axios
+      .post(`${process.env.NEXT_PUBLIC_BASEURL}/idea/${id}/comment`, data, {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      })
+      .then((res) => {
+        setReply("");
+        updateComment();
       });
   };
 
@@ -77,16 +125,46 @@ function IdeaCommentPanel(props: TabPanelProps) {
                   </CommentLabel>
                   <span className={"created-at"}>{comment.createdAt}</span>
                 </CommentInfo>
-                <span>{comment.comment}</span>
+                <span
+                  className={"comment"}
+                  onClick={() => handleOnClick(comment.id)}
+                >
+                  {comment.comment}
+                </span>
+
+                {comment.replies?.map((reply) => (
+                  <Reply>
+                    <CommentInfo className={"reply"}>
+                      <span className={"user-name"}>{reply.userName}</span>
+                      <CommentLabel isComment={reply.commentType === "COMMENT"}>
+                        {reply.commentType === "COMMENT" ? "댓글" : "피드백"}
+                      </CommentLabel>
+                      <span className={"created-at"}>{reply.createdAt}</span>
+                    </CommentInfo>
+                    <span className={"reply"}>{reply.comment}</span>
+                  </Reply>
+                ))}
+
+                <InputWrap
+                  className={"reply"}
+                  isshow={selectCommentId === comment.id}
+                >
+                  <StyledInputBox
+                    value={reply}
+                    onChange={handleOnChangeReply}
+                    onKeyDown={handleKeyDownReply}
+                  />
+                  <InputButton onClick={addReply}>{"답글 쓰기"}</InputButton>
+                </InputWrap>
               </CommentWrap>
             ))}
           </CommentContainer>
           {type != CommentType.All && (
-            <InputWrap>
+            <InputWrap className={"comment"} isshow={true}>
               <StyledInputBox
-                value={text}
-                onChange={handleOnChange}
-                onKeyDown={handleKeyDown}
+                value={comment}
+                onChange={handleOnChangeComment}
+                onKeyDown={handleKeyDownComment}
               />
               <InputButton onClick={addComment}>
                 {type === CommentType.Comment ? "댓글 쓰기" : "피드백 쓰기"}
@@ -100,3 +178,17 @@ function IdeaCommentPanel(props: TabPanelProps) {
 }
 
 export default IdeaCommentPanel;
+
+const CommentComponent = (comment: Comment) => {
+  return (
+    <>
+      <CommentInfo>
+        <span className={"user-name"}>{comment.userName}</span>
+        <CommentLabel isComment={comment.commentType === "COMMENT"}>
+          {comment.commentType === "COMMENT" ? "댓글" : "피드백"}
+        </CommentLabel>
+        <span className={"created-at"}>{comment.createdAt}</span>
+      </CommentInfo>
+    </>
+  );
+};
