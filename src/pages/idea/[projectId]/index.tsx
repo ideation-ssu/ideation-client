@@ -10,6 +10,7 @@ import {
   Container,
   Content,
   Logo,
+  LogoIcon,
   Panel,
   StyledTab,
   StyledTabContainer,
@@ -37,6 +38,10 @@ function Idea(): React.ReactElement {
     getJoiners();
     getIdeas();
   }, [projectId]);
+
+  const goMain = () => {
+    router.push("/main");
+  };
 
   const getJoiners = () => {
     axios
@@ -69,7 +74,10 @@ function Idea(): React.ReactElement {
   return (
     <Container>
       <StyledTabs orientation="vertical" value={tab} onChange={handleTabChange}>
-        <Logo>{"ideation"}</Logo>
+        <Logo onClick={goMain}>
+          <LogoIcon />
+          {"Ideation"}
+        </Logo>
         <StyledTab
           icon={<TabIcon className={"idealist"} selection={tab === 1} />}
           label={"Idea List"}
