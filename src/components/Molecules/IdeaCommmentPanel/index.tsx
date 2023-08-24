@@ -106,13 +106,7 @@ function IdeaCommentPanel(props: TabPanelProps) {
   };
 
   return (
-    <Panel
-      role="tabpanel"
-      hidden={tab !== type}
-      id={`simple-tabpanel-${type}`}
-      aria-labelledby={`simple-tab-${type}`}
-      {...other}
-    >
+    <Panel role="tabpanel" hidden={tab !== type} {...other}>
       {tab === type && (
         <>
           <CommentContainer>
@@ -178,17 +172,3 @@ function IdeaCommentPanel(props: TabPanelProps) {
 }
 
 export default IdeaCommentPanel;
-
-const CommentComponent = (comment: Comment) => {
-  return (
-    <>
-      <CommentInfo>
-        <span className={"user-name"}>{comment.userName}</span>
-        <CommentLabel isComment={comment.commentType === "COMMENT"}>
-          {comment.commentType === "COMMENT" ? "댓글" : "피드백"}
-        </CommentLabel>
-        <span className={"created-at"}>{comment.createdAt}</span>
-      </CommentInfo>
-    </>
-  );
-};
