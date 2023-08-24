@@ -1,17 +1,6 @@
 import MuiSearchIcon from "@mui/icons-material/Search";
-import Grid from "@mui/material/Grid";
 import InputBase from "@mui/material/InputBase";
 import { styled } from "@mui/material/styles";
-
-export const Container = styled(Grid)`
-  width: 100%;
-  height: 100vh;
-  gap: 25px;
-  display: flex;
-  flex-direction: row;
-  margin-left: 0;
-  background-color: transparent;
-`;
 
 export const Header = styled("div")`
   display: flex;
@@ -66,7 +55,7 @@ export const SearchInput = styled(InputBase)`
 
 export const GridBox = styled("div")`
   width: 94%;
-  height: 65%;
+  height: 100%;
   display: flex;
   flex-direction: row;
   gap: 25px;

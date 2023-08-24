@@ -3,17 +3,6 @@ import Grid from "@mui/material/Grid";
 import InputBase from "@mui/material/InputBase";
 import { styled } from "@mui/material/styles";
 
-export const Container = styled(Grid)`
-  width: 100%;
-  height: 100%;
-  gap: 25px;
-  display: flex;
-  flex-direction: column;
-  margin-left: 0;
-  margin-top: 0;
-  background-color: transparent;
-`;
-
 export const Header = styled("div")`
   display: flex;
   &.profile {

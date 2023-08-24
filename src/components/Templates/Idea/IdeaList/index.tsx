@@ -7,23 +7,15 @@ import {
   DropResult,
 } from "react-beautiful-dnd";
 
-import FlexWrap from "@/components/Atoms/FlexWrap";
 import RoundButton from "@/components/Atoms/RoundButton";
 import IdeaDetailModal from "@/components/Molecules/IdeaDetailModal";
 import NewIdeaModal from "@/components/Molecules/NewIdeaModal";
-import {
-  Comment,
-  IdeaStatus,
-  IIdea,
-  IIdeaByStatus,
-  Joiner,
-} from "@/interfaces/idea";
+import { IdeaStatus, IIdeaByStatus, Joiner } from "@/interfaces/idea";
 import { getToken } from "@/utils/tokenUtils";
 
 import {
   ButtonWrap,
   CardContainer,
-  Container,
   DragIcon,
   Header,
   Idea,
@@ -107,49 +99,47 @@ function IdeaList({
   };
 
   return (
-    <Container container className={"container"} spacing={1}>
-      <FlexWrap gap={35}>
-        <Header className={"profile"}>
-          <ProfileImg />
-        </Header>
-        <Header className={"search"}>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <SearchInput
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
+    <>
+      <Header className={"profile"}>
+        <ProfileImg />
+      </Header>
+      <Header className={"search"}>
+        <Search>
+          <SearchIconWrapper>
+            <SearchIcon />
+          </SearchIconWrapper>
+          <SearchInput
+            placeholder="Search…"
+            inputProps={{ "aria-label": "search" }}
+          />
+        </Search>
+        <ButtonWrap>
+          <RoundButton
+            text={"아이디어 정렬"}
+            isFilled={false}
+            isMainClr={false}
+          />
+          <RoundButton
+            text={"아이디어 생성하기 +"}
+            isFilled={true}
+            isMainClr={false}
+            onClick={handleNewIdeaOpen}
+          />
+          <NewIdeaModal
+            open={newIdeaOpen}
+            handleClose={handleNewIdeaClose}
+            updateIdeaList={updateIdeaList}
+            joiners={joiners}
+          />
+          {selectedIdeaId && (
+            <IdeaDetailModal
+              open={ideaDetailOpen}
+              handleClose={handleIdeaDetailClose}
+              selectedIdeaId={selectedIdeaId}
             />
-          </Search>
-          <ButtonWrap>
-            <RoundButton
-              text={"아이디어 정렬"}
-              isFilled={false}
-              isMainClr={false}
-            />
-            <RoundButton
-              text={"아이디어 생성하기 +"}
-              isFilled={true}
-              isMainClr={false}
-              onClick={handleNewIdeaOpen}
-            />
-            <NewIdeaModal
-              open={newIdeaOpen}
-              handleClose={handleNewIdeaClose}
-              updateIdeaList={updateIdeaList}
-              joiners={joiners}
-            />
-            {selectedIdeaId && (
-              <IdeaDetailModal
-                open={ideaDetailOpen}
-                handleClose={handleIdeaDetailClose}
-                selectedIdeaId={selectedIdeaId}
-              />
-            )}
-          </ButtonWrap>
-        </Header>
-      </FlexWrap>
+          )}
+        </ButtonWrap>
+      </Header>
       <DragDropContext onDragEnd={onDragEnd}>
         <CardContainer>
           {ideas &&
@@ -194,7 +184,7 @@ function IdeaList({
             ))}
         </CardContainer>
       </DragDropContext>
-    </Container>
+    </>
   );
 }
 

@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 
+import FlexWrap from "@/components/Atoms/FlexWrap";
 import IdeaList from "@/components/Templates/Idea/IdeaList";
 import JoinerList from "@/components/Templates/Idea/JoinerList";
 import { IIdeaByStatus, Joiner } from "@/interfaces/idea";
@@ -11,6 +12,7 @@ import {
   Logo,
   Panel,
   StyledTab,
+  StyledTabContainer,
   StyledTabs,
   TabIcon,
 } from "@/styles/idea/styles";
@@ -91,12 +93,14 @@ function Idea(): React.ReactElement {
       </StyledTabs>
       <Content>
         <TabPanel value={tab} index={1}>
-          <IdeaList
-            joiners={joiners}
-            ideas={ideas}
-            setIdeas={setIdeas}
-            updateIdeaList={getIdeas}
-          />
+          <TabContainer>
+            <IdeaList
+              joiners={joiners}
+              ideas={ideas}
+              setIdeas={setIdeas}
+              updateIdeaList={getIdeas}
+            />
+          </TabContainer>
         </TabPanel>
         <TabPanel value={tab} index={2}>
           통계 및 분석
@@ -105,7 +109,9 @@ function Idea(): React.ReactElement {
           브레인 스토밍
         </TabPanel>
         <TabPanel value={tab} index={4}>
-          <JoinerList projectId={projectId} joiners={joiners} code={code} />
+          <TabContainer>
+            <JoinerList projectId={projectId} joiners={joiners} code={code} />
+          </TabContainer>
         </TabPanel>
         <TabPanel value={tab} index={5}>
           투표하기
@@ -138,3 +144,15 @@ function TabPanel(props: TabPanelProps) {
     </Panel>
   );
 }
+
+interface TabContainerProps {
+  children?: ReactNode;
+}
+
+const TabContainer: React.FC<TabContainerProps> = ({ children }) => {
+  return (
+    <StyledTabContainer container className="container" spacing={1}>
+      <FlexWrap gap={35}>{children}</FlexWrap>
+    </StyledTabContainer>
+  );
+};
