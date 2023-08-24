@@ -90,7 +90,7 @@ export const ColorBar = styled("div")`
 `;
 
 export const Content = styled("div")`
-  width: 100%;
+  width: 73%;
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -107,10 +107,26 @@ export const Content = styled("div")`
   }
 `;
 
+export const MenuWrap = styled("div")`
+  width: 45px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const CrownIcon = styled("div")`
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='32' viewBox='0 0 28 32' fill='none'%3E%3Cpath d='M28 0L20.2222 8.42105L14 0L7.77778 8.42105L0 0V21.8947H28V0ZM3.11111 32H24.8889C25.714 32 26.5053 31.6451 27.0888 31.0134C27.6722 30.3817 28 29.5249 28 28.6316V25.2632H14H0V28.6316C0 29.5249 0.327777 30.3817 0.911223 31.0134C1.49467 31.6451 2.28599 32 3.11111 32Z' fill='%23D9D9D9'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='22' viewBox='0 0 28 22' fill='none'%3E%3Cpath d='M28 0L20.2222 8.42105L14 0L7.77778 8.42105L0 0V21.8947H28V0Z' fill='%23D9D9D9'/%3E%3C/svg%3E");
   background-size: cover;
   width: 28px;
-  height: 32px;
+  height: 21px;
   margin-left: 15px;
+`;
+
+export const MenuIcon = styled("div")`
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='23' height='24' viewBox='0 0 23 24' fill='none'%3E%3Cpath d='M4.65625 7.125H18.7477M4.65625 12H18.7477M4.65625 16.875H18.7477' stroke='%236E6E6E' stroke-width='2' stroke-miterlimit='10' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-size: cover;
+  width: 21px;
+  height: 24px;
+  cursor: pointer;
 `;

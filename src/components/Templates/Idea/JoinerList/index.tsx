@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 
+import MenuDrop from "@/components/Atoms/MenuDrop";
 import RoundButton from "@/components/Atoms/RoundButton";
 import InviteTeamModal from "@/components/Molecules/InviteTeamModal";
+import ProfileModal from "@/components/Molecules/ProfileModal";
 import { Joiner } from "@/interfaces/idea";
 
 import {
@@ -13,6 +15,8 @@ import {
   CrownIcon,
   GridBox,
   Header,
+  MenuIcon,
+  MenuWrap,
   ProfileImg,
   Search,
   SearchIcon,
@@ -33,6 +37,16 @@ function JoinerList({
   const [open, setOpen] = React.useState<boolean>(!!code);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  // profile modal
+  const [profileOpen, setProfileOpen] = React.useState<boolean>(!!code);
+  const handleProfileOpen = () => setProfileOpen(true);
+  const handleProfileClose = () => setProfileOpen(false);
+
+  const menuOptions = [
+    { label: "내 정보 수정하기", onClick: handleProfileOpen },
+    { label: "팀 나가기", onClick: () => console.log("팀 나가기") },
+  ];
 
   return (
     <>
@@ -75,7 +89,17 @@ function JoinerList({
                   <span className={"name"}>{value.userName}</span>
                   <span className={"email"}>{value.userEmail}</span>
                 </Content>
+                <MenuWrap>
+                  <MenuDrop
+                    menuIcon={MenuIconReactNode}
+                    options={menuOptions}
+                  />
+                </MenuWrap>
               </Card>
+              <ProfileModal
+                open={profileOpen}
+                handleClose={handleProfileClose}
+              />
             </CardContainer>
           );
         })}
@@ -85,3 +109,5 @@ function JoinerList({
 }
 
 export default JoinerList;
+
+const MenuIconReactNode: React.ReactNode = <MenuIcon />;
