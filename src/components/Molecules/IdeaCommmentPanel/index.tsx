@@ -126,8 +126,8 @@ function IdeaCommentPanel(props: TabPanelProps) {
                   {comment.comment}
                 </span>
 
-                {comment.replies?.map((reply) => (
-                  <Reply>
+                {comment.replies?.map((reply, index) => (
+                  <Reply key={index}>
                     <CommentInfo className={"reply"}>
                       <span className={"user-name"}>{reply.userName}</span>
                       <CommentLabel isComment={reply.commentType === "COMMENT"}>
