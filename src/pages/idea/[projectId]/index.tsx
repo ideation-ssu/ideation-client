@@ -46,7 +46,7 @@ function Idea(): React.ReactElement {
   }, [projectId]);
 
   const checkOwner = () => {
-    const owner = joiners.find((joiner) => joiner.joinerRole === "OWNER");
+    const owner = joiners?.find((joiner) => joiner.joinerRole === "OWNER");
     setIsOwner(owner?.userId === user?.id);
   };
 
@@ -114,6 +114,7 @@ function Idea(): React.ReactElement {
         <TabPanel value={tab} index={1}>
           <TabContainer>
             <IdeaList
+              projectId={projectId}
               isOwner={isOwner}
               joiners={joiners}
               ideas={ideas}

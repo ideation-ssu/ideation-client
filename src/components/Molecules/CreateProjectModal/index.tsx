@@ -21,7 +21,7 @@ import {
   Title,
 } from "./styles";
 
-function ProjectRegModal({
+function CreateProjectModal({
   open,
   handleClose,
 }: {
@@ -151,4 +151,4 @@ function ProjectRegModal({
   );
 }
 
-export default ProjectRegModal;
+export default CreateProjectModal;

@@ -1,4 +1,5 @@
 import Button from "@mui/material/Button";
+import MenuItem from "@mui/material/MenuItem";
 import { styled } from "@mui/material/styles";
 
 export const StyledButton = styled(Button)`
@@ -11,4 +12,8 @@ export const StyledButton = styled(Button)`
   .MuiButton-startIcon {
     margin: 0;
   }
+`;
+
+export const StyledMenuItem = styled(MenuItem)`
+  font-size: 14px;
 `;

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 
-import ProjectRegModal from "@/components/Molecules/ProjectRegModal";
 import SignUpModal from "@/components/Molecules/SignUpModal";
 import LoginForm from "@/components/Templates/LoginForm";
 import { isLoggedIn } from "@/utils/tokenUtils";
+
+import CreateProjectModal from "../CreateProjectModal";
 
 import { Container, StyledModal } from "./styles";
 
@@ -49,7 +50,7 @@ function LoginModal({
       </StyledModal>
 
       <SignUpModal open={signUpOpen} handleClose={signUpModalClose} />
-      <ProjectRegModal open={projectOpen} handleClose={handleProjectClose} />
+      <CreateProjectModal open={projectOpen} handleClose={handleProjectClose} />
     </>
   );
 }

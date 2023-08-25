@@ -31,8 +31,6 @@ function IdeaCommentPanel(props: TabPanelProps) {
   const [reply, setReply] = useState<string>("");
   const [selectCommentId, setSelectCommentId] = useState<number>(-1);
 
-  console.log(comments);
-
   const handleOnClick = (id: number) => {
     if (id === selectCommentId) setSelectCommentId(-1);
     else setSelectCommentId(id);

@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 
-import ProjectRegModal from "@/components/Molecules/ProjectRegModal";
-
 import SignupForm from "../../Templates/SignUpForm";
+import CreateProjectModal from "../CreateProjectModal";
 
 import { Container, StyledModal } from "./styles";
 
@@ -25,7 +24,7 @@ function SignUpModal({
 
   return (
     <>
-      <ProjectRegModal open={projectOpen} handleClose={handleProjectClose} />
+      <CreateProjectModal open={projectOpen} handleClose={handleProjectClose} />
       <StyledModal
         open={open}
         onClose={handleClose}

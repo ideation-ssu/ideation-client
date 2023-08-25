@@ -39,11 +39,15 @@ export const login = (
 
       setToken(res.data.data.token);
 
-      const decoded = jwt_decode(res.data.data.token) as { id: number };
+      const decoded = jwt_decode(res.data.data.token) as {
+        id: number;
+        image: string;
+      };
       authLogin({
         id: decoded.id,
         email: res.data.data.email,
         name: res.data.data.name,
+        image: decoded.image,
       });
     });
 

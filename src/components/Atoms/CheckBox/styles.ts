@@ -1,5 +1,11 @@
 import { styled } from "@mui/material/styles";
 
+export const Container = styled("div")`
+  display: flex;
+  flex-direction: row;
+  gap: 3px;
+`;
+
 export const Check = styled("div")<{ isChecked: boolean }>`
   background-image: ${(props) =>
     props.isChecked
@@ -13,4 +19,9 @@ export const Check = styled("div")<{ isChecked: boolean }>`
   border: ${(props) => (props.isChecked ? "none" : "1px solid #d9d9d9")};
   border-radius: 2px;
   box-sizing: border-box;
+`;
+
+export const Text = styled("div")`
+  font-size: 8px;
+  color: #6e6e6e;
 `;

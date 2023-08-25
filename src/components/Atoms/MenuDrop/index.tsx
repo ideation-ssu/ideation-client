@@ -1,8 +1,10 @@
-import React, { Dispatch, ReactNode, SetStateAction } from "react";
+import React, { Fragment, ReactNode } from "react";
 import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 
-import { StyledButton } from "./styles";
+import Driver from "@/components/Atoms/Driver";
+import RoundButton from "@/components/Atoms/RoundButton";
+
+import { StyledButton, StyledMenuItem } from "./styles";
 
 function MenuDrop({
   menuText,
@@ -15,6 +17,7 @@ function MenuDrop({
 }): React.ReactElement {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -24,41 +27,36 @@ function MenuDrop({
 
   return (
     <>
-      <StyledButton
-        id="basic-button"
-        aria-controls={open ? "basic-menu" : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? "true" : undefined}
-        onClick={handleClick}
-        startIcon={menuIcon}
-      >
-        {menuText}
-      </StyledButton>
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          "aria-labelledby": "basic-button",
-        }}
-      >
-        {options.map((menu, index) => {
-          return (
-            <MenuItem
-              key={index}
-              onClick={() => {
-                menu.onClick();
-                handleClose();
-              }}
-            >
-              {menu.label}
-            </MenuItem>
-          );
-        })}
+      {menuIcon ? (
+        <StyledButton onClick={handleClick} startIcon={menuIcon}>
+          {menuText}
+        </StyledButton>
+      ) : (
+        <RoundButton
+          text={menuText ? menuText : ""}
+          isFilled={true}
+          isMainClr={false}
+          onClick={handleClick}
+        />
+      )}
+      <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+        {options.map((menu, index) => [
+          <StyledMenuItem
+            key={index}
+            onClick={() => {
+              menu.onClick();
+              handleClose();
+            }}
+          >
+            {menu.label}
+          </StyledMenuItem>,
+          options.length - 1 !== index && <Driver key={`driver-${index}`} />,
+        ])}
       </Menu>
     </>
   );
 }
 
 export default MenuDrop;
+
+export const MenuItem = () => {};

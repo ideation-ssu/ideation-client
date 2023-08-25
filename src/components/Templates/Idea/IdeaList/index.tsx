@@ -1,4 +1,5 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import Avatar from "@mui/material/Avatar";
 import axios from "axios";
 import {
   DragDropContext,
@@ -9,9 +10,12 @@ import {
 
 import MenuDrop from "@/components/Atoms/MenuDrop";
 import RoundButton from "@/components/Atoms/RoundButton";
+import CloseProjectModal from "@/components/Molecules/CloseProjectModal";
+import CreateVoteIdeaModal from "@/components/Molecules/CreateVoteIdeaModal";
 import IdeaDetailModal from "@/components/Molecules/IdeaDetailModal";
 import NewIdeaModal from "@/components/Molecules/NewIdeaModal";
 import { IdeaStatus, IIdeaByStatus, Joiner } from "@/interfaces/idea";
+import { useAuth } from "@/utils/auth";
 import { getToken } from "@/utils/tokenUtils";
 
 import {
@@ -21,7 +25,6 @@ import {
   Header,
   Idea,
   ProcessCard,
-  ProfileImg,
   Search,
   SearchIcon,
   SearchIconWrapper,
@@ -30,18 +33,32 @@ import {
 } from "./styles";
 
 function IdeaList({
+  projectId,
   isOwner,
   joiners,
   ideas,
   setIdeas,
   updateIdeaList,
 }: {
+  projectId: number;
   isOwner: boolean;
   joiners: Joiner[];
   ideas: IIdeaByStatus;
   setIdeas: Dispatch<SetStateAction<IIdeaByStatus>>;
   updateIdeaList: () => void;
 }): React.ReactElement | null {
+  const { user } = useAuth();
+
+  // project close modal
+  const [closeModalOpen, setCloseModalOpen] = React.useState(false);
+  const projectCloseModalOpen = () => setCloseModalOpen(true);
+  const projectCloseModalClose = () => setCloseModalOpen(false);
+
+  // new vote idea modal
+  const [newVoteIdeaOpen, setNewVoteIdeaOpen] = React.useState(false);
+  const handleNewVoteIdeaOpen = () => setNewVoteIdeaOpen(true);
+  const handleNewVoteIdeaClose = () => setNewVoteIdeaOpen(false);
+
   // new idea modal
   const [newIdeaOpen, setNewIdeaOpen] = React.useState(false);
   const handleNewIdeaOpen = () => setNewIdeaOpen(true);
@@ -66,6 +83,14 @@ function IdeaList({
   }, []);
 
   if (!animationEnabled) return null;
+
+  const menuOptions = [
+    { label: "아이디어 선정하기", onClick: () => handleNewVoteIdeaOpen() },
+    {
+      label: "프로젝트 마감하기",
+      onClick: () => projectCloseModalOpen(),
+    },
+  ];
 
   const onDragEnd = (result: DropResult) => {
     const { source, destination } = result;
@@ -104,7 +129,7 @@ function IdeaList({
   return (
     <>
       <Header className={"profile"}>
-        <ProfileImg />
+        <Avatar src={user?.image} />
       </Header>
       <Header className={"search"}>
         <Search>
@@ -118,12 +143,7 @@ function IdeaList({
         </Search>
         <ButtonWrap>
           {isOwner && (
-            <RoundButton
-              text={"프로젝트 관리"}
-              isFilled={true}
-              isMainClr={false}
-              onClick={handleNewIdeaOpen}
-            />
+            <MenuDrop options={menuOptions} menuText={"프로젝트 관리"} />
           )}
           <RoundButton
             text={"아이디어 정렬"}
@@ -135,6 +155,16 @@ function IdeaList({
             isFilled={true}
             isMainClr={false}
             onClick={handleNewIdeaOpen}
+          />
+
+          <CreateVoteIdeaModal
+            open={newVoteIdeaOpen}
+            handleClose={handleNewVoteIdeaClose}
+          />
+          <CloseProjectModal
+            projectId={projectId}
+            open={closeModalOpen}
+            handleClose={projectCloseModalClose}
           />
           <NewIdeaModal
             open={newIdeaOpen}

@@ -11,8 +11,8 @@ import {
 } from "@/components/Templates/Main/Workspace/styles";
 import { getToken, isLoggedIn } from "@/utils/tokenUtils";
 
+import CreateProjectModal from "../../../Molecules/CreateProjectModal";
 import LoginModal from "../../../Molecules/LoginModal";
-import ProjectRegModal from "../../../Molecules/ProjectRegModal";
 
 interface Project {
   id: number;
@@ -66,7 +66,7 @@ function Workspace(): React.ReactElement {
 
   return (
     <>
-      <ProjectRegModal open={projectOpen} handleClose={projectModalClose} />
+      <CreateProjectModal open={projectOpen} handleClose={projectModalClose} />
       <LoginModal open={loginOpen} handleClose={loginModalClose} />
 
       <StyledGrid container className={"container"} spacing={1}>
