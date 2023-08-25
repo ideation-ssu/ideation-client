@@ -10,6 +10,8 @@ export const StyledModal = styled(Modal)`
 export const Container = styled("div")`
   width: 615px;
   height: 479px;
+  display: flex;
+  flex-direction: column;
   background-color: white;
   border-radius: 10px;
 `;
@@ -33,16 +35,58 @@ export const Content = styled("div")`
   padding: 50px 40px 0;
 `;
 
+export const ColumnWrap = styled("div")`
+  height: 335px;
+  max-height: 335px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow-y: auto;
+`;
+
+export const ColumnIdea = styled("div")<{ filled: boolean }>`
+  width: 100%;
+  height: 66px;
+  min-height: 66px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  background: ${(props) =>
+    props.filled ? "rgba(107, 104, 255, 0.04)" : "none"};
+
+  span {
+    background: none;
+    -webkit-background-clip: unset;
+  }
+
+  .title {
+    font-size: 16px;
+    background: none;
+    -webkit-background-clip: unset;
+    -webkit-text-fill-color: #000;
+  }
+
+  .hash-tag {
+    font-size: 12px;
+    background: none;
+    -webkit-background-clip: unset;
+    -webkit-text-fill-color: #555;
+  }
+`;
+
 export const Grid = styled("div")`
   display: flex;
   flex-direction: row;
 `;
 
-export const Line = styled("div")<{ rate: number }>`
+export const Line = styled("div")<{ rate: number; isAlignCenter?: boolean }>`
   display: flex;
   flex-direction: row;
   flex: ${(props) => props.rate};
   align-items: center;
+  justify-content: ${(props) =>
+    props.isAlignCenter ? "center" : "flex-start"};
 
   span {
     font-size: 20px;
@@ -53,12 +97,9 @@ export const Line = styled("div")<{ rate: number }>`
     -webkit-text-fill-color: transparent;
   }
 `;
-
-export const CalendarWrap = styled("div")`
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-`;
+Line.defaultProps = {
+  isAlignCenter: false, // 기본값 지정
+};
 
 export const SubTitleBar = styled("div")`
   width: 3px;
@@ -68,5 +109,5 @@ export const SubTitleBar = styled("div")`
 
 export const ButtonWrap = styled("div")`
   width: 487px;
-  margin: 50px auto;
+  margin: auto;
 `;

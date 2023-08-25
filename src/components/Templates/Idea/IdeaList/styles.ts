@@ -52,6 +52,7 @@ export const SearchInput = styled(InputBase)`
 
 export const CardContainer = styled("div")`
   width: 100%;
+  height: 100%;
   display: flex;
   justify-content: space-between;
   flex: 1;
@@ -60,6 +61,7 @@ export const CardContainer = styled("div")`
 
 export const ProcessCard = styled("div")`
   width: 33%;
+  max-height: 68vh;
   padding: 15px;
   border-radius: 5px;
   background-color: #ffffff;

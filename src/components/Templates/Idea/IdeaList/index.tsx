@@ -158,6 +158,8 @@ function IdeaList({
           />
 
           <CreateVoteIdeaModal
+            projectId={projectId}
+            ideas={ideas}
             open={newVoteIdeaOpen}
             handleClose={handleNewVoteIdeaClose}
           />
