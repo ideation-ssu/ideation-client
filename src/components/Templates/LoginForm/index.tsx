@@ -8,6 +8,7 @@ import KakaoButton from "@/components/Atoms/KakaoButton";
 import PasswordInputBox from "@/components/Atoms/PasswordInputBox";
 import RoundButton from "@/components/Atoms/RoundButton";
 import TextCheckBox from "@/components/Molecules/TextCheckBox";
+import { useAuth } from "@/utils/auth";
 import { isLoggedIn, login } from "@/utils/tokenUtils";
 
 import TitleCard from "../../Molecules/Card";
@@ -24,6 +25,7 @@ function LoginForm({
   handleSignUp: () => void;
 }): React.ReactElement {
   const router = useRouter();
+  const { user, authLogin } = useAuth();
 
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
@@ -64,7 +66,7 @@ function LoginForm({
   const handleLogin = async () => {
     if (existErr()) return;
 
-    if (!login(email, pw, autoLogin)) {
+    if (!login(email, pw, autoLogin, authLogin)) {
       setLoginErr("이메일 또는 비밀번호를 잘못 입력했습니다.");
       return;
     }

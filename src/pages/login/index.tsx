@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 
 import LoginForm from "@/components/Templates/LoginForm";
 import { Container } from "@/styles/login/styles";
+import { useAuth } from "@/utils/auth";
 
 function Login(): React.ReactElement {
   const router = useRouter();

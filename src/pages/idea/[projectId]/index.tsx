@@ -5,6 +5,7 @@ import axios from "axios";
 import FlexWrap from "@/components/Atoms/FlexWrap";
 import IdeaList from "@/components/Templates/Idea/IdeaList";
 import JoinerList from "@/components/Templates/Idea/JoinerList";
+import Vote from "@/components/Templates/Idea/Vote";
 import { IIdeaByStatus, Joiner } from "@/interfaces/idea";
 import {
   Container,
@@ -17,10 +18,13 @@ import {
   StyledTabs,
   TabIcon,
 } from "@/styles/idea/styles";
+import { useAuth } from "@/utils/auth";
 import { getToken } from "@/utils/tokenUtils";
 
 function Idea(): React.ReactElement {
   const router = useRouter();
+  const { user } = useAuth();
+  console.log(user);
   const { query } = router;
   const projectId: number =
     typeof query.projectId === "string" ? parseInt(query.projectId) : -1;
@@ -122,7 +126,9 @@ function Idea(): React.ReactElement {
           </TabContainer>
         </TabPanel>
         <TabPanel value={tab} index={5}>
-          투표하기
+          <TabContainer>
+            <Vote />
+          </TabContainer>
         </TabPanel>
       </Content>
     </Container>

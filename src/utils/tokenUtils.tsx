@@ -1,5 +1,7 @@
 import axios from "axios";
 
+import { User } from "@/interfaces/user";
+
 function setToken(token: string) {
   localStorage.setItem("token", token);
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
@@ -14,7 +16,12 @@ export function getToken() {
   return localStorage.getItem("token");
 }
 
-export const login = (email: string, pw: string, auto: boolean) => {
+export const login = (
+  email: string,
+  pw: string,
+  auto: boolean,
+  authLogin: (userData: User) => void
+) => {
   const data = {
     email: email,
     password: pw,
@@ -30,6 +37,16 @@ export const login = (email: string, pw: string, auto: boolean) => {
       if (res.data.error) return false;
 
       setToken(res.data.data.token);
+      authLogin({
+        email: res.data.data.email,
+        name: res.data.data.name,
+      });
+      console.log(
+        "email: ",
+        res.data.data.email,
+        " name: ",
+        res.data.data.name
+      );
     });
 
   return true;
@@ -39,6 +56,7 @@ export const isLoggedIn = () => {
   return !!getToken();
 };
 
-export const logout = () => {
+export const logout = (authLogout: () => void) => {
   clearToken();
+  authLogout();
 };

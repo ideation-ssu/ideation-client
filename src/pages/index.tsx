@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
+import { useAuth } from "@/utils/auth";
 import { isLoggedIn, logout } from "@/utils/tokenUtils";
 
 function Root(): React.ReactElement {
   const router = useRouter();
+  const { authLogout } = useAuth();
 
   const [isLogin, setIsLogin] = useState(false);
   const [text, setText] = useState("");
@@ -25,7 +27,7 @@ function Root(): React.ReactElement {
 
   const handleClick = () => {
     if (isLogin) {
-      logout();
+      logout(authLogout);
     } else {
       setText("로그아웃");
       router.push("/login");
