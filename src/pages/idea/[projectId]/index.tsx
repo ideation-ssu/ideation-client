@@ -42,12 +42,18 @@ function Idea(): React.ReactElement {
   useEffect(() => {
     getJoiners();
     getIdeas();
+  }, [projectId, user]);
+
+  useEffect(() => {
     checkOwner();
-  }, [projectId]);
+  }, [joiners, user]);
 
   const checkOwner = () => {
     const owner = joiners?.find((joiner) => joiner.joinerRole === "OWNER");
-    setIsOwner(owner?.userId === user?.id);
+    setIsOwner(owner != undefined && owner?.userId === user?.id);
+    console.log(joiners);
+    console.log(owner?.userId);
+    console.log(user?.id);
   };
 
   const goMain = () => {
