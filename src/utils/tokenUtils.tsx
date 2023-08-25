@@ -1,4 +1,5 @@
 import axios from "axios";
+import jwt_decode from "jwt-decode";
 
 import { User } from "@/interfaces/user";
 
@@ -37,16 +38,13 @@ export const login = (
       if (res.data.error) return false;
 
       setToken(res.data.data.token);
+
+      const decoded = jwt_decode(res.data.data.token) as { id: number };
       authLogin({
+        id: decoded.id,
         email: res.data.data.email,
         name: res.data.data.name,
       });
-      console.log(
-        "email: ",
-        res.data.data.email,
-        " name: ",
-        res.data.data.name
-      );
     });
 
   return true;

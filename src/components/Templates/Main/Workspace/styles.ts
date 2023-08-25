@@ -13,6 +13,7 @@ export const StyledGrid = styled(Grid)`
   height: 142px;
   background-color: white;
   border-radius: 5px;
+  cursor: pointer;
 
   &.container {
     width: 100%;
@@ -23,6 +24,7 @@ export const StyledGrid = styled(Grid)`
     margin-top: 30px;
     margin-left: 0;
     background-color: transparent;
+    cursor: auto;
   }
 
   &.add-project {

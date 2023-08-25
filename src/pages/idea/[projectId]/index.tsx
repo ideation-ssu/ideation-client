@@ -24,12 +24,13 @@ import { getToken } from "@/utils/tokenUtils";
 function Idea(): React.ReactElement {
   const router = useRouter();
   const { user } = useAuth();
-  console.log(user);
+
   const { query } = router;
   const projectId: number =
     typeof query.projectId === "string" ? parseInt(query.projectId) : -1;
   const code: string = query.code as string;
 
+  const [isOwner, setIsOwner] = useState<boolean>(false);
   const [tab, setTab] = useState(!code ? 1 : 3);
   const [ideas, setIdeas] = useState<IIdeaByStatus>({
     NOT_STARTED: [],
@@ -41,7 +42,13 @@ function Idea(): React.ReactElement {
   useEffect(() => {
     getJoiners();
     getIdeas();
+    checkOwner();
   }, [projectId]);
+
+  const checkOwner = () => {
+    const owner = joiners.find((joiner) => joiner.joinerRole === "OWNER");
+    setIsOwner(owner?.userId === user?.id);
+  };
 
   const goMain = () => {
     router.push("/main");
@@ -107,6 +114,7 @@ function Idea(): React.ReactElement {
         <TabPanel value={tab} index={1}>
           <TabContainer>
             <IdeaList
+              isOwner={isOwner}
               joiners={joiners}
               ideas={ideas}
               setIdeas={setIdeas}
@@ -127,7 +135,7 @@ function Idea(): React.ReactElement {
         </TabPanel>
         <TabPanel value={tab} index={5}>
           <TabContainer>
-            <Vote />
+            <Vote projectId={projectId} joiners={joiners} />
           </TabContainer>
         </TabPanel>
       </Content>

@@ -16,8 +16,11 @@ export const Header = styled("div")`
 export const ButtonWrap = styled("div")`
   display: flex;
   flex-direction: row;
-  width: 261px;
   gap: 10px;
+
+  button {
+    width: auto;
+  }
 `;
 
 export const ProfileImg = styled("div")`

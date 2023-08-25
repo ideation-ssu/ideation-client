@@ -5,6 +5,7 @@ import RoundButton from "@/components/Atoms/RoundButton";
 import InviteTeamModal from "@/components/Molecules/InviteTeamModal";
 import ProfileModal from "@/components/Molecules/ProfileModal";
 import { Joiner } from "@/interfaces/idea";
+import { useAuth } from "@/utils/auth";
 
 import {
   ButtonWrap,
@@ -24,22 +25,13 @@ import {
   SearchInput,
 } from "./styles";
 
-function Vote(): React.ReactElement | null {
-  // invite team members
-  const [open, setOpen] = React.useState<boolean>(!!code);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
-  // profile modal
-  const [profileOpen, setProfileOpen] = React.useState<boolean>(!!code);
-  const handleProfileOpen = () => setProfileOpen(true);
-  const handleProfileClose = () => setProfileOpen(false);
-
-  const menuOptions = [
-    { label: "내 정보 수정하기", onClick: handleProfileOpen },
-    { label: "팀 나가기", onClick: () => console.log("팀 나가기") },
-  ];
-
+function Vote({
+  projectId,
+  joiners,
+}: {
+  projectId: number;
+  joiners: Joiner[];
+}): React.ReactElement | null {
   return (
     <>
       <Header className={"profile"}>

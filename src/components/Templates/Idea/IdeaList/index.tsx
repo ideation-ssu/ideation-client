@@ -7,6 +7,7 @@ import {
   DropResult,
 } from "react-beautiful-dnd";
 
+import MenuDrop from "@/components/Atoms/MenuDrop";
 import RoundButton from "@/components/Atoms/RoundButton";
 import IdeaDetailModal from "@/components/Molecules/IdeaDetailModal";
 import NewIdeaModal from "@/components/Molecules/NewIdeaModal";
@@ -29,11 +30,13 @@ import {
 } from "./styles";
 
 function IdeaList({
+  isOwner,
   joiners,
   ideas,
   setIdeas,
   updateIdeaList,
 }: {
+  isOwner: boolean;
   joiners: Joiner[];
   ideas: IIdeaByStatus;
   setIdeas: Dispatch<SetStateAction<IIdeaByStatus>>;
@@ -114,6 +117,14 @@ function IdeaList({
           />
         </Search>
         <ButtonWrap>
+          {isOwner && (
+            <RoundButton
+              text={"프로젝트 관리"}
+              isFilled={true}
+              isMainClr={false}
+              onClick={handleNewIdeaOpen}
+            />
+          )}
           <RoundButton
             text={"아이디어 정렬"}
             isFilled={false}

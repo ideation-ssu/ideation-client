@@ -17,9 +17,8 @@ import {
   TitleBar,
   TitleWrap,
 } from "@/styles/main/styles";
-import { useAuth } from "@/utils/auth";
+
 function Main(): React.ReactElement {
-  const { user } = useAuth();
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {

@@ -27,7 +27,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
 
   const authLogin = (userData: User) => {
     setUser(userData);
-    console.log("data:", userData);
   };
 
   const authLogout = () => {
