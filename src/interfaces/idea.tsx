@@ -22,6 +22,7 @@ export interface IIdea {
   hashTags: string[];
   isLiked: boolean;
   likeCount: number;
+  commentCount: number;
   status: string;
   createdAt: string;
 }

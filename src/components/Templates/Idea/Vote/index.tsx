@@ -1,22 +1,21 @@
 import React, { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
-import { borderRadius } from "@mui/system";
 import axios from "axios";
 
-import MenuDrop from "@/components/Atoms/MenuDrop";
-import RoundButton from "@/components/Atoms/RoundButton";
-import InviteTeamModal from "@/components/Molecules/InviteTeamModal";
-import ProfileModal from "@/components/Molecules/ProfileModal";
-import { Joiner } from "@/interfaces/idea";
 import { IVote } from "@/interfaces/vote";
-import { useAuth } from "@/utils/auth";
 import { getToken } from "@/utils/tokenUtils";
+
+import { CommentIcon } from "../../../../../public/icons/Comment/styles.ts";
+import { LikedIcon } from "../../../../../public/icons/Liked/styles.ts";
 
 import {
   Category,
-  CommentIcon,
   GridBox,
   Header,
+  IconWrap,
+  MessageBox,
+  Percent,
+  PercentWrap,
   ProfileImg,
   Slider,
   SliderBackground,
@@ -28,6 +27,7 @@ import {
   TableRow,
   TitleBar,
   TitleWrap,
+  VotedIcon,
 } from "./styles";
 
 function Vote({ projectId }: { projectId: number }): React.ReactElement | null {
@@ -50,6 +50,44 @@ function Vote({ projectId }: { projectId: number }): React.ReactElement | null {
       });
   };
 
+  const voteDo = (ideaId: number) => {
+    const data = {
+      voteId: vote?.vote.voteId,
+      ideaIds: ideaId,
+    };
+
+    console.log(data);
+
+    axios
+      .post(`${process.env.NEXT_PUBLIC_BASEURL}/vote/do`, data, {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setVote(res.data);
+      });
+  };
+
+  const voteCalcel = (ideaId: number) => {
+    const data = {
+      voteId: vote?.vote.voteId,
+      ideaIds: ideaId,
+    };
+
+    axios
+      .post(`${process.env.NEXT_PUBLIC_BASEURL}/vote/cancel`, data, {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setVote(res.data);
+      });
+  };
+
   return (
     <>
       <Header className={"profile"}>
@@ -61,7 +99,14 @@ function Vote({ projectId }: { projectId: number }): React.ReactElement | null {
           <TitleBar />
           <span>{"SSU IT프로젝트 아이데이션"}</span>
         </TitleWrap>
-        <SliderWrap>
+        <SliderWrap isAnonymous={vote?.vote.isAnonymous}>
+          <MessageBox className={"joiner-box"}>
+            {vote?.votedUsers.map((user, index) => {
+              return index != vote?.votedUsers.length - 1
+                ? `${user.name}, `
+                : user.name;
+            })}
+          </MessageBox>
           <SliderBackground>
             {vote && (
               <Slider
@@ -93,6 +138,11 @@ function Vote({ projectId }: { projectId: number }): React.ReactElement | null {
                   key={index}
                   className={"body"}
                   isFill={index % 2 != 0}
+                  onClick={() =>
+                    result.voted
+                      ? voteCalcel(result.idea.id)
+                      : voteDo(result.idea.id)
+                  }
                 >
                   <TableData>
                     <Avatar src={result.idea.user.image} />
@@ -103,10 +153,28 @@ function Vote({ projectId }: { projectId: number }): React.ReactElement | null {
                   </TableData>
                   <TableData className={"liked"}>
                     <CommentIcon />
+                    {result.idea.commentCount}
+                    <LikedIcon />
                     {result.idea.likeCount}
                   </TableData>
-                  <TableData>{"연관자"}</TableData>
-                  <TableData>{result.percent}</TableData>
+                  <TableData>
+                    {result.idea.relatedUsers.map((relatedUser, index) => {
+                      return <Avatar key={index} src={relatedUser.image} />;
+                    })}
+                  </TableData>
+                  <TableData className={"vote"}>
+                    <PercentWrap>
+                      <MessageBox className={"count"}>
+                        {`${result.count}명이 투표했어요!`}
+                      </MessageBox>
+                      <Percent
+                        level={result.level}
+                      >{`${result.percent}%`}</Percent>
+                    </PercentWrap>
+                    <IconWrap isVoted={result.voted}>
+                      <VotedIcon isVoted={result.voted} />
+                    </IconWrap>
+                  </TableData>
                 </TableRow>
               );
             })}
