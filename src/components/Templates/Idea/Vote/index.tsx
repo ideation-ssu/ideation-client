@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import useForcedRerendering from "@mui/base/utils/useForcedRerendering";
 import Avatar from "@mui/material/Avatar";
 import axios from "axios";
 
@@ -45,7 +46,6 @@ function Vote({ projectId }: { projectId: number }): React.ReactElement | null {
         },
       })
       .then((res) => {
-        console.log(res.data);
         setVote(res.data);
       });
   };
@@ -53,10 +53,8 @@ function Vote({ projectId }: { projectId: number }): React.ReactElement | null {
   const voteDo = (ideaId: number) => {
     const data = {
       voteId: vote?.vote.voteId,
-      ideaIds: ideaId,
+      ideaId: ideaId,
     };
-
-    console.log(data);
 
     axios
       .post(`${process.env.NEXT_PUBLIC_BASEURL}/vote/do`, data, {
@@ -66,14 +64,13 @@ function Vote({ projectId }: { projectId: number }): React.ReactElement | null {
       })
       .then((res) => {
         console.log(res.data);
-        setVote(res.data);
       });
   };
 
   const voteCalcel = (ideaId: number) => {
     const data = {
       voteId: vote?.vote.voteId,
-      ideaIds: ideaId,
+      ideaId: ideaId,
     };
 
     axios
@@ -84,9 +81,10 @@ function Vote({ projectId }: { projectId: number }): React.ReactElement | null {
       })
       .then((res) => {
         console.log(res.data);
-        setVote(res.data);
       });
   };
+
+  console.log(vote);
 
   return (
     <>
@@ -99,6 +97,7 @@ function Vote({ projectId }: { projectId: number }): React.ReactElement | null {
           <TitleBar />
           <span>{"SSU IT프로젝트 아이데이션"}</span>
         </TitleWrap>
+
         <SliderWrap isAnonymous={vote?.vote.isAnonymous}>
           <MessageBox className={"joiner-box"}>
             {vote?.votedUsers.map((user, index) => {
