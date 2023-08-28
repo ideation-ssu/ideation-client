@@ -1,11 +1,15 @@
 import React from "react";
 
+import { Joiner } from "@/interfaces/idea";
+
 import { ModalWrap, StyledModal, StyledText, TextWrap } from "./styles";
 
 function ProfileModal({
+  user,
   open,
   handleClose,
 }: {
+  user: Joiner;
   open: boolean;
   handleClose: () => void;
 }): React.ReactElement {
@@ -18,7 +22,7 @@ function ProfileModal({
     >
       <ModalWrap>
         <TextWrap>
-          <StyledText className={"name"}>{"User"}</StyledText>
+          <StyledText className={"name"}>{user.userName}</StyledText>
           <StyledText className={"job"}>{"UI/UX Designer"}</StyledText>
         </TextWrap>
         <TextWrap>

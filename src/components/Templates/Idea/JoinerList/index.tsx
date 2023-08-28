@@ -5,6 +5,7 @@ import RoundButton from "@/components/Atoms/RoundButton";
 import InviteTeamModal from "@/components/Molecules/InviteTeamModal";
 import ProfileModal from "@/components/Molecules/ProfileModal";
 import { Joiner } from "@/interfaces/idea";
+import { useAuth } from "@/utils/auth";
 
 import {
   ButtonWrap,
@@ -33,6 +34,8 @@ function JoinerList({
   code: string;
   joiners: Joiner[];
 }): React.ReactElement | null {
+  const { user } = useAuth();
+
   // invite team members
   const [open, setOpen] = React.useState<boolean>(!!code);
   const handleOpen = () => setOpen(true);
@@ -79,24 +82,46 @@ function JoinerList({
         </ButtonWrap>
       </Header>
       <GridBox>
-        {joiners?.map((value, index) => {
+        {joiners?.map((joiner, index) => {
+          const isOwner = joiner.joinerRole === "OWNER";
+          const isMine = joiner.userId === user?.id;
           return (
             <CardContainer key={index}>
-              {value.joinerRole === "OWNER" && <CrownIcon />}
+              {isOwner && <CrownIcon />}
               <Card>
                 <ColorBar />
                 <Content>
-                  <span className={"name"}>{value.userName}</span>
-                  <span className={"email"}>{value.userEmail}</span>
+                  <span className={"name"}>{joiner.userName}</span>
+                  <span className={"email"}>{joiner.userEmail}</span>
                 </Content>
                 <MenuWrap>
                   <MenuDrop
                     menuIcon={MenuIconReactNode}
-                    options={menuOptions}
+                    options={[
+                      { label: "정보 확인하기", onClick: handleProfileOpen },
+                      ...(isOwner
+                        ? []
+                        : isMine
+                        ? [
+                            // userOwner일 때 추가 메뉴 옵션
+                            {
+                              label: "팀 나가기",
+                              onClick: () => console.log("팀 나가기"),
+                            },
+                          ]
+                        : [
+                            // userOwner가 아닐 때 추가 메뉴 옵션
+                            {
+                              label: "내보내기",
+                              onClick: () => console.log("내보내기"),
+                            },
+                          ]),
+                    ]}
                   />
                 </MenuWrap>
               </Card>
               <ProfileModal
+                user={joiner}
                 open={profileOpen}
                 handleClose={handleProfileClose}
               />
