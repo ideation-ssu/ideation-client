@@ -51,9 +51,6 @@ function Idea(): React.ReactElement {
   const checkOwner = () => {
     const owner = joiners?.find((joiner) => joiner.joinerRole === "OWNER");
     setIsOwner(owner != undefined && owner?.userId === user?.id);
-    console.log(joiners);
-    console.log(owner?.userId);
-    console.log(user?.id);
   };
 
   const goMain = () => {

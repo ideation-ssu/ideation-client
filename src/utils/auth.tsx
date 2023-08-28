@@ -23,14 +23,25 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
 }: {
   children: ReactNode;
 }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(() => {
+    if (typeof window !== "undefined") {
+      const savedUser = localStorage.getItem("user");
+      return savedUser ? JSON.parse(savedUser) : null;
+    }
+  });
 
   const authLogin = (userData: User) => {
     setUser(userData);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("user", JSON.stringify(userData));
+    }
   };
 
   const authLogout = () => {
     setUser(null);
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("user");
+    }
   };
 
   return (
