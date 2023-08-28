@@ -4,10 +4,13 @@ import { styled } from "@mui/material/styles";
 
 export const Header = styled("div")`
   display: flex;
+  justify-content: center;
+  align-items: center;
   &.profile {
     justify-content: flex-end;
   }
-  &.search {
+  &.search,
+  &.rate {
     justify-content: space-between;
   }
 `;
@@ -26,31 +29,46 @@ export const ProfileImg = styled("div")`
   height: 53px;
 `;
 
-export const Search = styled("div")`
-  width: 420px;
-  height: 41px;
-  display: flex;
-  border-radius: 10px;
-  background-color: #edeef3;
-  :hover {
-    background-color: #e2e3e8;
-  }
-`;
-
-export const SearchIcon = styled(MuiSearchIcon)`
-  color: #cccccc;
-`;
-
-export const SearchIconWrapper = styled("div")`
+export const TitleWrap = styled("div")`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-left: 15px;
+  span {
+    padding-left: 10px;
+    font-size: 24px;
+    font-weight: 600;
+  }
 `;
 
-export const SearchInput = styled(InputBase)`
-  font-size: 18px;
-  padding-left: 10px;
+export const TitleBar = styled("div")`
+  width: 7px;
+  height: 32px;
+  background: linear-gradient(0deg, #6e72fc 0%, #ad1deb 100%);
+`;
+
+export const SliderWrap = styled("div")`
+  display: flex;
+  flex-direction: column;
+
+  span {
+    font-size: 8px;
+    color: #6e6e6e;
+    text-align: right;
+    margin-top: 4px;
+  }
+`;
+export const SliderBackground = styled("div")`
+  width: 374px;
+  height: 28px;
+  background-color: #eaeaea;
+  border-radius: 100px;
+`;
+
+export const Slider = styled("div")<{ total: number; count: number }>`
+  width: ${(props) => `calc(100% / ${props.total} * ${props.count})`};
+  height: 100%;
+  background-color: #00b18c;
+  border-radius: 100px;
 `;
 
 export const GridBox = styled("div")`
@@ -63,30 +81,6 @@ export const GridBox = styled("div")`
   padding: 30px;
   border-radius: 5px;
   background-color: #fff;
-`;
-
-export const CardContainer = styled("div")`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  height: 127px;
-`;
-
-export const Card = styled("div")`
-  width: 300px;
-  height: 95px;
-  display: flex;
-  flex-direction: row;
-  border-radius: 5px;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
-`;
-
-export const ColorBar = styled("div")`
-  width: 17px;
-  height: 100%;
-  background-color: yellow;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
 `;
 
 export const Content = styled("div")`
@@ -107,26 +101,98 @@ export const Content = styled("div")`
   }
 `;
 
-export const MenuWrap = styled("div")`
-  width: 45px;
-  height: 35px;
+export const Table = styled("table")`
+  width: 100%;
+  height: 100%;
+`;
+
+export const TableHead = styled("thead")``;
+
+export const TableHeader = styled("th")`
+  padding: 10px 5px;
+  background-color: #f9f9f9;
+  flex: 1;
+  font-size: 13px;
+  color: #6e6e6e;
+  &.assign {
+    border-top-left-radius: 100px;
+    border-bottom-left-radius: 100px;
+  }
+
+  &.idea-name {
+  }
+
+  &.category {
+  }
+
+  &.liked {
+  }
+
+  &.relations {
+  }
+
+  &.vote {
+    border-top-right-radius: 100px;
+    border-bottom-right-radius: 100px;
+  }
+`;
+
+export const TableRow = styled("tr")<{ isFill?: boolean }>`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 7px;
+
+  &.body {
+    background-color: ${(props) =>
+      props.isFill ? "rgba(113, 62, 220, 0.05)" : "rgba(113, 62, 220, 0.02)"};
+    border-radius: 5px;
+  }
+`;
+
+export const TableData = styled("div")`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 5px;
+  flex: 1;
+  &.assign {
+  }
+
+  &.title {
+    font-weight: bold;
+  }
+
+  &.category {
+  }
+
+  &.liked {
+  }
+
+  &.relations {
+  }
+
+  &.vote {
+  }
+`;
+
+export const Category = styled("div")`
+  width: 66px;
+  height: 28px;
   display: flex;
   justify-content: center;
   align-items: center;
+  color: #fff;
+  background-color: #7b40f2;
+  border-radius: 20px;
+  font-size: 14px;
 `;
 
-export const CrownIcon = styled("div")`
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='22' viewBox='0 0 28 22' fill='none'%3E%3Cpath d='M28 0L20.2222 8.42105L14 0L7.77778 8.42105L0 0V21.8947H28V0Z' fill='%23D9D9D9'/%3E%3C/svg%3E");
+export const CommentIcon = styled("div")`
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='14' viewBox='0 0 16 14' fill='none'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M13.4141 0C14.5186 0 15.4141 0.895431 15.4141 2V8.57404C15.4141 9.67861 14.5186 10.574 13.4141 10.574H10.0182V12.7388C10.0182 13.1401 9.56915 13.3779 9.23719 13.1524L5.44272 10.574H1.99697C0.892406 10.574 -0.00302505 9.67861 -0.00302505 8.57404V2C-0.00302505 0.895431 0.892406 0 1.99698 0H13.4141Z' fill='%237B40F2'/%3E%3C/svg%3E");
   background-size: cover;
-  width: 28px;
-  height: 21px;
-  margin-left: 15px;
-`;
-
-export const MenuIcon = styled("div")`
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='23' height='24' viewBox='0 0 23 24' fill='none'%3E%3Cpath d='M4.65625 7.125H18.7477M4.65625 12H18.7477M4.65625 16.875H18.7477' stroke='%236E6E6E' stroke-width='2' stroke-miterlimit='10' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-size: cover;
-  width: 21px;
-  height: 24px;
-  cursor: pointer;
+  width: 15px;
+  height: 13px;
 `;

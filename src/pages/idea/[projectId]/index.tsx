@@ -139,7 +139,7 @@ function Idea(): React.ReactElement {
         </TabPanel>
         <TabPanel value={tab} index={5}>
           <TabContainer>
-            <Vote projectId={projectId} joiners={joiners} />
+            <Vote projectId={projectId} />
           </TabContainer>
         </TabPanel>
       </Content>

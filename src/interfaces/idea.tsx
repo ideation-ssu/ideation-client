@@ -1,3 +1,5 @@
+import { User } from "@/interfaces/user";
+
 export interface Joiner {
   userId: number;
   userName: string;
@@ -10,7 +12,9 @@ export interface IIdea {
   id: number;
   userId: number;
   userName: string;
+  user: User;
   relatedUserIds: number[];
+  relatedUsers: User[];
   projectId: number;
   title: string;
   category: string;

@@ -75,6 +75,7 @@ function CreateVoteIdeaModal({
         },
       })
       .then((res) => {
+        console.log(res.data);
         handleClose();
       });
   };
