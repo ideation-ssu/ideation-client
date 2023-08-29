@@ -11,6 +11,7 @@ export interface Project {
   public: boolean;
   done: boolean;
   dday: number;
+  ideaCount: number;
 }
 
 export interface Joiner {

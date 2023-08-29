@@ -1,58 +1,92 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
-import FlexWrap from "@/components/Atoms/FlexWrap";
+import Avatar from "@/components/Atoms/Avatar";
+import RoundButton from "@/components/Atoms/RoundButton";
+import CreateProjectModal from "@/components/Molecules/CreateProjectModal";
+import LoginModal from "@/components/Molecules/LoginModal";
 import Workspace from "@/components/Templates/Main/Workspace";
+import { Project } from "@/interfaces/project";
 import {
+  AvatarWrap,
+  ButtonWrap,
   Container,
   Content,
   Header,
-  ProfileImg,
+  LogoWrap,
+  RightHeaderWrap,
   Search,
   SearchIcon,
   SearchIconWrapper,
   SearchInput,
-  StyledTab,
-  StyledTabs,
-  TabIcon,
   TitleBar,
   TitleWrap,
 } from "@/styles/main/styles";
+import { useAuth } from "@/utils/auth";
+import { getToken, isLoggedIn } from "@/utils/tokenUtils";
+
+import { LogoIcon } from "../../../public/icons/Logo/styles.ts";
 
 function Main(): React.ReactElement {
-  const [value, setValue] = React.useState(0);
+  const { user } = useAuth();
+  const [projects, setProjects] = useState<Project[]>([]);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
+  // project creation modal
+  const [projectOpen, setProjectOpen] = React.useState(false);
+  const projectModalOpen = () => setProjectOpen(true);
+
+  // login modal
+  const [loginOpen, setLoginOpen] = React.useState(false);
+  const loginModalOpen = () => setLoginOpen(true);
+  const loginModalClose = () => setLoginOpen(false);
+
+  const openAddProjectModal = async () => {
+    if (isLoggedIn()) projectModalOpen();
+    else loginModalOpen();
+  };
+
+  const projectModalClose = () => {
+    setProjectOpen(false);
+    getProjects();
+  };
+
+  useEffect(() => {
+    getProjects();
+  }, []);
+
+  const getProjects = () => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_BASEURL}/project`, {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      })
+      .then((res) => {
+        setProjects(res.data.data?.projects);
+      });
   };
 
   return (
     <Container>
-      <StyledTabs orientation="vertical" value={value} onChange={handleChange}>
-        <StyledTab
-          icon={<TabIcon className={"workspace"} selection={value === 0} />}
-        />
-        <StyledTab
-          icon={<TabIcon className={"analysis"} selection={value === 1} />}
-        />
-        <StyledTab
-          icon={<TabIcon className={"dashboard"} selection={value === 2} />}
-        />
-        <StyledTab
-          icon={<TabIcon className={"management"} selection={value === 3} />}
-        />
-      </StyledTabs>
+      <CreateProjectModal open={projectOpen} handleClose={projectModalClose} />
+      <LoginModal open={loginOpen} handleClose={loginModalClose} />
+      <Header>
+        <LogoWrap>
+          <LogoIcon />
+        </LogoWrap>
+        {user && (
+          <AvatarWrap>
+            <Avatar src={user.image} />
+          </AvatarWrap>
+        )}
+      </Header>
       <Content>
-        <FlexWrap gap={60}>
-          <Header>
-            <TitleWrap>
-              <TitleBar />
-              <span>{"My Workspace"}</span>
-            </TitleWrap>
-            <div>
-              <ProfileImg />
-            </div>
-          </Header>
-          <Header>
+        <Header>
+          <TitleWrap>
+            <TitleBar />
+            <span>{"My Workspace"}</span>
+          </TitleWrap>
+          <RightHeaderWrap>
             <Search>
               <SearchIconWrapper>
                 <SearchIcon />
@@ -62,45 +96,20 @@ function Main(): React.ReactElement {
                 inputProps={{ "aria-label": "search" }}
               />
             </Search>
-          </Header>
-        </FlexWrap>
-        <TabPanel value={value} index={0}>
-          <Workspace />
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          Analysis
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          Dashboard
-        </TabPanel>
-        <TabPanel value={value} index={3}>
-          Management
-        </TabPanel>
+            <ButtonWrap>
+              <RoundButton
+                isFilled={true}
+                text={"프로젝트 생성하기"}
+                isMainClr={false}
+                onClick={openAddProjectModal}
+              />
+            </ButtonWrap>
+          </RightHeaderWrap>
+        </Header>
+        <Workspace projects={projects} />
       </Content>
     </Container>
   );
 }
 
 export default Main;
-
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
-
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`vertical-tabpanel-${index}`}
-      aria-labelledby={`vertical-tab-${index}`}
-      {...other}
-    >
-      {value === index && <div>{children}</div>}
-    </div>
-  );
-}
