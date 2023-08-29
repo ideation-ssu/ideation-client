@@ -14,7 +14,8 @@ import CloseProjectModal from "@/components/Molecules/CloseProjectModal";
 import CreateVoteIdeaModal from "@/components/Molecules/CreateVoteIdeaModal";
 import IdeaDetailModal from "@/components/Molecules/IdeaDetailModal";
 import NewIdeaModal from "@/components/Molecules/NewIdeaModal";
-import { IdeaStatus, IIdeaByStatus, Joiner } from "@/interfaces/idea";
+import { IdeaStatus, IIdeaByStatus } from "@/interfaces/idea";
+import { Joiner } from "@/interfaces/project";
 import { useAuth } from "@/utils/auth";
 import { getToken } from "@/utils/tokenUtils";
 

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Joiner } from "@/interfaces/idea";
+import { Joiner } from "@/interfaces/project";
 
 import { ModalWrap, StyledModal, StyledText, TextWrap } from "./styles";
 

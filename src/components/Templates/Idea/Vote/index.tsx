@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
-import useForcedRerendering from "@mui/base/utils/useForcedRerendering";
 import Avatar from "@mui/material/Avatar";
 import axios from "axios";
 
+import MenuDrop from "@/components/Atoms/MenuDrop";
+import CloseVoteModal from "@/components/Molecules/CloseVoteModal";
+import DeleteVoteModal from "@/components/Molecules/DeleteVoteModal";
 import { IVote } from "@/interfaces/vote";
+import { useAuth } from "@/utils/auth";
 import { getToken } from "@/utils/tokenUtils";
 
 import { CommentIcon } from "../../../../../public/icons/Comment/styles.ts";
@@ -11,6 +14,8 @@ import { LikedIcon } from "../../../../../public/icons/Liked/styles.ts";
 
 import {
   Category,
+  ConfigIcon,
+  ConfigWrap,
   GridBox,
   Header,
   IconWrap,
@@ -32,7 +37,18 @@ import {
 } from "./styles";
 
 function Vote({ projectId }: { projectId: number }): React.ReactElement | null {
+  const { user } = useAuth();
   const [vote, setVote] = useState<IVote>();
+
+  // close vote modal
+  const [closeVoteOpen, setCloseVoteOpen] = React.useState(false);
+  const handleCloseVoteOpen = () => setCloseVoteOpen(true);
+  const handleCloseVoteClose = () => setCloseVoteOpen(false);
+
+  // delete vote modal
+  const [deleteVoteOpen, setDeleteVoteOpen] = React.useState(false);
+  const handleDeleteVoteOpen = () => setDeleteVoteOpen(true);
+  const handleDeleteVoteClose = () => setDeleteVoteOpen(false);
 
   useEffect(() => {
     getVote();
@@ -86,6 +102,19 @@ function Vote({ projectId }: { projectId: number }): React.ReactElement | null {
       });
   };
 
+  const menuOptions = [
+    { label: "투표 종료하기", onClick: handleCloseVoteOpen },
+    {
+      label: "투표 삭제하기",
+      onClick: handleDeleteVoteOpen,
+    },
+  ];
+
+  // console.log(
+  //   vote?.project.joiners.find((joiner) => joiner.role === "OWNER")?.userId
+  // );
+  // console.log(vote?.project.joiners.map((joiner) => console.log(joiner.role)));
+
   return (
     <>
       <Header className={"profile"}>
@@ -95,27 +124,46 @@ function Vote({ projectId }: { projectId: number }): React.ReactElement | null {
       <Header className={"rate"}>
         <TitleWrap>
           <TitleBar />
-          <span>{"SSU IT프로젝트 아이데이션"}</span>
+          <span>{vote?.project.name}</span>
         </TitleWrap>
 
-        <SliderWrap isAnonymous={vote?.vote.isAnonymous}>
-          <MessageBox className={"joiner-box"}>
-            {vote?.votedUsers.map((user, index) => {
-              return index != vote?.votedUsers.length - 1
-                ? `${user.name}, `
-                : user.name;
-            })}
-          </MessageBox>
-          <SliderBackground>
-            {vote && (
-              <Slider
-                total={vote.totalJoinerCount}
-                count={vote.votedUserCount}
-              />
-            )}
-          </SliderBackground>
-          <span>{`${vote?.totalJoinerCount}명 중 ${vote?.votedUserCount}명이 참여했어요`}</span>
-        </SliderWrap>
+        <ConfigWrap>
+          <MenuDrop options={menuOptions} menuIcon={<ConfigIcon />} />
+          {vote && (
+            <CloseVoteModal
+              voteId={vote.vote.voteId}
+              open={closeVoteOpen}
+              handleClose={handleCloseVoteClose}
+            />
+          )}
+          {vote && (
+            <DeleteVoteModal
+              voteId={vote.vote.voteId}
+              voteName={vote.vote.title}
+              open={deleteVoteOpen}
+              handleClose={handleDeleteVoteClose}
+            />
+          )}
+
+          <SliderWrap isAnonymous={vote?.vote.isAnonymous}>
+            <MessageBox className={"joiner-box"}>
+              {vote?.votedUsers.map((user, index) => {
+                return index != vote?.votedUsers.length - 1
+                  ? `${user.name}, `
+                  : user.name;
+              })}
+            </MessageBox>
+            <SliderBackground>
+              {vote && (
+                <Slider
+                  total={vote.totalJoinerCount}
+                  count={vote.votedUserCount}
+                />
+              )}
+            </SliderBackground>
+            <span>{`${vote?.totalJoinerCount}명 중 ${vote?.votedUserCount}명이 참여했어요`}</span>
+          </SliderWrap>
+        </ConfigWrap>
       </Header>
 
       <GridBox>

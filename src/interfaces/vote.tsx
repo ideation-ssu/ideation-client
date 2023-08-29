@@ -1,4 +1,5 @@
 import { IIdea } from "@/interfaces/idea";
+import { Project } from "@/interfaces/project";
 import { User } from "@/interfaces/user";
 
 export interface IVoteResults {
@@ -29,4 +30,5 @@ export interface IVote {
   votedUsers: User[];
   totalVotedRate: number;
   done: boolean;
+  project: Project;
 }

@@ -10,7 +10,8 @@ import MultiComboBox from "@/components/Atoms/MultiComboBox";
 import RadioGroup from "@/components/Atoms/RadioGroup";
 import RoundButton from "@/components/Atoms/RoundButton";
 import TextArea from "@/components/Atoms/TextArea";
-import { IdeaStatus, Joiner } from "@/interfaces/idea";
+import { IdeaStatus } from "@/interfaces/idea";
+import { Joiner } from "@/interfaces/project";
 import { getToken } from "@/utils/tokenUtils";
 
 import {

@@ -9,17 +9,11 @@ import {
   PlusIcon,
   StyledGrid,
 } from "@/components/Templates/Main/Workspace/styles";
+import { Project } from "@/interfaces/project";
 import { getToken, isLoggedIn } from "@/utils/tokenUtils";
 
 import CreateProjectModal from "../../../Molecules/CreateProjectModal";
 import LoginModal from "../../../Molecules/LoginModal";
-
-interface Project {
-  id: number;
-  dday: number;
-  name: string;
-  desc: string;
-}
 
 function Workspace(): React.ReactElement {
   const router = useRouter();

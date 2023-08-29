@@ -4,7 +4,7 @@ import MenuDrop from "@/components/Atoms/MenuDrop";
 import RoundButton from "@/components/Atoms/RoundButton";
 import InviteTeamModal from "@/components/Molecules/InviteTeamModal";
 import ProfileModal from "@/components/Molecules/ProfileModal";
-import { Joiner } from "@/interfaces/idea";
+import { Joiner } from "@/interfaces/project";
 import { useAuth } from "@/utils/auth";
 
 import {

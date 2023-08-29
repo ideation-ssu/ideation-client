@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import axios from "axios";
 
-import OutlineInputBox from "@/components/Atoms/OutlineInputBox";
 import RoundButton from "@/components/Atoms/RoundButton";
 import { getToken } from "@/utils/tokenUtils";
 
