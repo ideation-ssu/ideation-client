@@ -1,5 +1,31 @@
 import { styled } from "@mui/material/styles";
 
+export const EmptyWrap = styled("div")`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+`;
+
+export const CreateVoteButtonWrap = styled("div")`
+  width: 130px;
+`;
+
+export const VoteIcon = styled("div")`
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='197' height='221' viewBox='0 0 197 221' fill='none'%3E%3Cpath d='M164.167 121.556H156.724L134.836 143.655H155.739L175.111 165.753H21.8889L41.37 143.655H63.8061L41.9172 121.556H32.8333L0 154.704V198.901C0 211.056 9.74055 221 21.7794 221H175.111C187.15 221 197 211.166 197 198.901V154.704L164.167 121.556ZM153.222 65.7573L99.0472 120.451L60.3039 81.3368L114.479 26.6428L153.222 65.7573ZM106.818 3.21824L37.1017 73.6023C32.8333 77.9115 32.8333 84.8726 37.1017 89.1818L91.2767 143.876C95.545 148.185 102.44 148.185 106.708 143.876L176.315 73.6023C180.583 69.2931 180.583 62.332 176.315 58.0228L122.14 3.32873C117.981 -1.09099 111.086 -1.09099 106.818 3.21824Z' fill='%23713EDC' fill-opacity='0.1'/%3E%3C/svg%3E");
+  background-size: cover;
+  width: 197px;
+  height: 221px;
+`;
+
+export const EmptyMessage = styled("div")`
+  font-size: 30px;
+  color: #6e6e6e;
+`;
+
 export const Header = styled("div")`
   display: flex;
   justify-content: center;
@@ -57,7 +83,7 @@ export const ConfigIcon = styled("div")`
   height: 30px;
 `;
 
-export const SliderWrap = styled("div")<{ isAnonymous?: boolean }>`
+export const SliderWrap = styled("div")<{ isHide?: boolean }>`
   display: flex;
   flex-direction: column;
 
@@ -69,7 +95,7 @@ export const SliderWrap = styled("div")<{ isAnonymous?: boolean }>`
   }
 
   &:hover .joiner-box {
-    visibility: ${(props) => (props.isAnonymous ? "hidden" : "visible")};
+    visibility: ${(props) => (props.isHide ? "hidden" : "visible")};
   }
 `;
 

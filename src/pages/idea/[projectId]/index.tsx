@@ -6,7 +6,8 @@ import FlexWrap from "@/components/Atoms/FlexWrap";
 import IdeaList from "@/components/Templates/Idea/IdeaList";
 import JoinerList from "@/components/Templates/Idea/JoinerList";
 import Vote from "@/components/Templates/Idea/Vote";
-import { IIdeaByStatus, Joiner } from "@/interfaces/idea";
+import { IIdeaByStatus } from "@/interfaces/idea";
+import { Joiner } from "@/interfaces/project";
 import {
   Container,
   Content,
@@ -139,7 +140,7 @@ function Idea(): React.ReactElement {
         </TabPanel>
         <TabPanel value={tab} index={5}>
           <TabContainer>
-            <Vote projectId={projectId} />
+            <Vote projectId={projectId} ideas={ideas} />
           </TabContainer>
         </TabPanel>
       </Content>
