@@ -77,6 +77,10 @@ export const Slider = styled("div")<{ total: number; count: number }>`
 export const MessageBox = styled("div")`
   visibility: hidden;
   width: fit-content;
+  height: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
   padding: 3px 10px;
   margin-bottom: 7px;

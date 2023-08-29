@@ -46,7 +46,9 @@ function Vote({ projectId }: { projectId: number }): React.ReactElement | null {
         },
       })
       .then((res) => {
-        setVote(res.data);
+        setVote((prevVote) => {
+          return res.data;
+        });
       });
   };
 
@@ -63,7 +65,7 @@ function Vote({ projectId }: { projectId: number }): React.ReactElement | null {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        getVote();
       });
   };
 
@@ -80,11 +82,9 @@ function Vote({ projectId }: { projectId: number }): React.ReactElement | null {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        getVote();
       });
   };
-
-  console.log(vote);
 
   return (
     <>
