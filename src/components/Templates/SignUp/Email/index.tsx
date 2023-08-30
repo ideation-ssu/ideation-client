@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 
 import Driver from "@/components/Atoms/Driver";
 import FlexWrap from "@/components/Atoms/FlexWrap";
@@ -7,7 +6,7 @@ import KakaoButton from "@/components/Atoms/KakaoButton";
 import OutlineInputBox from "@/components/Atoms/OutlineInputBox";
 import RoundButton from "@/components/Atoms/RoundButton";
 import { Text } from "@/components/Templates/SignUp/styles";
-import { getToken } from "@/utils/tokenUtils";
+import { useAuth } from "@/utils/auth";
 
 function Email({
   email,
@@ -18,6 +17,8 @@ function Email({
   setEmail: React.Dispatch<React.SetStateAction<string>>;
   nextPage: () => void;
 }): React.ReactElement {
+  const { axios } = useAuth();
+
   const emailRegEx =
     /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/;
 
@@ -39,11 +40,7 @@ function Email({
     };
 
     axios
-      .post(`${process.env.NEXT_PUBLIC_BASEURL}/auth/email/send-code`, data, {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      })
+      .post(`${process.env.NEXT_PUBLIC_BASEURL}/auth/email/send-code`, data)
       .then((res) => {
         if (res.data.error) setError(res.data.error.userMessage);
         else nextPage();

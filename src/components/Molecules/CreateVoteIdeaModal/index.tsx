@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import dayjs, { Dayjs } from "dayjs";
 
 import Calendar from "@/components/Atoms/Calendar";
@@ -11,7 +10,7 @@ import InputBox from "@/components/Atoms/InputBox";
 import RoundButton from "@/components/Atoms/RoundButton";
 import SwitchButton from "@/components/Atoms/SwitchButton";
 import { IIdeaByStatus } from "@/interfaces/idea";
-import { getToken } from "@/utils/tokenUtils";
+import { useAuth } from "@/utils/auth";
 
 import {
   ButtonWrap,
@@ -37,6 +36,8 @@ function CreateVoteIdeaModal({
   projectId: number;
   ideas: IIdeaByStatus;
 }): React.ReactElement {
+  const { axios } = useAuth();
+
   enum pageState {
     inputVoteInfo,
     selectIdea,
@@ -68,15 +69,9 @@ function CreateVoteIdeaModal({
       projectId: projectId,
       ideaIds: selectedIdeaIds,
     };
-    axios
-      .post(`${process.env.NEXT_PUBLIC_BASEURL}/vote`, data, {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      })
-      .then((res) => {
-        handleClose();
-      });
+    axios.post(`${process.env.NEXT_PUBLIC_BASEURL}/vote`, data).then((res) => {
+      handleClose();
+    });
   };
 
   const renderContent = () => {

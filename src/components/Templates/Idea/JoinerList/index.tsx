@@ -83,16 +83,16 @@ function JoinerList({
       </Header>
       <GridBox>
         {joiners?.map((joiner, index) => {
-          const isOwner = joiner.joinerRole === "OWNER";
-          const isMine = joiner.userId === user?.id;
+          const isOwner = joiner.role === "OWNER";
+          const isMine = joiner.userDto.id === user?.id;
           return (
             <CardContainer key={index}>
               {isOwner && <CrownIcon />}
               <Card>
                 <ColorBar />
                 <Content>
-                  <span className={"name"}>{joiner.userName}</span>
-                  <span className={"email"}>{joiner.userEmail}</span>
+                  <span className={"name"}>{joiner.userDto.name}</span>
+                  <span className={"email"}>{joiner.userDto.email}</span>
                 </Content>
                 <MenuWrap>
                   <MenuDrop

@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import Tab from "@mui/material/Tab";
-import axios from "axios";
 
 import FlexWrap from "@/components/Atoms/FlexWrap";
 import IdeaCommentPanel from "@/components/Molecules/IdeaCommmentPanel";
 import { IIdea } from "@/interfaces/idea";
 import { Comment } from "@/interfaces/idea";
-import { getToken } from "@/utils/tokenUtils";
+import { useAuth } from "@/utils/auth";
 
 import {
   Category,
@@ -41,6 +39,8 @@ function IdeaDetailModal({
   handleClose: () => void;
   selectedIdeaId: number;
 }): React.ReactElement {
+  const { axios } = useAuth();
+
   const [idea, setIdea] = useState<IIdea>();
   const [comments, setComments] = useState<Comment[]>([]);
   const [tab, setTab] = React.useState(0);
@@ -56,11 +56,7 @@ function IdeaDetailModal({
 
   const getDetailIdea = () => {
     axios
-      .get(`${process.env.NEXT_PUBLIC_BASEURL}/idea/detail/${selectedIdeaId}`, {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      })
+      .get(`${process.env.NEXT_PUBLIC_BASEURL}/idea/detail/${selectedIdeaId}`)
       .then((res) => {
         setIdea(res.data.data);
       });
@@ -68,14 +64,7 @@ function IdeaDetailModal({
 
   const getComments = () => {
     axios
-      .get(
-        `${process.env.NEXT_PUBLIC_BASEURL}/idea/${selectedIdeaId}/comment`,
-        {
-          headers: {
-            Authorization: `Bearer ${getToken()}`,
-          },
-        }
-      )
+      .get(`${process.env.NEXT_PUBLIC_BASEURL}/idea/${selectedIdeaId}/comment`)
       .then((res) => {
         setComments(res.data.data?.comments);
       });
@@ -83,11 +72,7 @@ function IdeaDetailModal({
 
   const likeIdea = () => {
     axios
-      .post(`${process.env.NEXT_PUBLIC_BASEURL}/idea/${selectedIdeaId}/like`, {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      })
+      .post(`${process.env.NEXT_PUBLIC_BASEURL}/idea/${selectedIdeaId}/like`)
       .then((res) => {
         setIdea(res.data.data);
       });

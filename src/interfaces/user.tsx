@@ -1,3 +1,5 @@
+import { AxiosInstance } from "axios";
+
 export interface User {
   id: number;
   email: string;
@@ -6,7 +8,9 @@ export interface User {
 }
 
 export interface AuthContextType {
-  user: User | null;
-  authLogin: (userData: User) => void;
+  user: User;
+  authLogin: (email: string, pw: string) => boolean;
   authLogout: () => void;
+  isLoggedIn: () => boolean;
+  axios: AxiosInstance;
 }

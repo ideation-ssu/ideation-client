@@ -1,8 +1,7 @@
 import React from "react";
-import axios from "axios";
 
 import RoundButton from "@/components/Atoms/RoundButton";
-import { getToken } from "@/utils/tokenUtils";
+import { useAuth } from "@/utils/auth";
 
 import { ButtonWrap, Container, Content, StyledModal, Title } from "./styles";
 
@@ -17,13 +16,11 @@ function CloseVoteModal({
   open: boolean;
   handleClose: () => void;
 }): React.ReactElement {
+  const { axios } = useAuth();
+
   const handleDeleteVote = () => {
     axios
-      .delete(`${process.env.NEXT_PUBLIC_BASEURL}/vote/${voteId}`, {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      })
+      .delete(`${process.env.NEXT_PUBLIC_BASEURL}/vote/${voteId}`)
       .then((res) => {
         handleClose();
       });

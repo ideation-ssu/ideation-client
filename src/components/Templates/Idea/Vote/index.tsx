@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
-import axios from "axios";
 
 import MenuDrop from "@/components/Atoms/MenuDrop";
 import RoundButton from "@/components/Atoms/RoundButton";
@@ -10,7 +9,6 @@ import DeleteVoteModal from "@/components/Molecules/DeleteVoteModal";
 import { IIdeaByStatus } from "@/interfaces/idea";
 import { IVote } from "@/interfaces/vote";
 import { useAuth } from "@/utils/auth";
-import { getToken } from "@/utils/tokenUtils";
 
 import { CommentIcon } from "../../../../../public/icons/Comment/styles.ts";
 import { LikedIcon } from "../../../../../public/icons/Liked/styles.ts";
@@ -50,7 +48,7 @@ function Vote({
   projectId: number;
   ideas: IIdeaByStatus;
 }): React.ReactElement | null {
-  const { user } = useAuth();
+  const { axios } = useAuth();
   const [vote, setVote] = useState<IVote>();
 
   // new vote idea modal
@@ -74,11 +72,7 @@ function Vote({
 
   const getVote = () => {
     axios
-      .get(`${process.env.NEXT_PUBLIC_BASEURL}/vote/${projectId}`, {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      })
+      .get(`${process.env.NEXT_PUBLIC_BASEURL}/vote/${projectId}`)
       .then((res) => {
         setVote((prevVote) => {
           return res.data;
@@ -93,11 +87,7 @@ function Vote({
     };
 
     axios
-      .post(`${process.env.NEXT_PUBLIC_BASEURL}/vote/do`, data, {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      })
+      .post(`${process.env.NEXT_PUBLIC_BASEURL}/vote/do`, data)
       .then((res) => {
         getVote();
       });
@@ -110,11 +100,7 @@ function Vote({
     };
 
     axios
-      .post(`${process.env.NEXT_PUBLIC_BASEURL}/vote/cancel`, data, {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      })
+      .post(`${process.env.NEXT_PUBLIC_BASEURL}/vote/cancel`, data)
       .then((res) => {
         getVote();
       });

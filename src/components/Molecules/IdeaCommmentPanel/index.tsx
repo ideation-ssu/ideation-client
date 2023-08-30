@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import axios from "axios";
 
 import { CommentType } from "@/components/Molecules/IdeaDetailModal";
 import { Comment } from "@/interfaces/idea";
-import { getToken } from "@/utils/tokenUtils";
+import { useAuth } from "@/utils/auth";
 
 import {
   CommentContainer,
@@ -26,6 +25,8 @@ interface TabPanelProps {
   updateComment: () => void;
 }
 function IdeaCommentPanel(props: TabPanelProps) {
+  const { axios } = useAuth();
+
   const { children, id, tab, type, comments, updateComment, ...other } = props;
   const [comment, setComment] = useState<string>("");
   const [reply, setReply] = useState<string>("");
@@ -70,11 +71,7 @@ function IdeaCommentPanel(props: TabPanelProps) {
     };
 
     axios
-      .post(`${process.env.NEXT_PUBLIC_BASEURL}/idea/${id}/comment`, data, {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      })
+      .post(`${process.env.NEXT_PUBLIC_BASEURL}/idea/${id}/comment`, data)
       .then((res) => {
         setComment("");
         updateComment();
@@ -92,11 +89,7 @@ function IdeaCommentPanel(props: TabPanelProps) {
     }
 
     axios
-      .post(`${process.env.NEXT_PUBLIC_BASEURL}/idea/${id}/comment`, data, {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      })
+      .post(`${process.env.NEXT_PUBLIC_BASEURL}/idea/${id}/comment`, data)
       .then((res) => {
         setReply("");
         updateComment();

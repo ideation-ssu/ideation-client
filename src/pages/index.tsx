@@ -1,38 +1,33 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import { useAuth } from "@/utils/auth";
-import { isLoggedIn, logout } from "@/utils/tokenUtils";
 
 function Root(): React.ReactElement {
   const router = useRouter();
-  const { authLogout } = useAuth();
+  const { authLogout, isLoggedIn } = useAuth();
 
-  const [isLogin, setIsLogin] = useState(false);
   const [text, setText] = useState("");
 
   useEffect(() => {
     const checkLoginStatus = async () => {
-      if (await isLoggedIn()) {
-        setIsLogin(true);
+      if (isLoggedIn()) {
         setText("로그아웃");
       } else {
-        setIsLogin(false);
         setText("로그인");
       }
     };
 
     checkLoginStatus();
-  }, [isLogin]);
+  }, [isLoggedIn]);
 
   const handleClick = () => {
-    if (isLogin) {
-      logout(authLogout);
+    if (isLoggedIn()) {
+      authLogout();
     } else {
       setText("로그아웃");
       router.push("/login");
     }
-    setIsLogin(!isLogin);
   };
 
   return (

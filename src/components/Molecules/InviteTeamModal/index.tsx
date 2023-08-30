@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import axios from "axios";
 
 import OutlineInputBox from "@/components/Atoms/OutlineInputBox";
 import RoundButton from "@/components/Atoms/RoundButton";
-import { getToken } from "@/utils/tokenUtils";
+import { useAuth } from "@/utils/auth";
 
 import { ButtonWrap, Container, Content, StyledModal, Title } from "./styles";
 
@@ -18,6 +17,8 @@ function InviteTeamModal({
   open: boolean;
   handleClose: () => void;
 }): React.ReactElement {
+  const { axios } = useAuth();
+
   const [email, setEmail] = useState<string>("");
 
   const handleInvite = () => {
@@ -26,11 +27,7 @@ function InviteTeamModal({
       projectId: projectId,
     };
     axios
-      .post(`${process.env.NEXT_PUBLIC_BASEURL}/project/invite`, data, {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      })
+      .post(`${process.env.NEXT_PUBLIC_BASEURL}/project/invite`, data)
       .then((res) => {
         handleClose();
       });
@@ -38,11 +35,7 @@ function InviteTeamModal({
 
   const handleCopyLink = () => {
     axios
-      .get(`${process.env.NEXT_PUBLIC_BASEURL}/project/invite/${projectId}`, {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      })
+      .get(`${process.env.NEXT_PUBLIC_BASEURL}/project/invite/${projectId}`)
       .then((res) => {
         navigator.clipboard.writeText(res.data.data.inviteLink);
         handleClose();
@@ -55,11 +48,7 @@ function InviteTeamModal({
     };
 
     axios
-      .post(`${process.env.NEXT_PUBLIC_BASEURL}/project/invite-accept`, data, {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      })
+      .post(`${process.env.NEXT_PUBLIC_BASEURL}/project/invite-accept`, data)
       .then((res) => {
         handleClose();
       });

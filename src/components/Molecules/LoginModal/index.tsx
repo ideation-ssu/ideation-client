@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import SignUpModal from "@/components/Molecules/SignUpModal";
 import LoginForm from "@/components/Templates/LoginForm";
-import { isLoggedIn } from "@/utils/tokenUtils";
+import { useAuth } from "@/utils/auth";
 
 import CreateProjectModal from "../CreateProjectModal";
 
@@ -15,6 +15,8 @@ function LoginModal({
   open: boolean;
   handleClose: () => void;
 }): React.ReactElement {
+  const { isLoggedIn } = useAuth();
+
   // login modal
   const [projectOpen, setProjectOpen] = React.useState(false);
   const handleProjectOpen = () => setProjectOpen(true);

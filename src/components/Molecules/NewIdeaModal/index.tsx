@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-import axios from "axios";
 
 import ComboBox from "@/components/Atoms/ComboBox";
 import Driver from "@/components/Atoms/Driver";
@@ -12,7 +11,7 @@ import RoundButton from "@/components/Atoms/RoundButton";
 import TextArea from "@/components/Atoms/TextArea";
 import { IdeaStatus } from "@/interfaces/idea";
 import { Joiner } from "@/interfaces/project";
-import { getToken } from "@/utils/tokenUtils";
+import { useAuth } from "@/utils/auth";
 
 import {
   AsignIcon,
@@ -39,6 +38,7 @@ function NewIdeaModal({
   updateIdeaList: () => void;
   joiners: Joiner[];
 }): React.ReactElement {
+  const { axios } = useAuth();
   const router = useRouter();
   const { query } = router;
   const projectId: number =
@@ -63,9 +63,9 @@ function NewIdeaModal({
 
     const relatedIds: number[] = relatedUser.flatMap((user) => {
       const matchingJoiners = joiners.filter(
-        (joiner) => joiner.userName === user
+        (joiner) => joiner.userDto.name === user
       );
-      return matchingJoiners.map((joiner) => joiner.userId);
+      return matchingJoiners.map((joiner) => joiner.userDto.id);
     });
 
     const ideaStatus = IdeaStatus.find((idea) => idea.title === status)?.id;
@@ -80,20 +80,14 @@ function NewIdeaModal({
       relatedUserIds: relatedIds,
     };
 
-    axios
-      .post(`${process.env.NEXT_PUBLIC_BASEURL}/idea`, data, {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      })
-      .then((res) => {
-        if (res.data.error) setErr(res.data.error.userMessage);
-        else {
-          setErr("");
-          handleClose();
-          updateIdeaList();
-        }
-      });
+    axios.post(`${process.env.NEXT_PUBLIC_BASEURL}/idea`, data).then((res) => {
+      if (res.data.error) setErr(res.data.error.userMessage);
+      else {
+        setErr("");
+        handleClose();
+        updateIdeaList();
+      }
+    });
   };
 
   return (
@@ -134,7 +128,7 @@ function NewIdeaModal({
                 value={relatedUser}
                 setValue={setRelatedUser}
                 placeholder={"연관 담당자 추가"}
-                options={joiners?.map((joiner: Joiner) => joiner.userName)}
+                options={joiners?.map((joiner: Joiner) => joiner.userDto.name)}
                 width={250}
               />
             </Line>

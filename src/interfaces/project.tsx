@@ -15,9 +15,10 @@ export interface Project {
 }
 
 export interface Joiner {
-  userId: number;
-  userName: string;
-  userEmail: string;
-  joinerStatus: string;
-  joinerRole: string;
+  id: number;
+  projectId: number;
+  userDto: User;
+  role: string;
+  status: string;
+  createdAt: string;
 }

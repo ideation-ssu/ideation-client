@@ -8,7 +8,7 @@ import DonePage from "@/components/Templates/SignUp/Done";
 import EmailPage from "@/components/Templates/SignUp/Email";
 import { InnerContainer } from "@/components/Templates/SignUp/styles";
 import UserInfoPage from "@/components/Templates/SignUp/UserInfo";
-import { isLoggedIn } from "@/utils/tokenUtils";
+import { useAuth } from "@/utils/auth";
 
 enum pageState {
   Email, // email 입력받음
@@ -22,6 +22,7 @@ function SignUp({
 }: {
   handleRegisterDone: () => void;
 }): React.ReactElement {
+  const { isLoggedIn } = useAuth();
   const router = useRouter();
 
   const [page, setPage] = useState(pageState.Email);

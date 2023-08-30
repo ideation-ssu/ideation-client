@@ -1,6 +1,5 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
-import axios from "axios";
 import {
   DragDropContext,
   Draggable,
@@ -17,7 +16,6 @@ import NewIdeaModal from "@/components/Molecules/NewIdeaModal";
 import { IdeaStatus, IIdeaByStatus } from "@/interfaces/idea";
 import { Joiner } from "@/interfaces/project";
 import { useAuth } from "@/utils/auth";
-import { getToken } from "@/utils/tokenUtils";
 
 import {
   ButtonWrap,
@@ -48,7 +46,7 @@ function IdeaList({
   setIdeas: Dispatch<SetStateAction<IIdeaByStatus>>;
   updateIdeaList: () => void;
 }): React.ReactElement | null {
-  const { user } = useAuth();
+  const { user, axios } = useAuth();
 
   // project close modal
   const [closeModalOpen, setCloseModalOpen] = React.useState(false);
@@ -109,12 +107,7 @@ function IdeaList({
     axios
       .put(
         `${process.env.NEXT_PUBLIC_BASEURL}/idea/${draggedIdea.id}/status`,
-        data,
-        {
-          headers: {
-            Authorization: `Bearer ${getToken()}`,
-          },
-        }
+        data
       )
       .then((res) => {
         if (res.data.error) {

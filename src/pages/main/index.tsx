@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 
 import Avatar from "@/components/Atoms/Avatar";
 import RoundButton from "@/components/Atoms/RoundButton";
@@ -23,12 +22,12 @@ import {
   TitleWrap,
 } from "@/styles/main/styles";
 import { useAuth } from "@/utils/auth";
-import { getToken, isLoggedIn } from "@/utils/tokenUtils";
 
 import { LogoIcon } from "../../../public/icons/Logo/styles.ts";
 
 function Main(): React.ReactElement {
-  const { user } = useAuth();
+  const { user, axios, isLoggedIn } = useAuth();
+
   const [projects, setProjects] = useState<Project[]>([]);
 
   // project creation modal
@@ -51,19 +50,13 @@ function Main(): React.ReactElement {
   };
 
   useEffect(() => {
-    getProjects();
-  }, []);
+    if (isLoggedIn()) getProjects();
+  }, [isLoggedIn]);
 
   const getProjects = () => {
-    axios
-      .get(`${process.env.NEXT_PUBLIC_BASEURL}/project`, {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      })
-      .then((res) => {
-        setProjects(res.data.data?.projects);
-      });
+    axios.get(`${process.env.NEXT_PUBLIC_BASEURL}/project`).then((res) => {
+      setProjects(res.data.data?.projects);
+    });
   };
 
   return (

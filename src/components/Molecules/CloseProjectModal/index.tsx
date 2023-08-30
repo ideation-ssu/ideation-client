@@ -1,8 +1,7 @@
 import React from "react";
-import axios from "axios";
 
 import RoundButton from "@/components/Atoms/RoundButton";
-import { getToken } from "@/utils/tokenUtils";
+import { useAuth } from "@/utils/auth";
 
 import {
   ButtonWrap,
@@ -22,17 +21,15 @@ function CloseProjectModal({
   open: boolean;
   handleClose: () => void;
 }): React.ReactElement {
+  const { axios } = useAuth();
+
   const handleCloseProject = () => {
     const data = {
       projectId: projectId,
       isDone: true,
     };
     axios
-      .put(`${process.env.NEXT_PUBLIC_BASEURL}/project/done`, data, {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      })
+      .put(`${process.env.NEXT_PUBLIC_BASEURL}/project/done`, data)
       .then((res) => {
         handleClose();
       });

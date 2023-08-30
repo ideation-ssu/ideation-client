@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-import axios from "axios";
 
 import FlexWrap from "@/components/Atoms/FlexWrap";
 import OutlineInputBox from "@/components/Atoms/OutlineInputBox";
 import OutlinePasswordInputBox from "@/components/Atoms/OutlinePasswordInputBox";
 import RoundButton from "@/components/Atoms/RoundButton";
 import { Text } from "@/components/Templates/SignUp/styles";
-import { getToken, login } from "@/utils/tokenUtils";
+import { useAuth } from "@/utils/auth";
 
 function UserInfo({
   email,
@@ -28,6 +27,8 @@ function UserInfo({
   setPwConfirm: React.Dispatch<React.SetStateAction<string>>;
   nextPage: () => void;
 }): React.ReactElement {
+  const { axios, authLogin } = useAuth();
+
   const router = useRouter();
   const pwRegEx = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
@@ -83,15 +84,11 @@ function UserInfo({
     };
 
     axios
-      .post(`${process.env.NEXT_PUBLIC_BASEURL}/auth/register`, data, {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      })
-      .then(async (res) => {
+      .post(`${process.env.NEXT_PUBLIC_BASEURL}/auth/register`, data)
+      .then((res) => {
         if (res.data.error) setError(res.data.error.userMessage);
         else {
-          if (await login(email, pw, true)) nextPage();
+          if (authLogin(email, pw)) nextPage();
         }
       });
   };

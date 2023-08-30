@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import dayjs, { Dayjs } from "dayjs";
 
 import Calendar from "@/components/Atoms/Calendar";
@@ -8,7 +7,7 @@ import Driver from "@/components/Atoms/Driver";
 import InputBox from "@/components/Atoms/InputBox";
 import RoundButton from "@/components/Atoms/RoundButton";
 import SwitchButton from "@/components/Atoms/SwitchButton";
-import { getToken } from "@/utils/tokenUtils";
+import { useAuth } from "@/utils/auth";
 
 import {
   ButtonWrap,
@@ -28,6 +27,8 @@ function CreateProjectModal({
   open: boolean;
   handleClose: () => void;
 }): React.ReactElement {
+  const { axios } = useAuth();
+
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
   const [dueDate, setDueDate] = useState<Dayjs>(dayjs().add(1, "day"));
@@ -53,11 +54,7 @@ function CreateProjectModal({
     };
 
     axios
-      .post(`${process.env.NEXT_PUBLIC_BASEURL}/project`, data, {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      })
+      .post(`${process.env.NEXT_PUBLIC_BASEURL}/project`, data)
       .then((res) => {
         if (res.data.error) setErr(res.data.error.userMessage);
         else {

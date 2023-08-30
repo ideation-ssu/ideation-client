@@ -1,6 +1,5 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import axios from "axios";
 
 import FlexWrap from "@/components/Atoms/FlexWrap";
 import IdeaList from "@/components/Templates/Idea/IdeaList";
@@ -20,11 +19,10 @@ import {
   TabIcon,
 } from "@/styles/idea/styles";
 import { useAuth } from "@/utils/auth";
-import { getToken } from "@/utils/tokenUtils";
 
 function Idea(): React.ReactElement {
   const router = useRouter();
-  const { user } = useAuth();
+  const { user, axios } = useAuth();
 
   const { query } = router;
   const projectId: number =
@@ -50,8 +48,8 @@ function Idea(): React.ReactElement {
   }, [joiners, user]);
 
   const checkOwner = () => {
-    const owner = joiners?.find((joiner) => joiner.joinerRole === "OWNER");
-    setIsOwner(owner != undefined && owner?.userId === user?.id);
+    const owner = joiners?.find((joiner) => joiner.role === "OWNER");
+    setIsOwner(owner != undefined && owner?.userDto.id === user?.id);
   };
 
   const goMain = () => {
@@ -60,11 +58,7 @@ function Idea(): React.ReactElement {
 
   const getJoiners = () => {
     axios
-      .get(`${process.env.NEXT_PUBLIC_BASEURL}/project/joiner/${projectId}`, {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      })
+      .get(`${process.env.NEXT_PUBLIC_BASEURL}/project/joiner/${projectId}`)
       .then((res) => {
         setJoiners(res.data.data?.joiners);
       });
@@ -72,11 +66,7 @@ function Idea(): React.ReactElement {
 
   const getIdeas = () => {
     axios
-      .get(`${process.env.NEXT_PUBLIC_BASEURL}/idea/${projectId}`, {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      })
+      .get(`${process.env.NEXT_PUBLIC_BASEURL}/idea/${projectId}`)
       .then((res) => {
         setIdeas(res.data.data);
       });
