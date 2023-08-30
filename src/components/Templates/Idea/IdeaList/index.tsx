@@ -17,13 +17,21 @@ import { IdeaStatus, IIdeaByStatus } from "@/interfaces/idea";
 import { Joiner } from "@/interfaces/project";
 import { useAuth } from "@/utils/auth";
 
+import { CommentIcon } from "../../../../../public/icons/Comment/styles.ts";
+import { LikedIcon } from "../../../../../public/icons/Liked/styles.ts";
+
 import {
   ButtonWrap,
   CardContainer,
-  DragIcon,
+  HashTag,
+  HashTagWrap,
   Header,
   Idea,
+  IdeaBottom,
+  IdeaInner,
+  IdeaTop,
   ProcessCard,
+  ReactionWrap,
   Search,
   SearchIcon,
   SearchIconWrapper,
@@ -207,8 +215,26 @@ function IdeaList({
                                 setSelectedIdeaId(idea.id);
                               }}
                             >
-                              <DragIcon />
-                              {idea.title}
+                              <IdeaInner>
+                                <IdeaTop>
+                                  <span>{idea.title}</span>
+                                </IdeaTop>
+                                <IdeaBottom>
+                                  <HashTagWrap>
+                                    {idea.hashTags.map((tag, index) => {
+                                      return (
+                                        <HashTag key={index}>{tag}</HashTag>
+                                      );
+                                    })}
+                                  </HashTagWrap>
+                                  <ReactionWrap>
+                                    <CommentIcon />
+                                    <span>{idea.commentCount}</span>
+                                    <LikedIcon />
+                                    <span>{idea.likeCount}</span>
+                                  </ReactionWrap>
+                                </IdeaBottom>
+                              </IdeaInner>
                             </Idea>
                           )}
                         </Draggable>
