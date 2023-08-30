@@ -2,6 +2,7 @@ import React, { ReactNode, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import FlexWrap from "@/components/Atoms/FlexWrap";
+import Brainstorming from "@/components/Templates/Idea/Brainstorming";
 import IdeaList from "@/components/Templates/Idea/IdeaList";
 import JoinerList from "@/components/Templates/Idea/JoinerList";
 import Vote from "@/components/Templates/Idea/Vote";
@@ -121,7 +122,9 @@ function Idea(): React.ReactElement {
           통계 및 분석
         </TabPanel>
         <TabPanel value={tab} index={3}>
-          브레인 스토밍
+          <TabContainer>
+            <Brainstorming projectId={projectId} joiners={joiners} />
+          </TabContainer>
         </TabPanel>
         <TabPanel value={tab} index={4}>
           <TabContainer>
