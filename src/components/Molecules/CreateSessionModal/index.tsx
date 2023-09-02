@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+import ComboBox from "@/components/Atoms/ComboBox";
 import Driver from "@/components/Atoms/Driver";
 import InputBox from "@/components/Atoms/InputBox";
 import MultiComboBox from "@/components/Atoms/MultiComboBox";
@@ -32,7 +33,8 @@ function CreateSessionModal({
   const { axios } = useAuth();
 
   const [title, setTitle] = useState("");
-  const [processMinutes, setProcessMinutes] = useState<number>(15);
+  const [desc, setDesc] = useState("");
+  const [processMinutes, setProcessMinutes] = useState<string>("15M");
   const [relatedUser, setRelatedUser] = useState<string[]>([]);
   const [err, setErr] = useState("");
 
@@ -46,15 +48,12 @@ function CreateSessionModal({
   const handleCreateSession = () => {
     const data = {
       title: title,
-      processMinutes: processMinutes,
+      processMinutes: Number(processMinutes.replace("M", "")),
       projectId: projectId,
       userIds: relatedIds,
     };
     axios
-      .post(
-        `${process.env.NEXT_PUBLIC_BASEURL}/brainstorming/${projectId}`,
-        data
-      )
+      .post(`${process.env.NEXT_PUBLIC_BASEURL}/brainstorming`, data)
       .then((res) => {
         handleClose();
       });
@@ -93,16 +92,30 @@ function CreateSessionModal({
           <Grid>
             <Line rate={1}>
               <SubTitleBar />
-              <span>{"세션 진행 시간"}</span>
+              <span>{"세션 설명"}</span>
             </Line>
             <Line rate={2.5}>
               <InputBox
                 placeHolder={""}
-                text={title}
-                setText={setTitle}
+                text={desc}
+                setText={setDesc}
                 errText={err}
-                autoComplete={"name"}
+                autoComplete={"desc"}
                 fontSize={15}
+              />
+            </Line>
+          </Grid>
+
+          <Grid>
+            <Line rate={1}>
+              <SubTitleBar />
+              <span>{"세션 진행 시간"}</span>
+            </Line>
+            <Line rate={2.5}>
+              <ComboBox
+                value={processMinutes}
+                setValue={setProcessMinutes}
+                options={["15M", "30M", "45M", "60M"]}
               />
             </Line>
           </Grid>

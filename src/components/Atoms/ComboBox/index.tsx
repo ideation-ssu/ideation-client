@@ -17,9 +17,7 @@ function ComboBox({
 }): React.ReactElement {
   return (
     <StyledComboBox
-      onChange={(e: React.SyntheticEvent, value: unknown) => {
-        setValue(value as string);
-      }}
+      defaultValue={value}
       disableClearable={true}
       id="tags-outlined"
       options={options ? options : []}
@@ -27,6 +25,9 @@ function ComboBox({
       renderInput={(params) => (
         <StyledTextField {...params} placeholder={placeholder} />
       )}
+      onChange={(e: React.SyntheticEvent, value: unknown) => {
+        setValue(value as string);
+      }}
       width={width ? width : 0}
     />
   );

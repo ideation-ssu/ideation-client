@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import SockJs from "sockjs-client";
 
 import RoundButton from "@/components/Atoms/RoundButton";
 import CreateSessionModal from "@/components/Molecules/CreateSessionModal";
+import WaitSessionModal from "@/components/Molecules/WaitSessionModal";
 import { ISession } from "@/interfaces/brainstorming";
 import { Joiner } from "@/interfaces/project";
 import { useAuth } from "@/utils/auth";
+import StompJS, { CompatClient, Stomp } from "@stomp/stompjs";
 
 import {
   BrainstorminIcon,
@@ -23,13 +26,20 @@ function Brainstorming({
   projectId: number;
   joiners: Joiner[];
 }): React.ReactElement | null {
-  const { axios } = useAuth();
+  const { axios, user } = useAuth();
+  const client = useRef<CompatClient>();
+
   const [session, setSession] = useState<ISession>();
 
   // new vote idea modal
   const [newSessionOpen, setNewSessionOpen] = React.useState(false);
   const handleNewSessionOpen = () => setNewSessionOpen(true);
   const handleNewSessionClose = () => setNewSessionOpen(false);
+
+  // wait session modal
+  const [waitSessionOpen, setWaitSessionOpen] = React.useState(false);
+  const handleWaitSessionOpen = () => setWaitSessionOpen(true);
+  const handleWaitSessionClose = () => setWaitSessionOpen(false);
 
   useEffect(() => {
     getSession();
@@ -39,8 +49,21 @@ function Brainstorming({
     axios
       .get(`${process.env.NEXT_PUBLIC_BASEURL}/brainstorming/${projectId}`)
       .then((res) => {
-        setSession(res.data.data);
+        setSession(res.data);
+        if (!res.data.error) stompConnect(res.data.brainstormingId);
       });
+  };
+
+  const stompConnect = (brainstormingId: number) => {
+    client.current = Stomp.over(() => {
+      const sock = new SockJs(`${process.env.NEXT_PUBLIC_BASEURL}/websocket`);
+      return sock;
+    });
+
+    console.log(brainstormingId);
+    client.current.connect({}, () => {
+      client.current?.subscribe(`/topic/current/${brainstormingId}`, () => {});
+    });
   };
 
   return (
@@ -50,7 +73,18 @@ function Brainstorming({
       </Header>
 
       {session ? (
-        <></>
+        <>
+          <RoundButton
+            isFilled={true}
+            text={"모달 띄우기 테스트"}
+            isMainClr={false}
+            onClick={handleWaitSessionOpen}
+          />
+          <WaitSessionModal
+            open={waitSessionOpen}
+            handleClose={handleWaitSessionClose}
+          />
+        </>
       ) : (
         <Header className={"add-button"}>
           <CreateVoteButtonWrap>
