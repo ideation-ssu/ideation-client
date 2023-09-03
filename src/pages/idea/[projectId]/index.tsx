@@ -27,8 +27,13 @@ interface IdeaProps {
   code?: string;
 }
 
-const Idea: NextPage<IdeaProps> = (props) => {
-  const { projectId, code } = props;
+function Idea(): React.ReactElement {
+  //const { projectId, code } = props;
+  const router = useRouter();
+  const { query } = router;
+  const projectId: number =
+    typeof query.projectId === "string" ? parseInt(query.projectId) : -1;
+  const code: string | undefined = query.code as string | undefined;
 
   const { user, axios } = useAuth();
   const [isOwner, setIsOwner] = useState<boolean>(false);
@@ -144,7 +149,7 @@ const Idea: NextPage<IdeaProps> = (props) => {
       </Content>
     </Container>
   );
-};
+}
 
 export default Idea;
 
