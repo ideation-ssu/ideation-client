@@ -113,6 +113,7 @@ function CreateSessionModal({
             </Line>
             <Line rate={2.5}>
               <ComboBox
+                placeholder={""}
                 value={processMinutes}
                 setValue={setProcessMinutes}
                 options={["15M", "30M", "45M", "60M"]}

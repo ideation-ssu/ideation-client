@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect, useState } from "react";
-import { GetServerSideProps } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import { useRouter } from "next/router";
 
 import FlexWrap from "@/components/Atoms/FlexWrap";
@@ -24,20 +24,13 @@ import { useAuth } from "@/utils/auth";
 
 interface IdeaProps {
   projectId: number;
-  code: string;
+  code?: string;
 }
 
-function Idea(): React.ReactElement {
+const Idea: NextPage<IdeaProps> = (props) => {
+  const { projectId, code } = props;
+
   const { user, axios } = useAuth();
-
-  const router = useRouter();
-  const { query } = router;
-  const projectId: number =
-    typeof query.projectId === "string" ? parseInt(query.projectId) : -1;
-  const code: string = query.code as string;
-
-  console.log(router);
-
   const [isOwner, setIsOwner] = useState<boolean>(false);
   const [tab, setTab] = useState(!code ? 1 : 3);
   const [ideas, setIdeas] = useState<IIdeaByStatus>({
@@ -62,7 +55,7 @@ function Idea(): React.ReactElement {
   };
 
   const goMain = () => {
-    router.push("/main");
+    //  router.push("/main");
   };
 
   const getJoiners = () => {
@@ -136,7 +129,11 @@ function Idea(): React.ReactElement {
         </TabPanel>
         <TabPanel value={tab} index={4}>
           <TabContainer>
-            <JoinerList projectId={projectId} joiners={joiners} code={code} />
+            <JoinerList
+              projectId={projectId}
+              joiners={joiners}
+              code={code ? code : ""}
+            />
           </TabContainer>
         </TabPanel>
         <TabPanel value={tab} index={5}>
@@ -147,7 +144,7 @@ function Idea(): React.ReactElement {
       </Content>
     </Container>
   );
-}
+};
 
 export default Idea;
 
@@ -157,13 +154,15 @@ export const getServerSideProps: GetServerSideProps<IdeaProps> = async (
   const { query } = context;
   const projectId: number =
     typeof query.projectId === "string" ? parseInt(query.projectId) : -1;
-  const code: string = query.code as string;
+  const code: string | undefined = query.code as string | undefined;
+
+  const props: IdeaProps = {
+    projectId,
+    ...(code !== undefined && { code }),
+  };
 
   return {
-    props: {
-      projectId,
-      code,
-    },
+    props,
   };
 };
 
