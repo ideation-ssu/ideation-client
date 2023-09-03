@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
-import { router } from "next/client";
+import { useRouter } from "next/router";
 
 import RoundButton from "@/components/Atoms/RoundButton";
 import CreateSessionModal from "@/components/Molecules/CreateSessionModal";
 import { Joiner } from "@/interfaces/project";
-import brainstormingId from "@/pages/brainstorming/[brainstormingId]";
 import { useAuth } from "@/utils/auth";
 
 import {
@@ -25,6 +24,7 @@ function Brainstorming({
   joiners: Joiner[];
 }): React.ReactElement | null {
   const { axios } = useAuth();
+  const router = useRouter();
 
   // new vote idea modal
   const [newSessionOpen, setNewSessionOpen] = React.useState(false);

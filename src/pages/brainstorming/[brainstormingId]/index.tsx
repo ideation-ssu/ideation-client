@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { GetServerSideProps, NextPage } from "next";
 import { router } from "next/client";
 import SockJs from "sockjs-client";
 
@@ -30,13 +31,14 @@ import { CompatClient, Stomp } from "@stomp/stompjs";
 
 import { LogoIcon } from "../../../../public/icons/Logo/styles.ts";
 
-function BrainstormingSession(): React.ReactElement {
+interface BrainstormingProps {
+  brainstormingId: number;
+}
+
+const BrainstormingSession: NextPage<BrainstormingProps> = ({
+  brainstormingId,
+}: BrainstormingProps) => {
   const { axios, user } = useAuth();
-  const { query } = router;
-  const brainstormingId: number =
-    typeof query.brainstormingId === "string"
-      ? parseInt(query.brainstormingId)
-      : -1;
 
   const client = useRef<CompatClient>();
   const [message, setMessage] = useState<IMessage>();
@@ -49,6 +51,7 @@ function BrainstormingSession(): React.ReactElement {
 
   useEffect(() => {
     handleWaitSessionOpen();
+    console.log("open");
     getBrainstorming();
     stompConnect(brainstormingId);
   }, []);
@@ -111,6 +114,22 @@ function BrainstormingSession(): React.ReactElement {
       <Content></Content>
     </Container>
   );
-}
+};
 
 export default BrainstormingSession;
+
+export const getServerSideProps: GetServerSideProps<
+  BrainstormingProps
+> = async (context) => {
+  const { query } = context;
+  const brainstormingId: number =
+    typeof query.brainstormingId === "string"
+      ? parseInt(query.brainstormingId)
+      : -1;
+
+  return {
+    props: {
+      brainstormingId,
+    },
+  };
+};
