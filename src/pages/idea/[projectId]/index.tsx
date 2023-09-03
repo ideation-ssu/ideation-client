@@ -1,4 +1,5 @@
 import React, { ReactNode, useEffect, useState } from "react";
+import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 
 import FlexWrap from "@/components/Atoms/FlexWrap";
@@ -21,14 +22,21 @@ import {
 } from "@/styles/idea/styles";
 import { useAuth } from "@/utils/auth";
 
+interface IdeaProps {
+  projectId: number;
+  code: string;
+}
+
 function Idea(): React.ReactElement {
-  const router = useRouter();
   const { user, axios } = useAuth();
 
+  const router = useRouter();
   const { query } = router;
   const projectId: number =
     typeof query.projectId === "string" ? parseInt(query.projectId) : -1;
   const code: string = query.code as string;
+
+  console.log(router);
 
   const [isOwner, setIsOwner] = useState<boolean>(false);
   const [tab, setTab] = useState(!code ? 1 : 3);
@@ -142,6 +150,22 @@ function Idea(): React.ReactElement {
 }
 
 export default Idea;
+
+export const getServerSideProps: GetServerSideProps<IdeaProps> = async (
+  context
+) => {
+  const { query } = context;
+  const projectId: number =
+    typeof query.projectId === "string" ? parseInt(query.projectId) : -1;
+  const code: string = query.code as string;
+
+  return {
+    props: {
+      projectId,
+      code,
+    },
+  };
+};
 
 interface TabPanelProps {
   children?: React.ReactNode;

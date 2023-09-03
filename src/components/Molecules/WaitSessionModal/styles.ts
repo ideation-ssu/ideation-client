@@ -51,15 +51,11 @@ export const Content = styled("div")`
   display: flex;
   flex-direction: column;
   gap: 55px;
-  padding: 45px 0;
+  padding: 25px 0;
 
   span {
     font-size: 30px;
     font-weight: bold;
-  }
-
-  .guide-message {
-    font-size: 18px;
     text-align: center;
   }
 
@@ -68,9 +64,9 @@ export const Content = styled("div")`
   }
 `;
 
-export const JoinerWrap = styled("div")`
+export const JoinerWrap = styled("div")<{ isOwner: boolean }>`
   width: 370px;
-  height: 250px;
+  height: ${(props) => (props.isOwner ? 230 : 270)}px;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -85,7 +81,14 @@ export const JoinerTitle = styled("div")`
   justify-content: space-between;
 `;
 
+export const JoinerListWrap = styled("div")`
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+`;
+
 export const JoinerList = styled("div")`
+  min-height: 50px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -108,23 +111,19 @@ export const ActiveWrap = styled("div")`
   flex: 1;
 `;
 
-export const Active = styled("div")`
+export const Active = styled("div")<{ isActive: boolean }>`
   width: 15px;
   height: 15px;
-  background-color: #00b18c;
+  background-color: ${(props) => (props.isActive ? "#00b18c" : "#f36262")};
   border-radius: 10px;
 `;
 
 export const ButtonWrap = styled("div")`
-  width: 85%;
+  width: 410px;
   margin-top: 20px;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
   gap: 5px;
-
-  button {
-    width: 100px;
-  }
 `;

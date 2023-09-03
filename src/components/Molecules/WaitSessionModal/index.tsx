@@ -2,6 +2,7 @@ import React from "react";
 import Avatar from "@mui/material/Avatar";
 
 import RoundButton from "@/components/Atoms/RoundButton";
+import { IMessage, ISession } from "@/interfaces/brainstorming";
 import { useAuth } from "@/utils/auth";
 
 import {
@@ -12,6 +13,7 @@ import {
   Container,
   Content,
   JoinerList,
+  JoinerListWrap,
   JoinerTitle,
   JoinerWrap,
   StyledModal,
@@ -21,18 +23,20 @@ import {
 function WaitSessionModal({
   open,
   handleClose,
+  brainstorming,
+  message,
 }: {
   open: boolean;
   handleClose: () => void;
+  brainstorming: ISession;
+  message: IMessage;
 }): React.ReactElement {
-  const { axios } = useAuth();
-
-  const handleCloseVote = () => {};
+  const { user } = useAuth();
+  const isOwner = user.id === brainstorming.userId;
 
   return (
     <StyledModal
       open={open}
-      onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
@@ -44,49 +48,54 @@ function WaitSessionModal({
           </span>
         </Title>
         <Content>
-          <span className={"guide-message"}>{"세션 제목이 들어갈 자리"}</span>
+          <span className={"guide-message"}>{brainstorming.title}</span>
         </Content>
-        <JoinerWrap>
+        <JoinerWrap isOwner={isOwner}>
           <JoinerTitle>
             <span>{"참여자"}</span>
-            <span>{"3/10"}</span>
+            <span>{`${message.onlineSessions.length} / ${
+              message.onlineSessions.length + message.offlineSessions.length
+            }`}</span>
           </JoinerTitle>
-          <JoinerList>
-            <AvatarWrap>
-              <Avatar />
-            </AvatarWrap>
-            <span>{"조세연"}</span>
-            <ActiveWrap>
-              <Active />
-            </ActiveWrap>
-          </JoinerList>
-          <JoinerList>
-            <AvatarWrap>
-              <Avatar />
-            </AvatarWrap>
-            <span>{"조세연"}</span>
-            <ActiveWrap>
-              <Active />
-            </ActiveWrap>
-          </JoinerList>
-          <JoinerList>
-            <AvatarWrap>
-              <Avatar />
-            </AvatarWrap>
-            <span>{"조세연"}</span>
-            <ActiveWrap>
-              <Active />
-            </ActiveWrap>
-          </JoinerList>
+          <JoinerListWrap>
+            {message.onlineSessions.map((session, index) => {
+              return (
+                <JoinerList key={index}>
+                  <AvatarWrap>
+                    <Avatar />
+                  </AvatarWrap>
+                  <span>{session.user.name}</span>
+                  <ActiveWrap>
+                    <Active isActive={true} />
+                  </ActiveWrap>
+                </JoinerList>
+              );
+            })}
+
+            {message.offlineSessions.map((session, index) => {
+              return (
+                <JoinerList key={index}>
+                  <AvatarWrap>
+                    <Avatar />
+                  </AvatarWrap>
+                  <span>{session.user.name}</span>
+                  <ActiveWrap>
+                    <Active isActive={false} />
+                  </ActiveWrap>
+                </JoinerList>
+              );
+            })}
+          </JoinerListWrap>
         </JoinerWrap>
-        {/*<ButtonWrap>*/}
-        {/*  <RoundButton text={"Cancel"} isFilled={false} onClick={handleClose} />*/}
-        {/*  <RoundButton*/}
-        {/*    text={"Continue"}*/}
-        {/*    isFilled={true}*/}
-        {/*    onClick={handleCloseVote}*/}
-        {/*  />*/}
-        {/*</ButtonWrap>*/}
+        {isOwner && (
+          <ButtonWrap>
+            <RoundButton
+              text={"세션 시작하기"}
+              isFilled={true}
+              onClick={handleClose}
+            />
+          </ButtonWrap>
+        )}
       </Container>
     </StyledModal>
   );
