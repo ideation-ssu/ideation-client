@@ -16,7 +16,7 @@ function Login(): React.ReactElement {
       <LoginForm
         isInvited={!!code}
         handleLoginAfter={() => {
-          if (code) router.push(`/idea/23?code=${code}`);
+          if (code) router.push(`/idea/id=${id}?code=${code}`);
           router.push("/main");
         }}
         handleSignUp={() => {
