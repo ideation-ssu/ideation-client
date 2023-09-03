@@ -22,7 +22,7 @@ function ProfileModal({
     >
       <ModalWrap>
         <TextWrap>
-          <StyledText className={"name"}>{user.userName}</StyledText>
+          <StyledText className={"name"}>{user.userDto.name}</StyledText>
           <StyledText className={"job"}>{"UI/UX Designer"}</StyledText>
         </TextWrap>
         <TextWrap>
