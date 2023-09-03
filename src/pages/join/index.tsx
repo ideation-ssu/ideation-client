@@ -9,7 +9,7 @@ function Join(): React.ReactElement {
 
   useEffect(() => {
     if (code) {
-      router.push(`/login?id=${id}code=${code}`);
+      router.push(`/login?id=${id}&code=${code}`);
     }
   }, [code, router]);
 
