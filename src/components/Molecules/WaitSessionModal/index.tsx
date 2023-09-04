@@ -1,22 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 
 import RoundButton from "@/components/Atoms/RoundButton";
-import { IMessage, ISession } from "@/interfaces/brainstorming";
+import { ISession, ITopic } from "@/interfaces/brainstorming";
 import { useAuth } from "@/utils/auth";
+import { useTimer } from "@/utils/Timer";
 
 import {
   Active,
   ActiveWrap,
   AvatarWrap,
+  BrainstormingIcon,
   ButtonWrap,
+  ClusteringIcon,
   Container,
-  Content,
+  FuncTag,
+  Grid,
+  Item,
   JoinerList,
   JoinerListWrap,
   JoinerTitle,
   JoinerWrap,
+  SessionFuncWrap,
+  SessionName,
+  StatisticsIcon,
   StyledModal,
+  TimerIcon,
   Title,
 } from "./styles";
 
@@ -24,15 +33,26 @@ function WaitSessionModal({
   open,
   handleClose,
   brainstorming,
-  message,
+  topic,
 }: {
   open: boolean;
   handleClose: () => void;
   brainstorming: ISession;
-  message: IMessage;
+  topic: ITopic;
 }): React.ReactElement {
   const { user } = useAuth();
   const isOwner = user.id === brainstorming.userId;
+
+  const [isStarted, setIsStarted] = useState<boolean>(false);
+
+  let timerValues = { minutes: 0, seconds: 0 };
+  useEffect(() => {
+    if (isStarted) {
+      timerValues = useTimer(0, 10);
+    }
+
+    if (timerValues.seconds === 0 && isStarted) handleClose();
+  }, [isStarted, timerValues.seconds]);
 
   return (
     <StyledModal
@@ -42,58 +62,103 @@ function WaitSessionModal({
     >
       <Container>
         <Title>
-          <span className={"main_title"}>{"세션 시작을 대기 중입니다."}</span>
+          <span className={"main_title"}>
+            {isStarted
+              ? "브레인 스토밍 세션 주요 4가지 기능"
+              : "세션 시작을 대기 중입니다."}
+          </span>
           <span className={"sub_title"}>
-            {"세션 담당자가 세션을 시작하기 전까지 기다려주세요."}
+            {isStarted
+              ? "아이데이션의 브레인스토밍 기능을 효율적으로 사용해보세요!"
+              : "세션 담당자가 세션을 시작하기 전까지 기다려주세요."}
           </span>
         </Title>
-        <Content>
-          <span className={"guide-message"}>{brainstorming.title}</span>
-        </Content>
-        <JoinerWrap isOwner={isOwner}>
-          <JoinerTitle>
-            <span>{"참여자"}</span>
-            <span>{`${message.onlineSessions.length} / ${
-              message.onlineSessions.length + message.offlineSessions.length
-            }`}</span>
-          </JoinerTitle>
-          <JoinerListWrap>
-            {message.onlineSessions.map((session, index) => {
-              return (
-                <JoinerList key={index}>
-                  <AvatarWrap>
-                    <Avatar />
-                  </AvatarWrap>
-                  <span>{session.user.name}</span>
-                  <ActiveWrap>
-                    <Active isActive={true} />
-                  </ActiveWrap>
-                </JoinerList>
-              );
-            })}
+        {isStarted ? (
+          <>
+            <SessionFuncWrap>
+              <Grid className={"first-child"}>
+                <Item className={"first-child"}>
+                  <TimerIcon />
+                  <FuncTag>{"시간 10분 연장"}</FuncTag>
+                </Item>
+                <Item>
+                  <ClusteringIcon />
+                  <FuncTag>{"클러스터링"}</FuncTag>
+                </Item>
+              </Grid>
+              <Grid>
+                <Item className={"first-child"}>
+                  <BrainstormingIcon />
+                  <FuncTag>{"브레인스토밍 통계"}</FuncTag>
+                </Item>
+                <Item>
+                  <StatisticsIcon />
+                  <FuncTag>{"통계"}</FuncTag>
+                </Item>
+              </Grid>
+            </SessionFuncWrap>
+          </>
+        ) : (
+          <>
+            <SessionName>
+              <span>{brainstorming.title}</span>
+            </SessionName>
+            <JoinerWrap isOwner={isOwner}>
+              <JoinerTitle>
+                <span>{"참여자"}</span>
+                <span>{`${topic.onlineSessions.length} / ${
+                  topic.onlineSessions.length + topic.offlineSessions.length
+                }`}</span>
+              </JoinerTitle>
+              <JoinerListWrap>
+                {topic.onlineSessions.map((session, index) => {
+                  return (
+                    <JoinerList key={index}>
+                      <AvatarWrap>
+                        <Avatar />
+                      </AvatarWrap>
+                      <span>{session.user.name}</span>
+                      <ActiveWrap>
+                        <Active isActive={true} />
+                      </ActiveWrap>
+                    </JoinerList>
+                  );
+                })}
 
-            {message.offlineSessions.map((session, index) => {
-              return (
-                <JoinerList key={index}>
-                  <AvatarWrap>
-                    <Avatar />
-                  </AvatarWrap>
-                  <span>{session.user.name}</span>
-                  <ActiveWrap>
-                    <Active isActive={false} />
-                  </ActiveWrap>
-                </JoinerList>
-              );
-            })}
-          </JoinerListWrap>
-        </JoinerWrap>
+                {topic.offlineSessions.map((session, index) => {
+                  return (
+                    <JoinerList key={index}>
+                      <AvatarWrap>
+                        <Avatar />
+                      </AvatarWrap>
+                      <span>{session.user.name}</span>
+                      <ActiveWrap>
+                        <Active isActive={false} />
+                      </ActiveWrap>
+                    </JoinerList>
+                  );
+                })}
+              </JoinerListWrap>
+            </JoinerWrap>
+          </>
+        )}
         {isOwner && (
           <ButtonWrap>
-            <RoundButton
-              text={"세션 시작하기"}
-              isFilled={true}
-              onClick={handleClose}
-            />
+            {isStarted ? (
+              <>
+                <RoundButton
+                  text={`${timerValues.seconds}초 후에 세션이 시작됩니다.`}
+                  isFilled={true}
+                  onClick={handleClose}
+                />
+              </>
+            ) : (
+              <RoundButton
+                text={"세션 시작하기"}
+                isFilled={true}
+                onClick={() => setIsStarted(true)}
+              />
+            )}
           </ButtonWrap>
         )}
       </Container>

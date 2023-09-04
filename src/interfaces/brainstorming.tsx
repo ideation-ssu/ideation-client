@@ -17,7 +17,12 @@ export interface ISessionInfo {
   user: User;
 }
 
-export interface IMessage {
+export interface ITopic {
   onlineSessions: ISessionInfo[];
   offlineSessions: ISessionInfo[];
+}
+
+export interface IStatus {
+  brainstormingId: number;
+  status: string;
 }

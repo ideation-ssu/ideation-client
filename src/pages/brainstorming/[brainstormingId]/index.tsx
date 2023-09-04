@@ -9,7 +9,7 @@ import CreateProjectModal from "@/components/Molecules/CreateProjectModal";
 import LoginModal from "@/components/Molecules/LoginModal";
 import WaitSessionModal from "@/components/Molecules/WaitSessionModal";
 import Workspace from "@/components/Templates/Main/Workspace";
-import { IMessage, ISession } from "@/interfaces/brainstorming";
+import { ISession, IStatus, ITopic } from "@/interfaces/brainstorming";
 import { Project } from "@/interfaces/project";
 import {
   AvatarWrap,
@@ -41,7 +41,8 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
   const { axios, user } = useAuth();
 
   const client = useRef<CompatClient>();
-  const [message, setMessage] = useState<IMessage>();
+  const [curTopic, setCurTopic] = useState<ITopic>();
+  const [status, setStatus] = useState<IStatus>();
   const [brainstorming, setBrainstorming] = useState<ISession>();
 
   // wait session modal
@@ -83,7 +84,14 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
     client.current?.subscribe(
       `/topic/current/${brainstormingId}`,
       (message) => {
-        setMessage(JSON.parse(message.body));
+        setCurTopic(JSON.parse(message.body));
+      }
+    );
+
+    client.current?.subscribe(
+      `/topic/session/${brainstormingId}/status`,
+      (message) => {
+        setStatus(JSON.parse(message.body));
       }
     );
   };
@@ -96,14 +104,25 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
     client.current?.send("/app/join", {}, JSON.stringify(message));
   };
 
+  const stompStart = (brainstormingId: number) => {
+    const message = {
+      userId: user.id,
+      brainstormingId: brainstormingId,
+    };
+    client.current?.send("/app/session/start", {}, JSON.stringify(message));
+  };
+
   return (
     <Container>
-      {message && brainstorming && (
+      {status?.status !== "STARTED" && curTopic && brainstorming && (
         <WaitSessionModal
           open={waitSessionOpen}
-          handleClose={handleWaitSessionClose}
+          handleClose={() => {
+            handleWaitSessionClose();
+            stompStart(brainstormingId);
+          }}
           brainstorming={brainstorming}
-          message={message}
+          topic={curTopic}
         />
       )}
       <Header>
@@ -111,7 +130,7 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
           <LogoIcon />
         </LogoWrap>
       </Header>
-      <Content></Content>
+      <Content>{status?.status === "STARTED" && <div>{"hi"}</div>}</Content>
     </Container>
   );
 };
