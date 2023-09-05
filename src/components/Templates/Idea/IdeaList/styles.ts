@@ -51,7 +51,6 @@ export const SearchInput = styled(InputBase)`
 `;
 
 export const CardContainer = styled("div")`
-  width: 100%;
   height: 100%;
   display: flex;
   justify-content: space-between;

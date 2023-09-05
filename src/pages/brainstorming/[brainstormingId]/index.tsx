@@ -1,31 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import { GetServerSideProps, NextPage } from "next";
-import { router } from "next/client";
 import SockJs from "sockjs-client";
 
-import Avatar from "@/components/Atoms/Avatar";
-import RoundButton from "@/components/Atoms/RoundButton";
-import CreateProjectModal from "@/components/Molecules/CreateProjectModal";
-import LoginModal from "@/components/Molecules/LoginModal";
 import WaitSessionModal from "@/components/Molecules/WaitSessionModal";
-import Workspace from "@/components/Templates/Main/Workspace";
 import { ISession, IStatus, ITopic } from "@/interfaces/brainstorming";
-import { Project } from "@/interfaces/project";
 import {
-  AvatarWrap,
-  ButtonWrap,
   Container,
   Content,
   Header,
   LogoWrap,
-  RightHeaderWrap,
-  Search,
-  SearchIcon,
-  SearchIconWrapper,
-  SearchInput,
-  TitleBar,
-  TitleWrap,
-} from "@/styles/main/styles";
+} from "@/styles/brainstorming/styles";
 import { useAuth } from "@/utils/auth";
 import { CompatClient, Stomp } from "@stomp/stompjs";
 

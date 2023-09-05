@@ -5,19 +5,14 @@ import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 
 export const Container = styled("div")`
+  width: 100%;
   height: 100vh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-
-  background-color: #f8f8f8;
-  background-image: linear-gradient(0deg, transparent 34px, #e9e9e9 34px),
-    linear-gradient(90deg, transparent 34px, #e9e9e9 34px);
-  background-size: 35px 35px;
 `;
 
 export const Content = styled("div")`
-  width: 100%;
   display: flex;
   flex-direction: column;
   padding: 30px;
