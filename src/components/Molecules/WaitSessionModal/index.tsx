@@ -44,15 +44,13 @@ function WaitSessionModal({
   const isOwner = user.id === brainstorming.userId;
 
   const [isStarted, setIsStarted] = useState<boolean>(false);
+  const timer = useTimer(isStarted, 0, 10);
 
-  let timerValues = { minutes: 0, seconds: 0 };
   useEffect(() => {
-    if (isStarted) {
-      timerValues = useTimer(0, 10);
+    if (isStarted && timer.minutes === 0 && timer.seconds === 0) {
+      handleClose();
     }
-
-    if (timerValues.seconds === 0 && isStarted) handleClose();
-  }, [isStarted, timerValues.seconds]);
+  }, [isStarted, timer]);
 
   return (
     <StyledModal
@@ -147,7 +145,7 @@ function WaitSessionModal({
             {isStarted ? (
               <>
                 <RoundButton
-                  text={`${timerValues.seconds}초 후에 세션이 시작됩니다.`}
+                  text={`${timer.seconds}초 후에 세션이 시작됩니다.`}
                   isFilled={true}
                   onClick={handleClose}
                 />
