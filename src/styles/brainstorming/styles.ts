@@ -16,7 +16,6 @@ export const Container = styled("div")`
 export const Content = styled("div")`
   display: flex;
   flex-direction: column;
-  padding: 30px;
 `;
 
 export const Header = styled("div")`

@@ -10,6 +10,7 @@ export const Container = styled("div")`
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  background-color: #f8f8f8;
 `;
 
 export const Content = styled("div")`

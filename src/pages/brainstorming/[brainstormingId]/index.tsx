@@ -35,11 +35,8 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
   const handleWaitSessionClose = () => setWaitSessionOpen(false);
 
   useEffect(() => {
-    handleWaitSessionOpen();
-    console.log("open");
     getBrainstorming();
-    stompConnect(brainstormingId);
-  }, []);
+  }, [user, brainstormingId]);
 
   const getBrainstorming = () => {
     axios
@@ -48,44 +45,35 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
       )
       .then((res) => {
         setBrainstorming(res.data);
+        stompConnect(res.data.isStarted, res.data.brainstormingId);
       });
   };
 
-  const stompConnect = (brainstormingId: number) => {
+  const stompConnect = (isStarted: boolean, brainstormingId: number) => {
     client.current = Stomp.over(() => {
       const sock = new SockJs(`${process.env.NEXT_PUBLIC_BASEURL}/websocket`);
       return sock;
     });
 
     client.current.connect({}, () => {
-      stompSend(brainstormingId);
-      stompSubscribe(brainstormingId);
-      handleWaitSessionOpen();
+      stompJoin(brainstormingId);
+      if (!isStarted) handleWaitSessionOpen();
     });
   };
 
-  const stompSubscribe = (brainstormingId: number) => {
+  const stompJoin = (brainstormingId: number) => {
+    const message = {
+      userId: user.id,
+      brainstormingId: brainstormingId,
+    };
+    client.current?.send("/app/join", {}, JSON.stringify(message));
+
     client.current?.subscribe(
       `/topic/current/${brainstormingId}`,
       (message) => {
         setCurTopic(JSON.parse(message.body));
       }
     );
-
-    client.current?.subscribe(
-      `/topic/session/${brainstormingId}/status`,
-      (message) => {
-        setStatus(JSON.parse(message.body));
-      }
-    );
-  };
-
-  const stompSend = (brainstormingId: number) => {
-    const message = {
-      userId: user.id,
-      brainstormingId: brainstormingId,
-    };
-    client.current?.send("/app/join", {}, JSON.stringify(message));
   };
 
   const stompStart = (brainstormingId: number) => {
@@ -94,6 +82,14 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
       brainstormingId: brainstormingId,
     };
     client.current?.send("/app/session/start", {}, JSON.stringify(message));
+
+    client.current?.subscribe(
+      `/topic/session/${brainstormingId}/status`,
+      (message) => {
+        setStatus(JSON.parse(message.body));
+        console.log(JSON.parse(message.body));
+      }
+    );
   };
 
   return (
@@ -110,11 +106,13 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
         />
       )}
       <Header>
-        <LogoWrap>
-          <LogoIcon />
-        </LogoWrap>
+        {brainstorming?.isStarted && (
+          <LogoWrap>
+            <LogoIcon />
+          </LogoWrap>
+        )}
       </Header>
-      <Content>{status?.status === "STARTED" && <div>{"hi"}</div>}</Content>
+      <Content>{<div>{"hi"}</div>}</Content>
     </Container>
   );
 };
