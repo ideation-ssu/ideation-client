@@ -2,13 +2,17 @@ import React, { useEffect, useRef, useState } from "react";
 import { GetServerSideProps, NextPage } from "next";
 import SockJs from "sockjs-client";
 
+import OutlineInputBox from "@/components/Atoms/OutlineInputBox";
 import WaitSessionModal from "@/components/Molecules/WaitSessionModal";
 import { ISession, IStatus, ITopic } from "@/interfaces/brainstorming";
 import {
   Container,
   Content,
+  Footer,
   Header,
   LogoWrap,
+  SendBtn,
+  SendIcon,
 } from "@/styles/brainstorming/styles";
 import { useAuth } from "@/utils/auth";
 import { CompatClient, Stomp } from "@stomp/stompjs";
@@ -28,6 +32,8 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
   const [curTopic, setCurTopic] = useState<ITopic>();
   const [status, setStatus] = useState<IStatus>();
   const [brainstorming, setBrainstorming] = useState<ISession>();
+
+  const [idea, setIdea] = useState<string>("");
 
   // wait session modal
   const [waitSessionOpen, setWaitSessionOpen] = React.useState(false);
@@ -113,6 +119,17 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
         )}
       </Header>
       <Content>{<div>{"hi"}</div>}</Content>
+      <Footer>
+        <OutlineInputBox
+          placeHolder=""
+          autoComplete="brainstorming"
+          text={idea}
+          setText={setIdea}
+        />
+        <SendBtn>
+          <SendIcon />
+        </SendBtn>
+      </Footer>
     </Container>
   );
 };

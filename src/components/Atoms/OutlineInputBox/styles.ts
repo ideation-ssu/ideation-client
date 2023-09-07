@@ -11,6 +11,7 @@ export const Container = styled("div")`
 export const Input = styled(TextField)<{ error: boolean; normal: string }>`
   &.MuiTextField-root {
     height: 100%;
+    background-color: #fff;
   }
 
   .MuiOutlinedInput-notchedOutline {
