@@ -64,3 +64,24 @@ export const Footer = styled("div")`
   left: 50%;
   transform: translate(-50%, -50%);
 `;
+
+export const ExitBtn = styled("div")`
+  width: 53px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: -60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background: var(
+    --grad,
+    linear-gradient(270deg, #6e72fc 2.3%, #ad1deb 97.24%)
+  );
+  cursor: pointer;
+
+  span {
+    color: #fff;
+  }
+`;

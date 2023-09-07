@@ -1,13 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { KeyboardEvent, useEffect, useRef, useState } from "react";
 import { GetServerSideProps, NextPage } from "next";
 import SockJs from "sockjs-client";
 
 import OutlineInputBox from "@/components/Atoms/OutlineInputBox";
+import RandomCircle from "@/components/Atoms/RandomCircle";
 import WaitSessionModal from "@/components/Molecules/WaitSessionModal";
 import { ISession, IStatus, ITopic } from "@/interfaces/brainstorming";
 import {
   Container,
   Content,
+  ExitBtn,
   Footer,
   Header,
   LogoWrap,
@@ -34,6 +36,7 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
   const [brainstorming, setBrainstorming] = useState<ISession>();
 
   const [idea, setIdea] = useState<string>("");
+  const [circleValue, setCircleValue] = useState<string>("");
 
   // wait session modal
   const [waitSessionOpen, setWaitSessionOpen] = React.useState(false);
@@ -98,6 +101,22 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
     );
   };
 
+  const stompEnd = (brainstormingId: number) => {
+    const message = {
+      userId: user.id,
+      brainstormingId: brainstormingId,
+    };
+    client.current?.send("/app/session/end", {}, JSON.stringify(message));
+
+    client.current?.subscribe(
+      `/topic/session/${brainstormingId}/status`,
+      (message) => {
+        setStatus(JSON.parse(message.body));
+        console.log(JSON.parse(message.body));
+      }
+    );
+  };
+
   return (
     <Container>
       {status?.status !== "STARTED" && curTopic && brainstorming && (
@@ -118,17 +137,32 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
           </LogoWrap>
         )}
       </Header>
-      <Content>{<div>{"hi"}</div>}</Content>
+      <Content>
+        <RandomCircle value={circleValue} setValue={setCircleValue} />
+      </Content>
       <Footer>
         <OutlineInputBox
           placeHolder=""
           autoComplete="brainstorming"
           text={idea}
           setText={setIdea}
+          onKeyUp={(e: KeyboardEvent<HTMLInputElement>) => {
+            const finish = ["Enter", "NumpadEnter"];
+            if (!finish.includes(e.key)) return;
+
+            const target = e.target as HTMLInputElement;
+            setCircleValue(target.value);
+            setIdea("");
+          }}
         />
         <SendBtn>
           <SendIcon />
         </SendBtn>
+        {user.id === brainstorming?.userId && (
+          <ExitBtn onClick={() => stompEnd(brainstormingId)}>
+            <span>{"종료"}</span>
+          </ExitBtn>
+        )}
       </Footer>
     </Container>
   );
