@@ -20,16 +20,6 @@ const RandomCircle = ({
     width: number;
     height: number;
   }>({ width: 0, height: 0 });
-
-  const [anchorEl, setAnchorEl] = React.useState<Konva.Node | null>(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (e: Konva.KonvaEventObject<MouseEvent>) => {
-    setAnchorEl(e.target);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
   useEffect(() => {
     setCanvasSize({
       width: window.innerWidth,
@@ -55,10 +45,6 @@ const RandomCircle = ({
       window.removeEventListener("resize", handleResize);
     };
   }, [value]);
-
-  const menuOptions = [
-    { label: "아이디어로 생성하기", onClick: () => console.log("menu") },
-  ];
 
   const addCircle = (value: string) => {
     const x = Math.random() * canvasSize.width;
@@ -135,7 +121,9 @@ const RandomCircle = ({
                   y={circle.y}
                   fill={circle.color}
                   radius={circle.radius}
-                  onClick={handleClick}
+                  onClick={() => {
+                    console.log("click");
+                  }}
                   onDblClick={handleDubleClick}
                 />
                 <Text
@@ -153,25 +141,6 @@ const RandomCircle = ({
           })}
         </Layer>
       </Stage>
-      <Menu
-        id="demo-positioned-menu"
-        aria-labelledby="demo-positioned-button"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: "top",
-          horizontal: "left",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "left",
-        }}
-      >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
-      </Menu>
     </>
   );
 };
