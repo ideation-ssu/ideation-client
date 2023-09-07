@@ -138,7 +138,7 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
         )}
       </Header>
       <Content>
-        {/*<RandomCircle value={circleValue} setValue={setCircleValue} />*/}
+        <RandomCircle value={circleValue} setValue={setCircleValue} />
       </Content>
       <Footer>
         <OutlineInputBox

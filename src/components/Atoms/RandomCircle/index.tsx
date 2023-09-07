@@ -103,7 +103,6 @@ const RandomCircle = ({
       <Stage width={canvasSize.width} height={canvasSize.height}>
         <Layer>
           {circles?.map((circle, index) => {
-            console.log(circle);
             return (
               <Group
                 draggable={true}
