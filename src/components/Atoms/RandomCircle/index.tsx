@@ -1,8 +1,12 @@
 import React, { KeyboardEvent, useEffect, useState } from "react";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Konva from "konva";
+import { Circle, Group, Layer, Stage, Text } from "react-konva";
 
 import { ICircle } from "@/interfaces/circle";
 
-import { Circle } from "./styles";
+import { StyledCircle } from "./styles";
 
 const RandomCircle = ({
   value,
@@ -12,79 +16,162 @@ const RandomCircle = ({
   setValue: (value: string) => void;
 }) => {
   const [circles, setCircles] = useState<ICircle[]>([]);
-  useEffect(() => {
-    if (value) addCircle(value);
-  }, [value]);
+  const [canvasSize, setCanvasSize] = useState<{
+    width: number;
+    height: number;
+  }>({ width: 0, height: 0 });
 
-  const getRandomColor = () => {
-    const letters = "0123456789ABCDEF";
-    let color = "#";
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
+  const [anchorEl, setAnchorEl] = React.useState<Konva.Node | null>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (e: Konva.KonvaEventObject<MouseEvent>) => {
+    setAnchorEl(e.target);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
-  const addCircle = (value: string) => {
-    console.log("add circle");
-    const screenWidth = window.innerWidth; // 화면 너비
-    const screenHeight = window.innerHeight; // 화면 높이
-    const maxRadius = 200; // 최대 반지름 (원의 크기)
-    const minRadius = 100; // 최소 반지름 (원의 크기)
-    const maxAttempts = 100; // 최대 시도 횟수
+  useEffect(() => {
+    setCanvasSize({
+      width: window.innerWidth,
+      height: window.innerHeight - 170,
+    });
+  }, []);
 
-    const color = getRandomColor();
+  useEffect(() => {
+    if (value) addCircle(value);
+
+    const handleResize = () => {
+      setCanvasSize({
+        width: window.innerWidth,
+        height: window.innerHeight - 170,
+      });
+    };
+
+    // 컴포넌트가 마운트된 후에 윈도우 크기 변경 이벤트 리스너 등록
+    window.addEventListener("resize", handleResize);
+
+    // 컴포넌트 언마운트 시 이벤트 리스너 제거
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [value]);
+
+  const menuOptions = [
+    { label: "아이디어로 생성하기", onClick: () => console.log("menu") },
+  ];
+
+  const addCircle = (value: string) => {
+    const x = Math.random() * canvasSize.width;
+    const y = Math.random() * canvasSize.height;
+
+    const maxRadius = 100; // 최대 반지름 (원의 크기)
+    const minRadius = 50; // 최소 반지름 (원의 크기)
     const radius =
       Math.floor(Math.random() * (maxRadius - minRadius + 1)) + minRadius;
+    const color = Konva.Util.getRandomColor();
+    const id = `${value}-${x}-${y}-${radius}-${color}`;
 
-    let x: number, y: number;
-    let isOverlapping;
-    let attempts = 0; // 시도 횟수 초기화
-    do {
-      x = Math.random() * (screenWidth - 2 * radius); // 가로 좌표
+    const ellipsis = "...";
+    const text =
+      value.length > 32 ? value.slice(0, value.length - 3) + ellipsis : value;
 
-      // y 좌표 계산
-      do {
-        y = Math.random() * (screenHeight - 2 * radius); // 세로 좌표
-      } while (y >= 600); // y가 600 이상이면 다시 계산
+    const newCircle = { id, x, y, radius, color, text };
+    setCircles([...circles, newCircle]);
+    setValue("");
+  };
 
-      // 생성된 원과 다른 원들과 겹치는지 확인
-      isOverlapping = circles.some((circle) => {
-        const dx = x - circle.x; // x 좌표 차이
-        const dy = y - circle.y; // y 좌표 차이
-        const distance = Math.sqrt(dx * dx + dy * dy); // 두 원의 중심 사이의 거리
-        return distance < radius + circle.radius; // 겹치는 경우
-      });
+  const handleDragStart = (e: Konva.KonvaEventObject<DragEvent>) => {
+    const id = e.target.name();
+    const updatedCircles = [...circles];
+    const circleIndex = updatedCircles.findIndex((circle) => circle.id === id);
+    const [draggedCircle] = updatedCircles.splice(circleIndex, 1);
+    updatedCircles.push(draggedCircle);
+    setCircles(updatedCircles);
+  };
 
-      attempts++; // 시도 횟수 증가
-    } while (isOverlapping && attempts < maxAttempts); // 겹치는 동안 또는 최대 시도 횟수까지 반복
+  const onDragEnd = (e: Konva.KonvaEventObject<DragEvent>) => {
+    const updatedCircles = circles.map((circle) => {
+      if (circle.id === e.target.name()) {
+        return {
+          ...circle,
+          x: e.target.x(),
+          y: e.target.y(),
+        };
+      }
+      return circle;
+    });
+    setCircles(updatedCircles);
+  };
 
-    if (!isOverlapping) {
-      // 겹치지 않는 경우에만 원 추가
-      const newCircle = { x, y, radius, color, value };
-      setCircles([...circles, newCircle]);
-      setValue("");
-    } else {
-      console.log("원을 추가할 수 없습니다. 최대 시도 횟수를 초과했습니다.");
-    }
+  const handleDubleClick = (e: Konva.KonvaEventObject<MouseEvent>) => {
+    const updatedCircles = circles.map((circle) => {
+      if (circle.id === e.target.name()) {
+        return {
+          ...circle,
+          radius: e.target.attrs.radius + 1,
+        };
+      }
+      return circle;
+    });
+    setCircles(updatedCircles);
   };
 
   return (
     <>
-      {circles?.map((circle, index) => {
-        return (
-          <Circle
-            key={index}
-            width={circle.radius}
-            height={circle.radius}
-            color={circle.color}
-            top={circle.x}
-            left={circle.y}
-          >
-            <span>{circle.value}</span>
-          </Circle>
-        );
-      })}
+      <Stage width={canvasSize.width} height={canvasSize.height}>
+        <Layer>
+          {circles?.map((circle, index) => {
+            console.log(circle);
+            return (
+              <Group
+                draggable={true}
+                key={index}
+                onDragStart={handleDragStart}
+                onDragEnd={onDragEnd}
+              >
+                <Circle
+                  name={circle.id}
+                  x={circle.x}
+                  y={circle.y}
+                  fill={circle.color}
+                  radius={circle.radius}
+                  onClick={handleClick}
+                  onDblClick={handleDubleClick}
+                />
+                <Text
+                  text={circle.text}
+                  x={circle.x - circle.radius}
+                  y={circle.y - 10}
+                  width={circle.radius * 2}
+                  fill="white"
+                  align="center"
+                  verticalAlign="middle"
+                  wrap="word"
+                />
+              </Group>
+            );
+          })}
+        </Layer>
+      </Stage>
+      <Menu
+        id="demo-positioned-menu"
+        aria-labelledby="demo-positioned-button"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "left",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "left",
+        }}
+      >
+        <MenuItem onClick={handleClose}>Profile</MenuItem>
+        <MenuItem onClick={handleClose}>My account</MenuItem>
+        <MenuItem onClick={handleClose}>Logout</MenuItem>
+      </Menu>
     </>
   );
 };

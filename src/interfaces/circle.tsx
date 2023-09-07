@@ -1,7 +1,8 @@
 export interface ICircle {
+  id: string;
   x: number;
   y: number;
   radius: number;
   color: string;
-  value: string;
+  text: string;
 }
