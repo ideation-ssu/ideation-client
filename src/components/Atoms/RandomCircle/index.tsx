@@ -1,12 +1,8 @@
-import React, { KeyboardEvent, useEffect, useState } from "react";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
+import React, { useEffect, useState } from "react";
 import Konva from "konva";
 import { Circle, Group, Layer, Stage, Text } from "react-konva";
 
 import { ICircle } from "@/interfaces/circle";
-
-import { StyledCircle } from "./styles";
 
 const RandomCircle = ({
   value,
