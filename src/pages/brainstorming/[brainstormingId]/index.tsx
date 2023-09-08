@@ -5,7 +5,8 @@ import SockJs from "sockjs-client";
 import OutlineInputBox from "@/components/Atoms/OutlineInputBox";
 import RandomCircle from "@/components/Atoms/RandomCircle";
 import WaitSessionModal from "@/components/Molecules/WaitSessionModal";
-import { ISession, IStatus, ITopic } from "@/interfaces/brainstorming";
+import { ISend, ISession, IStatus, ITopic } from "@/interfaces/brainstorming";
+import { ICircle } from "@/interfaces/circle";
 import {
   Container,
   Content,
@@ -33,10 +34,12 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
   const client = useRef<CompatClient>();
   const [curTopic, setCurTopic] = useState<ITopic>();
   const [status, setStatus] = useState<IStatus>();
+  const [send, setSend] = useState<ISend>();
   const [brainstorming, setBrainstorming] = useState<ISession>();
 
   const [idea, setIdea] = useState<string>("");
   const [circleValue, setCircleValue] = useState<string>("");
+  const [circles, setCircles] = useState<ICircle[]>([]);
 
   // wait session modal
   const [waitSessionOpen, setWaitSessionOpen] = React.useState(false);
@@ -66,6 +69,7 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
 
     client.current.connect({}, () => {
       stompJoin(brainstormingId);
+      subScribeSend();
       if (!isStarted) handleWaitSessionOpen();
     });
   };
@@ -85,7 +89,7 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
     );
   };
 
-  const stompStart = (brainstormingId: number) => {
+  const stompStart = () => {
     const message = {
       userId: user.id,
       brainstormingId: brainstormingId,
@@ -96,7 +100,33 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
       `/topic/session/${brainstormingId}/status`,
       (message) => {
         setStatus(JSON.parse(message.body));
+      }
+    );
+  };
+
+  const stompSend = (circle: ICircle) => {
+    const message = {
+      userId: user.id,
+      brainstormingId: brainstormingId,
+      ideaName: idea,
+      freeJsonString: JSON.stringify(circle),
+    };
+    console.log(JSON.stringify(message));
+    client.current?.send("/app/chat/idea", {}, JSON.stringify(message));
+    subScribeSend();
+  };
+
+  const subScribeSend = () => {
+    client.current?.subscribe(
+      `/topic/session/${brainstormingId}/chat`,
+      (message) => {
         console.log(JSON.parse(message.body));
+        setSend(JSON.parse(message.body));
+        const newCircle: ICircle[] = [];
+        JSON.parse(message.body).map((circle: ISend) => {
+          newCircle.push(JSON.parse(circle.freeJsonString));
+        });
+        setCircles(newCircle);
       }
     );
   };
@@ -124,7 +154,7 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
           open={waitSessionOpen}
           handleClose={() => {
             handleWaitSessionClose();
-            stompStart(brainstormingId);
+            stompStart();
           }}
           brainstorming={brainstorming}
           topic={curTopic}
@@ -138,7 +168,13 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
         )}
       </Header>
       <Content>
-        <RandomCircle value={circleValue} setValue={setCircleValue} />
+        <RandomCircle
+          value={circleValue}
+          setValue={setCircleValue}
+          circles={circles}
+          setCircles={setCircles}
+          sendCircle={stompSend}
+        />
       </Content>
       <Footer>
         <OutlineInputBox

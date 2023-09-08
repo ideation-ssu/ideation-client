@@ -26,3 +26,10 @@ export interface IStatus {
   brainstormingId: number;
   status: string;
 }
+
+export interface ISend {
+  userId: number;
+  brainstormingId: number;
+  ideaName: string;
+  freeJsonString: string;
+}

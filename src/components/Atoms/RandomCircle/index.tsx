@@ -1,21 +1,27 @@
 import React, { useEffect, useState } from "react";
 import Konva from "konva";
-import { Circle, Group, Layer, Stage, Text } from "react-konva";
+import { Circle, Group, Image, Layer, Stage, Text } from "react-konva";
 
 import { ICircle } from "@/interfaces/circle";
 
 const RandomCircle = ({
   value,
   setValue,
+  circles,
+  setCircles,
+  sendCircle,
 }: {
   value: string;
   setValue: (value: string) => void;
+  circles: ICircle[];
+  setCircles: (circle: ICircle[]) => void;
+  sendCircle: (circle: ICircle) => void;
 }) => {
-  const [circles, setCircles] = useState<ICircle[]>([]);
   const [canvasSize, setCanvasSize] = useState<{
     width: number;
     height: number;
   }>({ width: 0, height: 0 });
+
   useEffect(() => {
     setCanvasSize({
       width: window.innerWidth,
@@ -58,8 +64,8 @@ const RandomCircle = ({
       value.length > 32 ? value.slice(0, value.length - 3) + ellipsis : value;
 
     const newCircle = { id, x, y, radius, color, text };
-    setCircles([...circles, newCircle]);
     setValue("");
+    sendCircle(newCircle);
   };
 
   const handleDragStart = (e: Konva.KonvaEventObject<DragEvent>) => {
@@ -80,12 +86,35 @@ const RandomCircle = ({
           y: e.target.y(),
         };
       }
+      // sendCircle(circle);
       return circle;
     });
     setCircles(updatedCircles);
   };
 
+  const handleOnClick = (e: Konva.KonvaEventObject<MouseEvent>) => {
+    console.log(e);
+    switch (e.evt.detail) {
+      case 1: {
+        console.log("single click");
+        break;
+      }
+      case 2: {
+        console.log("double click");
+        break;
+      }
+      case 3: {
+        console.log("triple click");
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+  };
+
   const handleDubleClick = (e: Konva.KonvaEventObject<MouseEvent>) => {
+    console.log(e);
     const updatedCircles = circles.map((circle) => {
       if (circle.id === e.target.name()) {
         return {
@@ -116,9 +145,7 @@ const RandomCircle = ({
                   y={circle.y}
                   fill={circle.color}
                   radius={circle.radius}
-                  onClick={() => {
-                    console.log("click");
-                  }}
+                  onClick={handleOnClick}
                   onDblClick={handleDubleClick}
                 />
                 <Text
