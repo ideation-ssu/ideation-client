@@ -9,7 +9,7 @@ export interface User {
 
 export interface AuthContextType {
   user: User;
-  authLogin: (email: string, pw: string) => boolean;
+  authLogin: (email: string, pw: string) => Promise<boolean>;
   authLogout: () => void;
   isLoggedIn: () => boolean;
   axios: AxiosInstance;

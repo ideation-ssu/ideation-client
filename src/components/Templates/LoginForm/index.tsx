@@ -65,7 +65,9 @@ function LoginForm({
   const handleLogin = async () => {
     if (existErr()) return;
 
-    if (!authLogin(email, pw)) {
+    const loginResult = await authLogin(email, pw);
+
+    if (!loginResult) {
       setLoginErr("이메일 또는 비밀번호를 잘못 입력했습니다.");
       return;
     }

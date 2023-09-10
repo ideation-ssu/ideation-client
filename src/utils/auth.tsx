@@ -20,7 +20,7 @@ const initialUser: User = {
 
 const AuthContext = createContext<AuthContextType | null>({
   user: initialUser,
-  authLogin: () => false,
+  authLogin: async () => false,
   authLogout: () => {},
   isLoggedIn: () => false,
   axios: axios.create(),
@@ -55,35 +55,39 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
     });
   }, [token]);
 
-  const authLogin = (email: string, pw: string) => {
-    const data = {
+  const authLogin = async (email: string, pw: string) => {
+    const body = {
       email: email,
       password: pw,
     };
 
-    customAxios
-      .post(`${process.env.NEXT_PUBLIC_BASEURL}/auth/login`, data)
-      .then((res) => {
-        if (res.data.error) return false;
+    try {
+      const { data } = await customAxios.post(
+        `${process.env.NEXT_PUBLIC_BASEURL}/auth/login`,
+        body
+      );
+      if (data.error) throw Error();
 
-        const decoded = jwt_decode(res.data.data.token) as {
-          id: number;
-          image: string;
-        };
-        const userData = {
-          id: decoded.id,
-          email: res.data.data.email,
-          name: res.data.data.name,
-          image: decoded.image,
-        };
+      const decoded = jwt_decode(data.data.token) as {
+        id: number;
+        image: string;
+      };
+      const userData = {
+        id: decoded.id,
+        email: data.data.email,
+        name: data.data.name,
+        image: decoded.image,
+      };
 
-        setUser(userData);
-        localStorage.setItem("user", JSON.stringify(userData));
+      setUser(userData);
+      localStorage.setItem("user", JSON.stringify(userData));
 
-        setToken(res.data.data.token);
-        localStorage.setItem("token", res.data.data.token);
-      });
-    return true;
+      setToken(data.data.token);
+      localStorage.setItem("token", data.data.token);
+      return true;
+    } catch (e) {
+      return false;
+    }
   };
 
   const authLogout = () => {
