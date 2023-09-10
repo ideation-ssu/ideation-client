@@ -116,7 +116,7 @@ const RandomCircle = ({
       if (circle.id === e.target.name()) {
         return {
           ...circle,
-          radius: e.target.attrs.radius + 1,
+          radius: e.target.attrs.radius + 5,
         };
       }
       return circle;
