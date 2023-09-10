@@ -201,7 +201,6 @@ export const TableRow = styled("tr")<{ isFill?: boolean }>`
   justify-content: center;
   align-items: center;
   margin-top: 7px;
-  cursor: pointer;
 
   &.body {
     background-color: ${(props) =>
@@ -293,6 +292,7 @@ export const IconWrap = styled("div")<{ isVoted: boolean }>`
   background-color: ${(props) =>
     props.isVoted ? "rgba(113, 62, 220, 0.8)" : "rgba(113, 62, 220, 0.1)"};
   border-radius: 100px;
+  cursor: pointer;
 `;
 
 export const VotedIcon = styled("div")<{ isVoted: boolean }>`

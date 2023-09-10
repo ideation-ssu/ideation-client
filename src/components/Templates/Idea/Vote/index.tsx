@@ -225,11 +225,6 @@ function Vote({
                     key={index}
                     className={"body"}
                     isFill={index % 2 != 0}
-                    onClick={() =>
-                      result.voted
-                        ? voteCalcel(result.idea.id)
-                        : voteDo(result.idea.id)
-                    }
                   >
                     <TableData>
                       <Avatar src={result.idea.user.image} />
@@ -260,7 +255,14 @@ function Vote({
                           level={result.level}
                         >{`${result.percent}%`}</Percent>
                       </PercentWrap>
-                      <IconWrap isVoted={result.voted}>
+                      <IconWrap
+                        isVoted={result.voted}
+                        onClick={() =>
+                          result.voted
+                            ? voteCalcel(result.idea.id)
+                            : voteDo(result.idea.id)
+                        }
+                      >
                         <VotedIcon isVoted={result.voted} />
                       </IconWrap>
                     </TableData>
