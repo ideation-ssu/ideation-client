@@ -81,10 +81,10 @@ export const Card = styled("div")`
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
 `;
 
-export const ColorBar = styled("div")`
+export const ColorBar = styled("div")<{ color: string }>`
   width: 17px;
   height: 100%;
-  background-color: yellow;
+  background-color: ${(props) => props.color};
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
 `;

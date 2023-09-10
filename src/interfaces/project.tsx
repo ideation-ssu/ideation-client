@@ -20,5 +20,6 @@ export interface Joiner {
   userDto: User;
   role: string;
   status: string;
+  color: string;
   createdAt: string;
 }

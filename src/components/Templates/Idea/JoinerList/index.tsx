@@ -89,7 +89,7 @@ function JoinerList({
             <CardContainer key={index}>
               {isOwner && <CrownIcon />}
               <Card>
-                <ColorBar />
+                <ColorBar color={joiner.color} />
                 <Content>
                   <span className={"name"}>{joiner.userDto.name}</span>
                   <span className={"email"}>{joiner.userDto.email}</span>
