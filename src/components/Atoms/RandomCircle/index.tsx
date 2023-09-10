@@ -52,12 +52,9 @@ const RandomCircle = ({
     const x = Math.random() * canvasSize.width;
     const y = Math.random() * canvasSize.height;
 
-    const maxRadius = 100; // 최대 반지름 (원의 크기)
-    const minRadius = 50; // 최소 반지름 (원의 크기)
-    const radius =
-      Math.floor(Math.random() * (maxRadius - minRadius + 1)) + minRadius;
+    const radius = 60;
     const color = Konva.Util.getRandomColor();
-    const id = `${value}-${x}-${y}-${radius}-${color}`;
+    const id = `${value}-${x}-${y}-${color}`;
 
     const ellipsis = "...";
     const text =
