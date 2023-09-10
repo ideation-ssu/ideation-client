@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useRouter } from "next/router";
 
 import ComboBox from "@/components/Atoms/ComboBox";
@@ -54,6 +54,14 @@ function NewIdeaModal({
   const [content, setContent] = useState<string>("");
   const [status, setStatus] = useState<string>("");
   const [err, setErr] = useState("");
+
+  const isValid = useMemo(() => {
+    if (!title || relatedUser.length < 1 || !category || !content || !status) {
+      return false;
+    }
+
+    return true;
+  }, [title, relatedUser, category, content, status]);
 
   const createIdea = () => {
     if (!title) {
@@ -129,7 +137,7 @@ function NewIdeaModal({
                 setValue={setRelatedUser}
                 placeholder={"연관 담당자 추가"}
                 options={joiners?.map((joiner: Joiner) => joiner.userDto.name)}
-                width={250}
+                width={550}
               />
             </Line>
           </Grid>
@@ -183,6 +191,7 @@ function NewIdeaModal({
               <RoundButton
                 text={"제출하기"}
                 isFilled={true}
+                disabled={!isValid}
                 onClick={createIdea}
               />
             </div>

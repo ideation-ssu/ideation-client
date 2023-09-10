@@ -24,7 +24,7 @@ export const StyledComboBox = styled(Autocomplete)<{ width: number }>`
 
 export const StyledTextField = styled(TextField)`
   width: 100%;
-  height: 32px;
+  min-height: 32px;
 
   .MuiInputBase-root {
     padding: 0;

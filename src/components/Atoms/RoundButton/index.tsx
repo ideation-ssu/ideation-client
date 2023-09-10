@@ -7,11 +7,13 @@ function RoundButton({
   isMainClr = true,
   text,
   onClick,
+  disabled,
 }: {
   isFilled: boolean;
   isMainClr?: boolean;
   text: string;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  disabled?: boolean;
 }): React.ReactElement {
   return (
     <StyledButton
@@ -19,6 +21,7 @@ function RoundButton({
       main={isMainClr ? "true" : "false"}
       variant="contained"
       onClick={onClick}
+      disabled={disabled}
     >
       <span>{text}</span>
     </StyledButton>

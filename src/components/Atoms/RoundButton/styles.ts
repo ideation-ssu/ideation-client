@@ -46,4 +46,8 @@ export const StyledButton = styled(Button)<{
         ? "#713edc"
         : "#00b18c"};
   }
+
+  &.Mui-disabled {
+    border: 1px solid rgba(0, 0, 0, 0.12);
+  }
 `;
