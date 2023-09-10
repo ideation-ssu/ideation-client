@@ -3,6 +3,7 @@ import Tab from "@mui/material/Tab";
 
 import FlexWrap from "@/components/Atoms/FlexWrap";
 import IdeaCommentPanel from "@/components/Molecules/IdeaCommmentPanel";
+import { _IdeaStatus, IDEA_STATUS_TYPE } from "@/enums/ideaStatus";
 import { IIdea } from "@/interfaces/idea";
 import { Comment } from "@/interfaces/idea";
 import { useAuth } from "@/utils/auth";
@@ -14,6 +15,7 @@ import {
   Date,
   HashTag,
   HashTagWrap,
+  IdeaStatusChip,
   LikeIcon,
   LikeWrap,
   MainText,
@@ -59,6 +61,7 @@ function IdeaDetailModal({
       .get(`${process.env.NEXT_PUBLIC_BASEURL}/idea/detail/${selectedIdeaId}`)
       .then((res) => {
         setIdea(res.data.data);
+        console.log(res.data.data);
       });
   };
 
@@ -89,6 +92,10 @@ function IdeaDetailModal({
         {idea && (
           <Container>
             <FlexWrap gap={8}>
+              <IdeaStatusChip
+                status={idea.status as IDEA_STATUS_TYPE}
+                label={_IdeaStatus[idea.status as IDEA_STATUS_TYPE]}
+              ></IdeaStatusChip>
               <Category>{idea.category}</Category>
               <Title>{idea.title}</Title>
             </FlexWrap>

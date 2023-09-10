@@ -1,6 +1,8 @@
-import Modal from "@mui/material/Modal";
-import { styled } from "@mui/material/styles";
-import Tabs from "@mui/material/Tabs";
+import { Chip, Modal, Tabs } from "@mui/material";
+import { css, styled } from "@mui/material/styles";
+
+import { IDEA_STATUS_TYPE } from "@/enums/ideaStatus";
+
 export const StyledModal = styled(Modal)`
   display: flex;
   justify-content: center;
@@ -31,6 +33,33 @@ export const Category = styled("div")`
   border-radius: 20px;
   background-color: #7b40f2;
   color: #fff;
+`;
+
+export const IdeaStatusChip = styled(Chip)<{ status: IDEA_STATUS_TYPE }>`
+  align-self: flex-start;
+  height: 23px;
+  border-radius: 4px;
+  font-size: 16px;
+
+  ${({ status }) => {
+    switch (status) {
+      case "NOT_STARTED":
+        return css`
+          color: #e94e7c;
+          background-color: rgba(233, 78, 124, 0.04);
+        `;
+      case "IN_PROGRESS":
+        return css`
+          color: #f79942;
+          background-color: rgba(245, 161, 83, 0.04);
+        `;
+      case "DONE":
+        return css`
+          color: #4fb1f9;
+          background-color: rgba(83, 177, 245, 0.04);
+        `;
+    }
+  }}
 `;
 
 export const Title = styled("div")`
