@@ -1,5 +1,6 @@
 import React, { KeyboardEvent, useEffect, useRef, useState } from "react";
 import { GetServerSideProps, NextPage } from "next";
+import { useRouter } from "next/router";
 import SockJs from "sockjs-client";
 
 import OutlineInputBox from "@/components/Atoms/OutlineInputBox";
@@ -30,6 +31,7 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
   brainstormingId,
 }: BrainstormingProps) => {
   const { axios, user } = useAuth();
+  const router = useRouter();
 
   const client = useRef<CompatClient>();
   const [curTopic, setCurTopic] = useState<ITopic>();
@@ -147,6 +149,10 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
     );
   };
 
+  const goHome = () => {
+    router.push("/main");
+  };
+
   return (
     <Container>
       {status?.status !== "STARTED" && curTopic && brainstorming && (
@@ -162,7 +168,7 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
       )}
       <Header>
         {brainstorming?.isStarted && (
-          <LogoWrap>
+          <LogoWrap onClick={goHome}>
             <LogoIcon />
           </LogoWrap>
         )}

@@ -33,6 +33,7 @@ export const LogoWrap = styled("div")`
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
   background-color: #7b40f2;
+  cursor: pointer;
 `;
 
 export const SendBtn = styled("div")`
