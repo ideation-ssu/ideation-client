@@ -45,7 +45,7 @@ function IdeaDetailModal({
 
   const [idea, setIdea] = useState<IIdea>();
   const [comments, setComments] = useState<Comment[]>([]);
-  const [tab, setTab] = React.useState(0);
+  const [tab, setTab] = React.useState(1);
 
   useEffect(() => {
     getDetailIdea();
