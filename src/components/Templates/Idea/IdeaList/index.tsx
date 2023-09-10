@@ -28,7 +28,9 @@ import {
   Header,
   Idea,
   IdeaBottom,
+  IdeaCreatorNameText,
   IdeaInner,
+  IdeaTitleText,
   IdeaTop,
   ProcessCard,
   ReactionWrap,
@@ -217,7 +219,8 @@ function IdeaList({
                             >
                               <IdeaInner>
                                 <IdeaTop>
-                                  <span>{idea.title}</span>
+                                  <IdeaTitleText>{idea.title}</IdeaTitleText>
+                                  <IdeaCreatorNameText label={idea.userName} />
                                 </IdeaTop>
                                 <IdeaBottom>
                                   <HashTagWrap>

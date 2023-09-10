@@ -1,4 +1,5 @@
 import MuiSearchIcon from "@mui/icons-material/Search";
+import { Chip } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import InputBase from "@mui/material/InputBase";
 import { styled } from "@mui/material/styles";
@@ -99,7 +100,32 @@ export const IdeaInner = styled("div")`
   }
 `;
 
-export const IdeaTop = styled("div")``;
+export const IdeaTop = styled("div")`
+  display: flex;
+  align-items: center;
+`;
+
+export const IdeaTitleText = styled("p")`
+  width: 0;
+  flex-grow: 1;
+  margin: 0;
+  font-size: 15px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+`;
+
+export const IdeaCreatorNameText = styled(Chip)`
+  margin: 0;
+  height: 20px;
+  background-color: #00b18c;
+
+  > span {
+    font-size: 12px;
+    color: #fff;
+    padding: 0 8px;
+  }
+`;
 
 export const IdeaBottom = styled("div")`
   display: flex;
