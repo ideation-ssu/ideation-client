@@ -122,7 +122,6 @@ function Vote({
       label: "투표 삭제하기",
       onClick: () => {
         handleDeleteVoteOpen();
-        setVote(undefined);
       },
     },
   ];
@@ -164,6 +163,7 @@ function Vote({
                 voteName={vote.vote.title}
                 open={deleteVoteOpen}
                 handleClose={handleDeleteVoteClose}
+                callback={getVote}
               />
             )}
 
