@@ -56,7 +56,7 @@ function NewIdeaModal({
   const [err, setErr] = useState("");
 
   const isValid = useMemo(() => {
-    if (!title || relatedUser.length < 1 || !category || !content || !status) {
+    if (!title || !category || !content || !status) {
       return false;
     }
 
