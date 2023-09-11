@@ -1,3 +1,5 @@
+import differenceInCalendarDays from "date-fns/differenceInCalendarDays/index";
+
 export function parseIsoDate(isoDate: string) {
   const date = new Date(isoDate);
 
@@ -6,4 +8,11 @@ export function parseIsoDate(isoDate: string) {
   const day = `${date.getDate()}`.padStart(2, "0");
 
   return `${year}. ${month}. ${day}`;
+}
+
+export function getDueDate(isoDate: string) {
+  const targetDate = new Date(isoDate);
+  const nowDate = new Date();
+
+  return differenceInCalendarDays(targetDate, nowDate);
 }

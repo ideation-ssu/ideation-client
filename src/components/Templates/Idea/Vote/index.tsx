@@ -9,7 +9,7 @@ import DeleteVoteModal from "@/components/Molecules/DeleteVoteModal";
 import { IIdeaByStatus } from "@/interfaces/idea";
 import { IVote } from "@/interfaces/vote";
 import { useAuth } from "@/utils/auth";
-import { parseIsoDate } from "@/utils/date";
+import { getDueDate, parseIsoDate } from "@/utils/date";
 
 import { CommentIcon } from "../../../../../public/icons/Comment/styles.ts";
 import { LikedIcon } from "../../../../../public/icons/Liked/styles.ts";
@@ -37,6 +37,7 @@ import {
   TableHeader,
   TableRow,
   TitleBar,
+  TitleDueDateText,
   TitleWrap,
   VoteDate,
   VotedIcon,
@@ -142,6 +143,9 @@ function Vote({
           <TitleWrap>
             <TitleBar />
             <span>{vote.project.name}</span>
+            <TitleDueDateText>
+              D - {getDueDate(vote.project.dueDate)}
+            </TitleDueDateText>
           </TitleWrap>
 
           <ConfigWrap>
