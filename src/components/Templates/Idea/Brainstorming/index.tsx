@@ -100,7 +100,7 @@ function Brainstorming({
                   <Content>
                     <ImageWrap />
                     <span className={"title"}>{session.title}</span>
-                    <span className={"desc"}>{"앵이 만들어주세여"}</span>
+                    <span className={"desc"}>{session.description}</span>
                     <ProjectInfoWrap>
                       <span>
                         {

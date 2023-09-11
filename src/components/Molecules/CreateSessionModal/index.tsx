@@ -31,7 +31,6 @@ function CreateSessionModal({
   joiners: Joiner[];
 }): React.ReactElement {
   const { axios, user } = useAuth();
-  console.log(user.id);
 
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
@@ -39,7 +38,7 @@ function CreateSessionModal({
   const [relatedUser, setRelatedUser] = useState<string[]>([]);
   const [err, setErr] = useState("");
 
-  const relatedIds: number[] = relatedUser.flatMap((user) => {
+  const relatedIds: number[] = [...relatedUser, user].flatMap((user) => {
     const matchingJoiners = joiners.filter(
       (joiner) => joiner.userDto.name === user
     );
@@ -49,6 +48,7 @@ function CreateSessionModal({
   const handleCreateSession = () => {
     const data = {
       title: title,
+      description: desc,
       processMinutes: Number(processMinutes.replace("M", "")),
       projectId: projectId,
       userIds: relatedIds,

@@ -3,6 +3,7 @@ import { User } from "@/interfaces/user";
 export interface ISession {
   brainstormingId: number;
   title: string;
+  description: string;
   processMinutes: number;
   projectId: number;
   userId: number;
