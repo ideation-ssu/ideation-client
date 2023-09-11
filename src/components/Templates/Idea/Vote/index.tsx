@@ -9,6 +9,7 @@ import DeleteVoteModal from "@/components/Molecules/DeleteVoteModal";
 import { IIdeaByStatus } from "@/interfaces/idea";
 import { IVote } from "@/interfaces/vote";
 import { useAuth } from "@/utils/auth";
+import { parseIsoDate } from "@/utils/date";
 
 import { CommentIcon } from "../../../../../public/icons/Comment/styles.ts";
 import { LikedIcon } from "../../../../../public/icons/Liked/styles.ts";
@@ -37,8 +38,10 @@ import {
   TableRow,
   TitleBar,
   TitleWrap,
+  VoteDate,
   VotedIcon,
   VoteIcon,
+  VoteTitle,
 } from "./styles";
 
 function Vote({
@@ -229,8 +232,9 @@ function Vote({
                     <TableData>
                       <Avatar src={result.idea.user.image} />
                     </TableData>
-                    <TableData className={"title"}>
-                      {result.idea.title}
+                    <TableData className={"title"} isTitle>
+                      <VoteTitle>{result.idea.title}</VoteTitle>
+                      <VoteDate>{parseIsoDate(result.idea.createdAt)}</VoteDate>
                     </TableData>
                     <TableData>
                       <Category>{result.idea.category}</Category>
