@@ -30,7 +30,8 @@ function CreateSessionModal({
   projectId: number;
   joiners: Joiner[];
 }): React.ReactElement {
-  const { axios } = useAuth();
+  const { axios, user } = useAuth();
+  console.log(user.id);
 
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
@@ -131,7 +132,9 @@ function CreateSessionModal({
                 value={relatedUser}
                 setValue={setRelatedUser}
                 placeholder={"연관 담당자 추가"}
-                options={joiners?.map((joiner: Joiner) => joiner.userDto.name)}
+                options={joiners
+                  ?.filter((joiner) => joiner.userDto.id !== user.id)
+                  .map((joiner) => joiner.userDto.name)}
                 width={250}
               />
             </Line>
