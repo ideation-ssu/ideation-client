@@ -5,6 +5,7 @@ import SockJs from "sockjs-client";
 
 import OutlineInputBox from "@/components/Atoms/OutlineInputBox";
 import RandomCircle from "@/components/Atoms/RandomCircle";
+import CloseSessionModal from "@/components/Molecules/CloseSessionModal";
 import WaitSessionModal from "@/components/Molecules/WaitSessionModal";
 import { ISend, ISession, IStatus, ITopic } from "@/interfaces/brainstorming";
 import { ICircle } from "@/interfaces/circle";
@@ -48,6 +49,11 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
   const handleWaitSessionOpen = () => setWaitSessionOpen(true);
   const handleWaitSessionClose = () => setWaitSessionOpen(false);
 
+  // close session modal
+  const [closeSessionOpen, setCloseSessionOpen] = React.useState(false);
+  const handleCloseSessionOpen = () => setCloseSessionOpen(true);
+  const handleCloseSessionClose = () => setCloseSessionOpen(false);
+
   useEffect(() => {
     getBrainstorming();
   }, [user, brainstormingId]);
@@ -59,6 +65,8 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
       )
       .then((res) => {
         setBrainstorming(res.data);
+        if (res.data.status === "FINISHED")
+          router.push(`/idea/${res.data.projectId}?tab=3`);
         stompConnect(res.data.isStarted, res.data.brainstormingId);
       });
   };
@@ -133,7 +141,7 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
     );
   };
 
-  const stompEnd = (brainstormingId: number) => {
+  const stompEnd = () => {
     const message = {
       userId: user.id,
       brainstormingId: brainstormingId,
@@ -144,7 +152,7 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
       `/topic/session/${brainstormingId}/status`,
       (message) => {
         setStatus(JSON.parse(message.body));
-        console.log(JSON.parse(message.body));
+        router.push("/statistics");
       }
     );
   };
@@ -155,7 +163,7 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
 
   return (
     <Container>
-      {status?.status !== "STARTED" && curTopic && brainstorming && (
+      {status?.status === "PENDING" && curTopic && brainstorming && (
         <WaitSessionModal
           open={waitSessionOpen}
           handleClose={() => {
@@ -167,11 +175,9 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
         />
       )}
       <Header>
-        {brainstorming?.isStarted && (
-          <LogoWrap onClick={goHome}>
-            <LogoIcon />
-          </LogoWrap>
-        )}
+        <LogoWrap onClick={goHome}>
+          <LogoIcon />
+        </LogoWrap>
       </Header>
       <Content>
         <RandomCircle
@@ -201,10 +207,15 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
           <SendIcon />
         </SendBtn>
         {user.id === brainstorming?.userId && (
-          <ExitBtn onClick={() => stompEnd(brainstormingId)}>
+          <ExitBtn onClick={handleCloseSessionOpen}>
             <span>{"종료"}</span>
           </ExitBtn>
         )}
+        <CloseSessionModal
+          open={closeSessionOpen}
+          handleClose={handleCloseSessionClose}
+          closeSession={stompEnd}
+        />
       </Footer>
     </Container>
   );

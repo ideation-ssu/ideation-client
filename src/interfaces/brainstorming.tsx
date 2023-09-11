@@ -10,6 +10,7 @@ export interface ISession {
   userIds: number[];
   users: User[];
   isStarted: boolean;
+  status: string;
 }
 
 export interface ISessionInfo {

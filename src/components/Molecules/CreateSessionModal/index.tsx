@@ -39,10 +39,10 @@ function CreateSessionModal({
   const [err, setErr] = useState("");
 
   const relatedIds: number[] = [...relatedUser, user].flatMap((user) => {
-    const matchingJoiners = joiners.filter(
+    const matchingJoiners = joiners?.filter(
       (joiner) => joiner.userDto.name === user
     );
-    return matchingJoiners.map((joiner) => joiner.userDto.id);
+    return matchingJoiners?.map((joiner) => joiner.userDto.id);
   });
 
   const handleCreateSession = () => {

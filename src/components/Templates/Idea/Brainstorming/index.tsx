@@ -94,7 +94,10 @@ function Brainstorming({
                 <StyledGrid
                   key={session.brainstormingId}
                   onClick={() => {
-                    router.push(`/brainstorming/${session.brainstormingId}`);
+                    if (session.status === "FINISHED")
+                      router.push("/statistics");
+                    else
+                      router.push(`/brainstorming/${session.brainstormingId}`);
                   }}
                 >
                   <Content>
