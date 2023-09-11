@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Konva from "konva";
-import { Circle, Group, Image, Layer, Stage, Text } from "react-konva";
+import { Circle, Group, Layer, Stage, Text } from "react-konva";
 
 import { ICircle } from "@/interfaces/circle";
 
@@ -83,7 +83,7 @@ const RandomCircle = ({
           y: e.target.y(),
         };
       }
-      // sendCircle(circle);
+      sendCircle(circle);
       return circle;
     });
     setCircles(updatedCircles);

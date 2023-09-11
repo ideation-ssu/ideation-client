@@ -36,6 +36,30 @@ export const LogoWrap = styled("div")`
   cursor: pointer;
 `;
 
+export const TimerWrap = styled("div")`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-right: 25px;
+
+  span {
+    width: 135px;
+    font-size: 50px;
+    background: linear-gradient(270deg, #6e72fc 2.3%, #ad1deb 97.24%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+`;
+
+export const TimerIcon = styled("div")`
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='47' height='57' viewBox='0 0 47 57' fill='none'%3E%3Cpath d='M23.5 54.249C34.8218 54.249 44 45.0709 44 33.749C44 22.4272 34.8218 13.249 23.5 13.249C12.1782 13.249 3 22.4272 3 33.749C3 45.0709 12.1782 54.249 23.5 54.249Z' stroke='url(%23paint0_linear_1197_13818)' stroke-width='5'/%3E%3Cpath d='M28.6328 3H18.3828M23.5078 3V13.25M37.6016 18.375L41.4453 14.5312M23.5078 26.0625V33.75H15.8203' stroke='url(%23paint1_linear_1197_13818)' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cdefs%3E%3ClinearGradient id='paint0_linear_1197_13818' x1='43.0625' y1='33.7491' x2='4.125' y2='33.739' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%236E72FC'/%3E%3Cstop offset='1' stop-color='%23AD1DEB'/%3E%3C/linearGradient%3E%3ClinearGradient id='paint1_linear_1197_13818' x1='40.8594' y1='18.375' x2='16.5234' y2='18.3698' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%236E72FC'/%3E%3Cstop offset='1' stop-color='%23AD1DEB'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E");
+  background-size: cover;
+  width: 43px;
+  height: 52.25px;
+`;
+
 export const SendBtn = styled("div")`
   width: 70px;
   height: 100%;
