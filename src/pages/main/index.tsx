@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import Avatar from "@/components/Atoms/Avatar";
+import Profile from "@/components/Atoms/Profile";
 import RoundButton from "@/components/Atoms/RoundButton";
 import CreateProjectModal from "@/components/Molecules/CreateProjectModal";
 import LoginModal from "@/components/Molecules/LoginModal";
@@ -69,7 +70,7 @@ function Main(): React.ReactElement {
         </LogoWrap>
         {user && (
           <AvatarWrap>
-            <Avatar src={user.image} />
+            <Profile />
           </AvatarWrap>
         )}
       </Header>
