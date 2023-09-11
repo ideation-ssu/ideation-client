@@ -49,7 +49,7 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
   const handleWaitSessionClose = () => setWaitSessionOpen(false);
 
   useEffect(() => {
-    getBrainstorming();
+    if (brainstormingId) getBrainstorming();
   }, [user, brainstormingId]);
 
   const getBrainstorming = () => {
