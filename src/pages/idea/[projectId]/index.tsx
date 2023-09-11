@@ -40,6 +40,7 @@ const Idea: NextPage<IdeaProps> = (props) => {
     DONE: [],
   });
   const [joiners, setJoiners] = useState<Joiner[]>([]);
+  const query = router.query;
 
   useEffect(() => {
     getJoiners();
@@ -76,8 +77,22 @@ const Idea: NextPage<IdeaProps> = (props) => {
   };
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-    setTab(newValue);
+    router.replace({
+      query: {
+        ...router.query,
+        tab: newValue,
+      },
+    });
   };
+
+  useEffect(() => {
+    if (!query.tab) {
+      setTab(1);
+      return;
+    }
+
+    setTab(Number(query.tab));
+  }, [query]);
 
   return (
     <Container>
