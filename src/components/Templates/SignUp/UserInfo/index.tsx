@@ -85,10 +85,11 @@ function UserInfo({
 
     axios
       .post(`${process.env.NEXT_PUBLIC_BASEURL}/auth/register`, data)
-      .then((res) => {
+      .then(async (res) => {
         if (res.data.error) setError(res.data.error.userMessage);
         else {
-          if (authLogin(email, pw)) nextPage();
+          const loginResult = await authLogin(email, pw);
+          if (loginResult) nextPage();
         }
       });
   };
