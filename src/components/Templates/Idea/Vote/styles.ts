@@ -58,11 +58,21 @@ export const TitleWrap = styled("div")`
   display: flex;
   align-items: center;
   justify-content: center;
+
   span {
     padding-left: 10px;
     font-size: 24px;
     font-weight: 600;
+    margin-right: 10px;
   }
+`;
+
+export const TitleDueDateText = styled("p")`
+  display: block;
+  padding: 4px 6px;
+  background-color: rgba(123, 64, 242, 0.1);
+  color: #7b40f2;
+  border-radius: 5px;
 `;
 
 export const TitleBar = styled("div")`
