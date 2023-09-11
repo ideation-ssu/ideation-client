@@ -1,4 +1,4 @@
-import { styled } from "@mui/material/styles";
+import { css, styled } from "@mui/material/styles";
 
 export const EmptyWrap = styled("div")`
   width: 100%;
@@ -209,7 +209,7 @@ export const TableRow = styled("tr")<{ isFill?: boolean }>`
   }
 `;
 
-export const TableData = styled("td")`
+export const TableData = styled("td")<{ isTitle?: boolean }>`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -230,6 +230,14 @@ export const TableData = styled("td")`
     gap: 10px;
     flex: 1.5;
   }
+
+  ${({ isTitle }) =>
+    isTitle &&
+    css`
+      justify-content: flex-start;
+      align-items: flex-start;
+      flex-direction: column;
+    `}
 `;
 
 export const PercentWrap = styled("div")`
@@ -300,4 +308,16 @@ export const VotedIcon = styled("div")<{ isVoted: boolean }>`
   background-size: cover;
   width: 30px;
   height: 47px;
+`;
+
+export const VoteTitle = styled("p")`
+  font-weight: bold;
+  margin: 0 0 6px 0;
+`;
+
+export const VoteDate = styled("p")`
+  color: #bdbdbd;
+  font-size: 10px;
+  font-weight: 300;
+  margin: 0;
 `;
