@@ -125,6 +125,7 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
       `/topic/session/${brainstormingId}/status`,
       (message) => {
         setStatus(JSON.parse(message.body));
+        handleWaitSessionClose();
       }
     );
   };
@@ -178,7 +179,6 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
         <WaitSessionModal
           open={waitSessionOpen}
           handleClose={() => {
-            handleWaitSessionClose();
             stompStart();
           }}
           brainstorming={brainstorming}
