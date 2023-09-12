@@ -284,7 +284,7 @@ const SelectIdeaSection: React.FC<SelectIdeaSectionProps> = ({
 
       <ButtonWrap>
         <RoundButton
-          text={`${voteIdeas.length}개 아이디어로 투표 시작하기`}
+          text={`${isCheck.filter((v) => v).length}개 아이디어로 투표 시작하기`}
           isFilled={true}
           onClick={handleVoteIdea}
         />
