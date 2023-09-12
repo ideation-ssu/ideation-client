@@ -65,6 +65,10 @@ export const ColumnIdea = styled("div")<{ filled: boolean }>`
     background: none;
     -webkit-background-clip: unset;
     -webkit-text-fill-color: #000;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 520px;
   }
 
   .hash-tag {
