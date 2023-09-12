@@ -29,10 +29,12 @@ function JoinerList({
   projectId,
   code,
   joiners,
+  isOwner,
 }: {
   projectId: number;
   code: string;
   joiners: Joiner[];
+  isOwner: boolean;
 }): React.ReactElement | null {
   const { user } = useAuth();
 
@@ -45,11 +47,6 @@ function JoinerList({
   const [profileOpen, setProfileOpen] = React.useState<boolean>(!!code);
   const handleProfileOpen = () => setProfileOpen(true);
   const handleProfileClose = () => setProfileOpen(false);
-
-  const menuOptions = [
-    { label: "내 정보 수정하기", onClick: handleProfileOpen },
-    { label: "팀 나가기", onClick: () => console.log("팀 나가기") },
-  ];
 
   return (
     <>
@@ -83,11 +80,32 @@ function JoinerList({
       </Header>
       <GridBox>
         {joiners?.map((joiner, index) => {
-          const isOwner = joiner.role === "OWNER";
-          const isMine = joiner.userDto.id === user?.id;
+          const isOwnerAccount = joiner.role === "OWNER";
+          const isMine = joiner.userDto.id === user.id;
+
+          const menuOptionList: { label: string; onClick: () => void }[] = [
+            { label: "정보 확인하기", onClick: handleProfileOpen },
+          ];
+
+          if (isOwner) {
+            if (!isMine) {
+              menuOptionList.push({
+                label: "내보내기",
+                onClick: () => console.log("내보내기"),
+              });
+            }
+          } else {
+            if (isMine) {
+              menuOptionList.push({
+                label: "팀 나가기",
+                onClick: () => console.log("팀 나가기"),
+              });
+            }
+          }
+
           return (
             <CardContainer key={index}>
-              {isOwner && <CrownIcon />}
+              {isOwnerAccount && <CrownIcon />}
               <Card>
                 <ColorBar color={joiner.color} />
                 <Content>
@@ -97,26 +115,7 @@ function JoinerList({
                 <MenuWrap>
                   <MenuDrop
                     menuIcon={MenuIconReactNode}
-                    options={[
-                      { label: "정보 확인하기", onClick: handleProfileOpen },
-                      ...(isOwner
-                        ? []
-                        : isMine
-                        ? [
-                            // userOwner일 때 추가 메뉴 옵션
-                            {
-                              label: "팀 나가기",
-                              onClick: () => console.log("팀 나가기"),
-                            },
-                          ]
-                        : [
-                            // userOwner가 아닐 때 추가 메뉴 옵션
-                            {
-                              label: "내보내기",
-                              onClick: () => console.log("내보내기"),
-                            },
-                          ]),
-                    ]}
+                    options={menuOptionList}
                   />
                 </MenuWrap>
               </Card>
