@@ -15,7 +15,8 @@ export const Container = styled("div")`
 export const Content = styled("div")`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 0;
+  flex-grow: 1;
   padding: 30px;
 `;
 
@@ -45,8 +46,8 @@ export const Panel = styled("div")`
 export const StyledTabs = styled(Tabs)`
   &.MuiTabs-root {
     height: 100%;
-    width: 255px;
     background-color: #7b40f2;
+    overflow: unset;
   }
 
   .MuiTabs-scroller {
@@ -56,6 +57,7 @@ export const StyledTabs = styled(Tabs)`
   }
 
   .MuiTabs-flexContainer {
+    width: 200px;
     display: flex;
     flex-direction: column;
     justify-content: center;
