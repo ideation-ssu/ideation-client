@@ -149,6 +149,7 @@ const Idea: NextPage<IdeaProps> = (props) => {
               projectId={projectId}
               joiners={joiners}
               code={code ? code : ""}
+              isOwner={isOwner}
             />
           </TabContainer>
         </TabPanel>
