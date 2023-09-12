@@ -63,6 +63,7 @@ export const GridBox = styled("div")`
   padding: 30px;
   border-radius: 5px;
   background-color: #fff;
+  overflow-x: scroll;
 `;
 
 export const CardContainer = styled("div")`
