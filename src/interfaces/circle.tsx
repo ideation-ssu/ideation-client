@@ -1,8 +1,10 @@
 export interface ICircle {
-  id: string;
+  userId: number;
+  brainstormingId: number;
+  ideaName: string;
+  sessionIdeaId: string;
   x: number;
   y: number;
   radius: number;
   color: string;
-  text: string;
 }

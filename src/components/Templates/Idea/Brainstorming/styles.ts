@@ -86,6 +86,7 @@ export const StyledGrid = styled(Grid)`
     background-color: transparent;
     cursor: auto;
     box-shadow: none;
+    overflow-y: auto;
   }
 `;
 

@@ -3,20 +3,24 @@ import Konva from "konva";
 import { Circle, Group, Layer, Stage, Text } from "react-konva";
 
 import { ICircle } from "@/interfaces/circle";
+import { useAuth } from "@/utils/auth";
 
 const RandomCircle = ({
+  brainstormingId,
   value,
   setValue,
   circles,
   setCircles,
   sendCircle,
 }: {
+  brainstormingId: number;
   value: string;
   setValue: (value: string) => void;
   circles: ICircle[];
   setCircles: (circle: ICircle[]) => void;
   sendCircle: (circle: ICircle) => void;
 }) => {
+  const { user } = useAuth();
   const [canvasSize, setCanvasSize] = useState<{
     width: number;
     height: number;
@@ -56,11 +60,22 @@ const RandomCircle = ({
     const color = Konva.Util.getRandomColor();
     const id = `${value}-${x}-${y}-${color}`;
 
-    const ellipsis = "...";
-    const text =
-      value.length > 32 ? value.slice(0, value.length - 3) + ellipsis : value;
+    // const ellipsis = "...";
+    // const text =
+    //   value.length > 32 ? value.slice(0, value.length - 3) + ellipsis : value;
 
-    const newCircle = { id, x, y, radius, color, text };
+    const userId = user.id;
+    const sessionIdeaId = ""; // 새로운 원 추가 시 seesionIdeaId를 empty로 넘김
+    const newCircle: ICircle = {
+      userId: userId,
+      brainstormingId: brainstormingId,
+      sessionIdeaId: sessionIdeaId,
+      x: x,
+      y: y,
+      radius: radius,
+      color: color,
+      ideaName: value,
+    };
     setValue("");
     sendCircle(newCircle);
   };
@@ -68,25 +83,25 @@ const RandomCircle = ({
   const handleDragStart = (e: Konva.KonvaEventObject<DragEvent>) => {
     const id = e.target.name();
     const updatedCircles = [...circles];
-    const circleIndex = updatedCircles.findIndex((circle) => circle.id === id);
+    const circleIndex = updatedCircles.findIndex(
+      (circle) => circle.sessionIdeaId === id
+    );
     const [draggedCircle] = updatedCircles.splice(circleIndex, 1);
     updatedCircles.push(draggedCircle);
-    setCircles(updatedCircles);
+    // setCircles(updatedCircles);
   };
 
   const onDragEnd = (e: Konva.KonvaEventObject<DragEvent>) => {
-    const updatedCircles = circles.map((circle) => {
-      if (circle.id === e.target.name()) {
-        return {
+    circles.map((circle) => {
+      if (circle.sessionIdeaId === e.target.name()) {
+        const updateCircle: ICircle = {
           ...circle,
           x: e.target.x(),
           y: e.target.y(),
         };
+        sendCircle(updateCircle);
       }
-      sendCircle(circle);
-      return circle;
     });
-    setCircles(updatedCircles);
   };
 
   const handleOnClick = (e: Konva.KonvaEventObject<MouseEvent>) => {
@@ -111,17 +126,15 @@ const RandomCircle = ({
   };
 
   const handleDubleClick = (e: Konva.KonvaEventObject<MouseEvent>) => {
-    console.log(e);
-    const updatedCircles = circles.map((circle) => {
-      if (circle.id === e.target.name()) {
-        return {
+    circles.map((circle) => {
+      if (circle.sessionIdeaId === e.target.name()) {
+        const updateCircle: ICircle = {
           ...circle,
-          radius: e.target.attrs.radius + 5,
+          radius: e.target.attrs.radius + 2,
         };
+        sendCircle(updateCircle);
       }
-      return circle;
     });
-    setCircles(updatedCircles);
   };
 
   return (
@@ -133,27 +146,28 @@ const RandomCircle = ({
               <Group
                 draggable={true}
                 key={index}
+                name={circle.sessionIdeaId}
+                x={circle.x}
+                y={circle.y}
                 onDragStart={handleDragStart}
                 onDragEnd={onDragEnd}
               >
                 <Circle
-                  name={circle.id}
-                  x={circle.x}
-                  y={circle.y}
+                  name={circle.sessionIdeaId}
                   fill={circle.color}
                   radius={circle.radius}
                   onClick={handleOnClick}
                   onDblClick={handleDubleClick}
                 />
                 <Text
-                  text={circle.text}
-                  x={circle.x - circle.radius}
-                  y={circle.y - 10}
-                  width={circle.radius * 2}
+                  text={
+                    circle.ideaName.length > (circle.radius * 2) / 10
+                      ? circle.ideaName.slice(0, value.length - 3) + "..."
+                      : circle.ideaName
+                  }
+                  x={0 - (circle.ideaName.length / 2) * 8}
                   fill="white"
-                  align="center"
-                  verticalAlign="middle"
-                  wrap="word"
+                  fontSize={10}
                 />
               </Group>
             );

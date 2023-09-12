@@ -29,14 +29,6 @@ export interface IStatus {
   status: string;
 }
 
-export interface ISend {
-  sessionIdeaId: number;
-  userId: number;
-  brainstormingId: number;
-  ideaName: string;
-  freeJsonString: string;
-}
-
 export interface ITimer {
   minute: number;
   second: number;
