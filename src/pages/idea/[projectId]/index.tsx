@@ -155,7 +155,7 @@ const Idea: NextPage<IdeaProps> = (props) => {
         </TabPanel>
         <TabPanel value={tab} index={5}>
           <TabContainer>
-            <Vote projectId={projectId} ideas={ideas} />
+            <Vote projectId={projectId} ideas={ideas} isOwner={isOwner} />
           </TabContainer>
         </TabPanel>
       </Content>

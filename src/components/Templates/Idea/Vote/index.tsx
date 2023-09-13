@@ -48,9 +48,11 @@ import {
 function Vote({
   projectId,
   ideas,
+  isOwner,
 }: {
   projectId: number;
   ideas: IIdeaByStatus;
+  isOwner: boolean;
 }): React.ReactElement | null {
   const { axios } = useAuth();
   const [vote, setVote] = useState<IVote>();
@@ -148,7 +150,9 @@ function Vote({
           </TitleWrap>
 
           <ConfigWrap>
-            <MenuDrop options={menuOptions} menuIcon={<ConfigIcon />} />
+            {isOwner && (
+              <MenuDrop options={menuOptions} menuIcon={<ConfigIcon />} />
+            )}
 
             {vote && (
               <CloseVoteModal
