@@ -150,6 +150,7 @@ const Idea: NextPage<IdeaProps> = (props) => {
               joiners={joiners}
               code={code ? code : ""}
               isOwner={isOwner}
+              setJoiners={setJoiners}
             />
           </TabContainer>
         </TabPanel>
