@@ -164,7 +164,7 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
       `/topic/session/${brainstormingId}/status`,
       (message) => {
         setStatus(JSON.parse(message.body));
-        router.push("/statistics");
+        router.push(`/statistics/${brainstorming}`);
       }
     );
   };

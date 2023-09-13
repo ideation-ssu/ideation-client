@@ -14,15 +14,21 @@ export const Container = styled("div")`
 `;
 
 export const Content = styled("div")`
+  height: 100%;
   display: flex;
   flex-direction: column;
   padding: 30px;
+  gap: 35px;
 `;
 
 export const Header = styled("div")`
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
+
+  &.title {
+    margin: 0;
+  }
 `;
 
 export const LogoWrap = styled("div")`

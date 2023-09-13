@@ -95,7 +95,7 @@ function Brainstorming({
                   key={session.brainstormingId}
                   onClick={() => {
                     if (session.status === "FINISHED")
-                      router.push("/statistics");
+                      router.push(`/statistics/${session.brainstormingId}`);
                     else
                       router.push(`/brainstorming/${session.brainstormingId}`);
                   }}
