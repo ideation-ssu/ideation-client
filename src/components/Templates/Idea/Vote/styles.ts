@@ -323,6 +323,11 @@ export const VotedIcon = styled("div")<{ isVoted: boolean }>`
 export const VoteTitle = styled("p")`
   font-weight: bold;
   margin: 0 0 6px 0;
+  max-width: 150px;
+  width: 150px;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 export const VoteDate = styled("p")`
