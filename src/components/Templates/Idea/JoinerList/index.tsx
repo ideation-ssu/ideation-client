@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
+import axios, { AxiosResponse } from "axios";
 
 import MenuDrop from "@/components/Atoms/MenuDrop";
 import RoundButton from "@/components/Atoms/RoundButton";
 import InviteTeamModal from "@/components/Molecules/InviteTeamModal";
+import LeaveTeamModal from "@/components/Molecules/LeaveTeamModal";
 import ProfileModal from "@/components/Molecules/ProfileModal";
 import { Joiner } from "@/interfaces/project";
 import { useAuth } from "@/utils/auth";
@@ -30,11 +32,13 @@ function JoinerList({
   code,
   joiners,
   isOwner,
+  setJoiners,
 }: {
   projectId: number;
   code: string;
   joiners: Joiner[];
   isOwner: boolean;
+  setJoiners: React.Dispatch<React.SetStateAction<Joiner[]>>;
 }): React.ReactElement | null {
   const { user } = useAuth();
 
@@ -48,8 +52,17 @@ function JoinerList({
   const handleProfileOpen = () => setProfileOpen(true);
   const handleProfileClose = () => setProfileOpen(false);
 
+  // leave team modal
+  const [showLeaveTeamModal, setShowLeaveTeamModal] = React.useState(false);
+
   return (
     <>
+      <LeaveTeamModal
+        projectId={projectId}
+        userId={user.id}
+        open={showLeaveTeamModal}
+        handleClose={() => setShowLeaveTeamModal(false)}
+      />
       <Header className={"profile"}>
         <ProfileImg />
       </Header>
@@ -98,7 +111,7 @@ function JoinerList({
             if (isMine) {
               menuOptionList.push({
                 label: "팀 나가기",
-                onClick: () => console.log("팀 나가기"),
+                onClick: () => setShowLeaveTeamModal(true),
               });
             }
           }
