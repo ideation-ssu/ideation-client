@@ -35,24 +35,19 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
 }: {
   children: ReactNode;
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState<User>(initialUser);
   const [token, setToken] = useState<string>("");
 
   useEffect(() => {
+    setIsLoading(false);
     const savedUser = localStorage.getItem("user");
     setUser(savedUser ? JSON.parse(savedUser) : initialUser);
 
     const token = localStorage.getItem("token");
     setToken(token ? token : "");
-  }, [token]);
-
-  const customAxios = useMemo(() => {
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-    return axios.create({
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    setIsLoading(true);
   }, [token]);
 
   const authLogin = async (email: string, pw: string) => {
@@ -62,7 +57,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
     };
 
     try {
-      const { data } = await customAxios.post(
+      const { data } = await axios.post(
         `${process.env.NEXT_PUBLIC_BASEURL}/auth/login`,
         body
       );
@@ -102,6 +97,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
     return !!token;
   };
 
+  if (!isLoading) {
+    return <></>;
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -109,7 +108,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
         authLogin: authLogin,
         authLogout: authLogout,
         isLoggedIn: isLoggedIn,
-        axios: customAxios,
+        axios,
       }}
     >
       {children}
