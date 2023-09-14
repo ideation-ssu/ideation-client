@@ -1,49 +1,16 @@
 import React, { useEffect, useState } from "react";
-import Avatar from "@mui/material/Avatar";
 
-import MenuDrop from "@/components/Atoms/MenuDrop";
-import RoundButton from "@/components/Atoms/RoundButton";
-import CloseVoteModal from "@/components/Molecules/CloseVoteModal";
-import CreateVoteIdeaModal from "@/components/Molecules/CreateVoteIdeaModal";
-import DeleteVoteModal from "@/components/Molecules/DeleteVoteModal";
+import VoteDone from "@/components/Templates/Idea/Vote/VoteDone";
+import VoteInprogress from "@/components/Templates/Idea/Vote/VoteInprogress";
+import VoteNotStarted from "@/components/Templates/Idea/Vote/VoteNotStarted";
 import { IIdeaByStatus } from "@/interfaces/idea";
 import { IVote } from "@/interfaces/vote";
 import { useAuth } from "@/utils/auth";
-import { getDueDate, parseIsoDate } from "@/utils/date";
 
-import { CommentIcon } from "../../../../../public/icons/Comment/styles.ts";
-import { LikedIcon } from "../../../../../public/icons/Liked/styles.ts";
-
-import {
-  Category,
-  ConfigIcon,
-  ConfigWrap,
-  CreateVoteButtonWrap,
-  EmptyMessage,
-  EmptyWrap,
-  GridBox,
-  Header,
-  IconWrap,
-  MessageBox,
-  Percent,
-  PercentWrap,
-  ProfileImg,
-  Slider,
-  SliderBackground,
-  SliderWrap,
-  Table,
-  TableData,
-  TableHead,
-  TableHeader,
-  TableRow,
-  TitleBar,
-  TitleDueDateText,
-  TitleWrap,
-  VoteDate,
-  VotedIcon,
-  VoteIcon,
-  VoteTitle,
-} from "./styles";
+export interface IVoteMenuOption {
+  label: string;
+  onClick: () => void;
+}
 
 function Vote({
   projectId,
@@ -57,21 +24,6 @@ function Vote({
   const { axios } = useAuth();
   const [vote, setVote] = useState<IVote>();
 
-  // new vote idea modal
-  const [newVoteIdeaOpen, setNewVoteIdeaOpen] = React.useState(false);
-  const handleNewVoteIdeaOpen = () => setNewVoteIdeaOpen(true);
-  const handleNewVoteIdeaClose = () => setNewVoteIdeaOpen(false);
-
-  // close vote modal
-  const [closeVoteOpen, setCloseVoteOpen] = React.useState(false);
-  const handleCloseVoteOpen = () => setCloseVoteOpen(true);
-  const handleCloseVoteClose = () => setCloseVoteOpen(false);
-
-  // delete vote modal
-  const [deleteVoteOpen, setDeleteVoteOpen] = React.useState(false);
-  const handleDeleteVoteOpen = () => setDeleteVoteOpen(true);
-  const handleDeleteVoteClose = () => setDeleteVoteOpen(false);
-
   useEffect(() => {
     getVote();
   }, []);
@@ -80,217 +32,47 @@ function Vote({
     axios
       .get(`${process.env.NEXT_PUBLIC_BASEURL}/vote/${projectId}`)
       .then((res) => {
-        setVote((prevVote) => {
+        setVote(() => {
           return res.data;
         });
       });
   };
 
-  const voteDo = (ideaId: number) => {
-    const data = {
-      voteId: vote?.vote.voteId,
-      ideaId: ideaId,
-    };
+  if (!vote) {
+    return <></>;
+  }
 
-    axios
-      .post(`${process.env.NEXT_PUBLIC_BASEURL}/vote/do`, data)
-      .then((res) => {
-        getVote();
-      });
-  };
+  if (!vote.vote) {
+    return (
+      <VoteNotStarted
+        getVote={getVote}
+        ideas={ideas}
+        isOwner={isOwner}
+        projectId={projectId}
+      />
+    );
+  }
 
-  const voteCalcel = (ideaId: number) => {
-    const data = {
-      voteId: vote?.vote.voteId,
-      ideaId: ideaId,
-    };
-
-    axios
-      .post(`${process.env.NEXT_PUBLIC_BASEURL}/vote/cancel`, data)
-      .then((res) => {
-        getVote();
-      });
-  };
-
-  const menuOptions = [
-    {
-      label: "투표 종료하기",
-      onClick: () => {
-        handleCloseVoteOpen();
-        getVote();
-      },
-    },
-    {
-      label: "투표 삭제하기",
-      onClick: () => {
-        handleDeleteVoteOpen();
-      },
-    },
-  ];
-
-  // console.log(
-  //   vote?.project.joiners.find((joiner) => joiner.role === "OWNER")?.userId
-  // );
-  // console.log(vote?.project.joiners.map((joiner) => console.log(joiner.role)));
+  if (!vote.done) {
+    return (
+      <VoteInprogress
+        vote={vote}
+        getVote={getVote}
+        projectId={projectId}
+        ideas={ideas}
+        isOwner={isOwner}
+      />
+    );
+  }
 
   return (
-    <>
-      <Header className={"profile"}>
-        <ProfileImg />
-      </Header>
-
-      {vote?.vote ? (
-        <Header className={"rate"}>
-          <TitleWrap>
-            <TitleBar />
-            <span>{vote.project.name}</span>
-            <TitleDueDateText>
-              D - {getDueDate(vote.project.dueDate)}
-            </TitleDueDateText>
-          </TitleWrap>
-
-          <ConfigWrap>
-            {isOwner && (
-              <MenuDrop options={menuOptions} menuIcon={<ConfigIcon />} />
-            )}
-
-            {vote && (
-              <CloseVoteModal
-                voteId={vote.vote.voteId}
-                open={closeVoteOpen}
-                handleClose={handleCloseVoteClose}
-              />
-            )}
-            {vote && (
-              <DeleteVoteModal
-                voteId={vote.vote.voteId}
-                voteName={vote.vote.title}
-                open={deleteVoteOpen}
-                handleClose={handleDeleteVoteClose}
-                callback={getVote}
-              />
-            )}
-
-            <SliderWrap
-              isHide={vote.vote.isAnonymous || vote.votedUsers.length <= 0}
-            >
-              <MessageBox className={"joiner-box"}>
-                {vote.votedUsers.map((user, index) => {
-                  return index != vote.votedUsers.length - 1
-                    ? `${user.name}, `
-                    : user.name;
-                })}
-              </MessageBox>
-              <SliderBackground>
-                {vote && (
-                  <Slider
-                    total={vote.totalJoinerCount}
-                    count={vote.votedUserCount}
-                  />
-                )}
-              </SliderBackground>
-              <span>{`${vote.totalJoinerCount}명 중 ${vote.votedUserCount}명이 참여했어요`}</span>
-            </SliderWrap>
-          </ConfigWrap>
-        </Header>
-      ) : (
-        <Header className={"add-button"}>
-          <CreateVoteButtonWrap>
-            <RoundButton
-              isFilled={true}
-              text={"아이디어 선정하기"}
-              isMainClr={false}
-              onClick={handleNewVoteIdeaOpen}
-            />
-
-            <CreateVoteIdeaModal
-              projectId={projectId}
-              ideas={ideas}
-              open={newVoteIdeaOpen}
-              handleClose={() => {
-                handleNewVoteIdeaClose();
-                getVote();
-              }}
-            />
-          </CreateVoteButtonWrap>
-        </Header>
-      )}
-
-      <GridBox>
-        {vote?.vote ? (
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableHeader className={"assign"}>{"담당자"}</TableHeader>
-                <TableHeader>{"아이디어 명"}</TableHeader>
-                <TableHeader>{"카테고리"}</TableHeader>
-                <TableHeader>{"반응"}</TableHeader>
-                <TableHeader>{"연관자"}</TableHeader>
-                <TableHeader className={"vote"}>{"투표"}</TableHeader>
-              </TableRow>
-            </TableHead>
-            <tbody>
-              {vote.voteResults.map((result, index) => {
-                return (
-                  <TableRow
-                    key={index}
-                    className={"body"}
-                    isFill={index % 2 != 0}
-                  >
-                    <TableData>
-                      <Avatar src={result.idea.user.image} />
-                    </TableData>
-                    <TableData className={"title"} isTitle>
-                      <VoteTitle>{result.idea.title}</VoteTitle>
-                      <VoteDate>{parseIsoDate(result.idea.createdAt)}</VoteDate>
-                    </TableData>
-                    <TableData>
-                      <Category>{result.idea.category}</Category>
-                    </TableData>
-                    <TableData className={"liked"}>
-                      <CommentIcon />
-                      {result.idea.commentCount}
-                      <LikedIcon />
-                      {result.idea.likeCount}
-                    </TableData>
-                    <TableData>
-                      {result.idea.relatedUsers.map((relatedUser, index) => {
-                        return <Avatar key={index} src={relatedUser.image} />;
-                      })}
-                    </TableData>
-                    <TableData className={"vote"}>
-                      <PercentWrap>
-                        <MessageBox className={"count"}>
-                          {`${result.count}명이 투표했어요!`}
-                        </MessageBox>
-                        <Percent
-                          level={result.level}
-                        >{`${result.percent}%`}</Percent>
-                      </PercentWrap>
-                      <IconWrap
-                        isVoted={result.voted}
-                        onClick={() =>
-                          result.voted
-                            ? voteCalcel(result.idea.id)
-                            : voteDo(result.idea.id)
-                        }
-                      >
-                        <VotedIcon isVoted={result.voted} />
-                      </IconWrap>
-                    </TableData>
-                  </TableRow>
-                );
-              })}
-            </tbody>
-          </Table>
-        ) : (
-          <EmptyWrap>
-            <VoteIcon />
-            <EmptyMessage>{"진행 중인 투표가 없어요!"}</EmptyMessage>
-          </EmptyWrap>
-        )}
-      </GridBox>
-    </>
+    <VoteDone
+      vote={vote}
+      getVote={getVote}
+      projectId={projectId}
+      ideas={ideas}
+      isOwner={isOwner}
+    />
   );
 }
 
