@@ -1,10 +1,10 @@
 import React from "react";
 
+import { DoughnutChart } from "@/components/Atoms/DoughnutChart";
 import { IStatistics } from "@/interfaces/statistics";
 
 import {
   AnalysisBottom,
-  AnalysisContent,
   AnalysisTop,
   AnalysisWrap,
   Content,
@@ -37,7 +37,18 @@ function Analysis({
               </TimerWrap>
               <IdeaAnalysisWarp>
                 <SubTitle>{"참여자별 아이디어"}</SubTitle>
-                <Content direction={"row"}></Content>
+                <Content direction={"row"}>
+                  {statistics && (
+                    <DoughnutChart
+                      labels={statistics.statisticsUsers?.map(
+                        (user) => user.userName
+                      )}
+                      percentages={statistics.statisticsUsers?.map(
+                        (user) => user.percentage
+                      )}
+                    />
+                  )}
+                </Content>
               </IdeaAnalysisWarp>
             </AnalysisTop>
             <AnalysisBottom>
