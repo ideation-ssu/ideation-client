@@ -1,9 +1,7 @@
 import React from "react";
 import Avatar from "@mui/material/Avatar";
-import axios from "axios";
 
 import MenuDrop from "@/components/Atoms/MenuDrop";
-import CloseVoteModal from "@/components/Molecules/CloseVoteModal";
 import DeleteVoteModal from "@/components/Molecules/DeleteVoteModal";
 import { IVoteMenuOption } from "@/components/Templates/Idea/Vote";
 import {
@@ -12,7 +10,6 @@ import {
   ConfigWrap,
   GridBox,
   Header,
-  IconWrap,
   MessageBox,
   Percent,
   PercentWrap,
@@ -29,7 +26,7 @@ import {
   TitleDueDateText,
   TitleWrap,
   VoteDate,
-  VotedIcon,
+  VoteMedalIcon,
   VoteTitle,
 } from "@/components/Templates/Idea/Vote/styles";
 import { IIdeaByStatus } from "@/interfaces/idea";
@@ -54,50 +51,12 @@ export default function VoteDone({
   ideas,
   vote,
 }: PropsType) {
-  // close vote modal
-  const [closeVoteOpen, setCloseVoteOpen] = React.useState(false);
-  const handleCloseVoteOpen = () => setCloseVoteOpen(true);
-  const handleCloseVoteClose = () => setCloseVoteOpen(false);
-
   // delete vote modal
   const [deleteVoteOpen, setDeleteVoteOpen] = React.useState(false);
   const handleDeleteVoteOpen = () => setDeleteVoteOpen(true);
   const handleDeleteVoteClose = () => setDeleteVoteOpen(false);
 
-  const voteDo = (ideaId: number) => {
-    const data = {
-      voteId: vote?.vote.voteId,
-      ideaId: ideaId,
-    };
-
-    axios
-      .post(`${process.env.NEXT_PUBLIC_BASEURL}/vote/do`, data)
-      .then((res) => {
-        getVote();
-      });
-  };
-
-  const voteCalcel = (ideaId: number) => {
-    const data = {
-      voteId: vote?.vote.voteId,
-      ideaId: ideaId,
-    };
-
-    axios
-      .post(`${process.env.NEXT_PUBLIC_BASEURL}/vote/cancel`, data)
-      .then((res) => {
-        getVote();
-      });
-  };
-
   const menuOptions: IVoteMenuOption[] = [
-    {
-      label: "투표 종료하기",
-      onClick: () => {
-        handleCloseVoteOpen();
-        getVote();
-      },
-    },
     {
       label: "투표 삭제하기",
       onClick: () => {
@@ -108,12 +67,6 @@ export default function VoteDone({
 
   return (
     <>
-      <CloseVoteModal
-        voteId={vote.vote.voteId}
-        open={closeVoteOpen}
-        handleClose={handleCloseVoteClose}
-      />
-
       <DeleteVoteModal
         voteId={vote.vote.voteId}
         voteName={vote.vote.title}
@@ -140,26 +93,15 @@ export default function VoteDone({
             <MenuDrop options={menuOptions} menuIcon={<ConfigIcon />} />
           )}
 
-          {vote && (
-            <CloseVoteModal
-              voteId={vote.vote.voteId}
-              open={closeVoteOpen}
-              handleClose={handleCloseVoteClose}
-            />
-          )}
-          {vote && (
-            <DeleteVoteModal
-              voteId={vote.vote.voteId}
-              voteName={vote.vote.title}
-              open={deleteVoteOpen}
-              handleClose={handleDeleteVoteClose}
-              callback={getVote}
-            />
-          )}
+          <DeleteVoteModal
+            voteId={vote.vote.voteId}
+            voteName={vote.vote.title}
+            open={deleteVoteOpen}
+            handleClose={handleDeleteVoteClose}
+            callback={getVote}
+          />
 
-          <SliderWrap
-            isHide={vote.vote.isAnonymous || vote.votedUsers.length <= 0}
-          >
+          <SliderWrap isShow>
             <MessageBox className={"joiner-box"}>
               {vote.votedUsers.map((user, index) => {
                 return index != vote.votedUsers.length - 1
@@ -168,12 +110,10 @@ export default function VoteDone({
               })}
             </MessageBox>
             <SliderBackground>
-              {vote && (
-                <Slider
-                  total={vote.totalJoinerCount}
-                  count={vote.votedUserCount}
-                />
-              )}
+              <Slider
+                total={vote.totalJoinerCount}
+                count={vote.votedUserCount}
+              />
             </SliderBackground>
             <span>{`${vote.totalJoinerCount}명 중 ${vote.votedUserCount}명이 참여했어요`}</span>
           </SliderWrap>
@@ -199,8 +139,15 @@ export default function VoteDone({
                   key={index}
                   className={"body"}
                   isFill={index % 2 != 0}
+                  rank={result.rank}
                 >
                   <TableData>
+                    {result.rank <= 3 && (
+                      <VoteMedalIcon
+                        src={`/icons/Vote/medal-${result.rank}.svg`}
+                        alt="medal"
+                      />
+                    )}
                     <Avatar src={result.idea.user.image} />
                   </TableData>
                   <TableData className={"title"} isTitle>
@@ -230,16 +177,6 @@ export default function VoteDone({
                         level={result.level}
                       >{`${result.percent}%`}</Percent>
                     </PercentWrap>
-                    <IconWrap
-                      isVoted={result.voted}
-                      onClick={() =>
-                        result.voted
-                          ? voteCalcel(result.idea.id)
-                          : voteDo(result.idea.id)
-                      }
-                    >
-                      <VotedIcon isVoted={result.voted} />
-                    </IconWrap>
                   </TableData>
                 </TableRow>
               );

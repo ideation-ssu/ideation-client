@@ -94,7 +94,7 @@ export const ConfigIcon = styled("div")`
   height: 30px;
 `;
 
-export const SliderWrap = styled("div")<{ isHide?: boolean }>`
+export const SliderWrap = styled("div")<{ isHide?: boolean; isShow?: boolean }>`
   display: flex;
   flex-direction: column;
 
@@ -108,6 +108,14 @@ export const SliderWrap = styled("div")<{ isHide?: boolean }>`
   &:hover .joiner-box {
     visibility: ${(props) => (props.isHide ? "hidden" : "visible")};
   }
+
+  ${({ isShow }) =>
+    isShow &&
+    css`
+      & .joiner-box {
+        visibility: visible;
+      }
+    `};
 `;
 
 export const SliderBackground = styled("div")`
@@ -205,7 +213,7 @@ export const TableHeader = styled("th")`
   }
 `;
 
-export const TableRow = styled("tr")<{ isFill?: boolean }>`
+export const TableRow = styled("tr")<{ isFill?: boolean; rank?: number }>`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -216,7 +224,31 @@ export const TableRow = styled("tr")<{ isFill?: boolean }>`
     background-color: ${(props) =>
       props.isFill ? "rgba(113, 62, 220, 0.05)" : "rgba(113, 62, 220, 0.02)"};
     border-radius: 5px;
-  }
+    
+    ${({ rank }) => {
+      if (!rank) {
+        return "";
+      }
+
+      switch (rank) {
+        case 1:
+          return css`
+            background-color: rgba(123, 64, 242, 0.1) !important;
+          `;
+        case 2:
+          return css`
+            background-color: rgba(113, 62, 220, 0.07) !important;
+          `;
+        case 3:
+          return css`
+            background-color: rgba(113, 62, 220, 0.05) !important;
+          `;
+        default:
+          return css`
+            background-color: #fff !important;
+          `;
+      }
+    }}
 `;
 
 export const TableData = styled("td")<{ isTitle?: boolean }>`
@@ -226,6 +258,7 @@ export const TableData = styled("td")<{ isTitle?: boolean }>`
   align-items: center;
   padding: 10px 5px;
   flex: 1;
+  position: relative;
 
   &.title {
     font-weight: bold;
@@ -335,4 +368,13 @@ export const VoteDate = styled("p")`
   font-size: 10px;
   font-weight: 300;
   margin: 0;
+`;
+
+export const VoteMedalIcon = styled("img")`
+  position: absolute;
+  left: 5px;
+  top: 50%;
+  transform: translate(0px, -50%);
+  width: 30px;
+  height: 30px;
 `;
