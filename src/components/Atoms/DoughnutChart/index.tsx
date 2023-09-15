@@ -51,39 +51,39 @@ export function DoughnutChart({
             size: 16,
             family: "Pretendard",
           },
-          generateLabels: function (chart: Chart) {
-            const data = chart.data as ChartData<
-              "doughnut",
-              DefaultDataPoint<"doughnut">,
-              string
-            >;
-            if (data.labels && data.datasets) {
-              return data.labels?.map((label: string, index: number) => {
-                const dataset = data.datasets[0];
-                if (dataset.backgroundColor) {
-                  const iconColor = dataset.backgroundColor[index];
-
-                  // 범례 아이콘 스타일 및 크기 조절
-                  const icon = {
-                    pointStyle: "circle", // 원 모양 아이콘
-                    backgroundColor: iconColor, // 아이콘 배경색
-                    borderColor: "white", // 아이콘 테두리 색
-                    borderWidth: 2, // 아이콘 테두리 두께
-                    radius: 5, // 원 크기 조절 (원의 반지름)
-                  };
-
-                  return {
-                    text: label,
-                    fillStyle: "transparent", // 텍스트 색상
-                    fontColor: "black", // 텍스트 색상
-                    usePointStyle: true,
-                    pointStyle: icon, // 범례 아이콘 스타일
-                  };
-                }
-              });
-            }
-            return [];
-          },
+          // generateLabels: function (chart: Chart) {
+          //   const data = chart.data as ChartData<
+          //     "doughnut",
+          //     DefaultDataPoint<"doughnut">,
+          //     string
+          //   >;
+          //   if (data.labels && data.datasets) {
+          //     return data.labels?.map((label: string, index: number) => {
+          //       const dataset = data.datasets[0];
+          //       if (dataset.backgroundColor) {
+          //         const iconColor = dataset.backgroundColor[index];
+          //
+          //         // 범례 아이콘 스타일 및 크기 조절
+          //         const icon = {
+          //           pointStyle: "circle", // 원 모양 아이콘
+          //           backgroundColor: iconColor, // 아이콘 배경색
+          //           borderColor: "white", // 아이콘 테두리 색
+          //           borderWidth: 2, // 아이콘 테두리 두께
+          //           radius: 5, // 원 크기 조절 (원의 반지름)
+          //         };
+          //
+          //         return {
+          //           text: label,
+          //           fillStyle: "transparent", // 텍스트 색상
+          //           fontColor: "black", // 텍스트 색상
+          //           usePointStyle: true,
+          //           pointStyle: icon, // 범례 아이콘 스타일
+          //         };
+          //       }
+          //     });
+          //   }
+          //   return [];
+          // },
         },
       },
     },
