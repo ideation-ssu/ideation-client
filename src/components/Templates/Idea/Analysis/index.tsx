@@ -62,14 +62,7 @@ function Analysis({
             <AnalysisBottom>
               <SubTitle>{"워드 클라우드"}</SubTitle>
               <Content direction={"row"}>
-                <WordCloud
-                  words={statistics.wordCloudResponses?.map((wordCloud) => {
-                    return {
-                      ...wordCloud,
-                      value: wordCloud.value * 5,
-                    };
-                  })}
-                />
+                <WordCloud words={statistics.wordCloudResponses} />
               </Content>
             </AnalysisBottom>
           </AnalysisWrap>
