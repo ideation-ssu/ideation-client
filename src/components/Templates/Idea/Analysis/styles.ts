@@ -8,16 +8,14 @@ export const Container = styled("div")`
 `;
 
 export const GridBox = styled("div")`
-  width: 94%;
-  height: 100%;
   display: flex;
+  flex: 1;
   flex-direction: row;
   gap: 25px;
   margin-left: 0;
   padding: 30px;
   border-radius: 5px;
   background-color: #fff;
-  overflow-x: scroll;
 `;
 
 export const Inner = styled("div")`
@@ -41,7 +39,6 @@ export const SubTitle = styled("div")`
 export const AnalysisTop = styled("div")`
   display: flex;
   flex-direction: row;
-  flex: 4;
   gap: 15px;
 `;
 
@@ -75,6 +72,26 @@ export const Content = styled("div")<{ direction: string }>`
   gap: 20px;
   background-color: #f8f8ff;
   border-radius: 10px;
+
+  &.idea-list {
+    justify-content: flex-start;
+    overflow-y: auto;
+    padding: 20px 10px;
+    flex: 1;
+  }
+`;
+
+export const IdeaListWrap = styled("div")`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+  background-color: #f8f8ff;
+  border-radius: 10px;
+  overflow-y: auto;
+  padding: 20px 10px;
 `;
 
 export const IdeaAnalysisWarp = styled("div")`
@@ -88,12 +105,90 @@ export const AnalysisBottom = styled("div")`
   display: flex;
   flex-direction: column;
   gap: 5px;
-  flex: 6;
+  flex: 1;
 `;
 
 export const IdeaList = styled("div")`
+  height: 630px;
   display: flex;
   flex-direction: column;
   gap: 5px;
   flex: 4;
+`;
+
+export const IdeaWrap = styled("div")`
+  width: 95%;
+  height: 80px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 15px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #f3edff;
+
+  :nth-child(1) {
+    background-color: #7d40ff;
+  }
+  :nth-child(2) {
+    background-color: #9c6cff;
+  }
+  :nth-child(3) {
+    background-color: #c7acff;
+  }
+
+  :nth-child(1) span.title,
+  :nth-child(2) span.title,
+  :nth-child(3) span.title {
+    font-size: 20px;
+    color: #fff;
+  }
+
+  :nth-child(1) span.name,
+  :nth-child(2) span.name,
+  :nth-child(3) span.name {
+    font-size: 10px;
+    color: #fff;
+  }
+`;
+
+export const IdeaTitleInfo = styled("div")`
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  span.title {
+    font-size: 20px;
+    color: #000;
+  }
+  span.name {
+    font-size: 13px;
+    color: #000;
+  }
+`;
+
+export const IconWrap = styled("div")`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+`;
+
+export const HeartIcon = styled("div")<{ isDark: boolean }>`
+  background-image: ${(props) =>
+    props.isDark
+      ? `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='14' viewBox='0 0 16 14' fill='none'%3E%3Cpath d='M7.65145 13.7625L6.54199 12.7725C2.60149 9.27 0 6.9525 0 4.125C0 1.8075 1.85165 0 4.2083 0C5.53965 0 6.81744 0.6075 7.65145 1.56C8.48546 0.6075 9.76325 0 11.0946 0C13.4512 0 15.3029 1.8075 15.3029 4.125C15.3029 6.9525 12.7014 9.27 8.76091 12.7725L7.65145 13.7625Z' fill='black'/%3E%3C/svg%3E");`
+      : `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='14' viewBox='0 0 16 14' fill='none'%3E%3Cpath d='M7.65145 13.7625L6.54199 12.7725C2.60149 9.27 0 6.9525 0 4.125C0 1.8075 1.85165 0 4.2083 0C5.53965 0 6.81744 0.6075 7.65145 1.56C8.48546 0.6075 9.76325 0 11.0946 0C13.4512 0 15.3029 1.8075 15.3029 4.125C15.3029 6.9525 12.7014 9.27 8.76091 12.7725L7.65145 13.7625Z' fill='white'/%3E%3C/svg%3E");`}
+  background-size: cover;
+  width: 17px;
+  height: 15px;
+`;
+
+export const LikeCount = styled("span")<{ isDark: boolean }>`
+  font-size: 15px;
+  color: ${(props) => (props.isDark ? "#000" : "#fff")};
+  padding-bottom: 2px;
 `;

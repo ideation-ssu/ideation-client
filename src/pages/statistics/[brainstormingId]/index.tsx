@@ -40,13 +40,12 @@ const Statistics: NextPage<BrainstormingProps> = ({
     axios
       .get(`${process.env.NEXT_PUBLIC_BASEURL}/statistics/${brainstormingId}`)
       .then((res) => {
-        console.log(res.data);
         setStatistics(res.data);
       });
   };
 
   const goBrainstorming = () => {
-    router.push("/brainstorming?tab=3");
+    router.push(`/idea/${statistics?.projectId}?tab=3`);
   };
 
   return (

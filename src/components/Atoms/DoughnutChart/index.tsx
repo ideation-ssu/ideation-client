@@ -7,7 +7,7 @@ import { ChartWrap } from "@/components/Atoms/DoughnutChart/styles";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export function DoughnutChart({
+function DoughnutChart({
   labels,
   percentages,
 }: {
@@ -73,7 +73,6 @@ export function DoughnutChart({
           //         };
           //
           //         return {
-          //           text: label,
           //           fillStyle: "transparent", // 텍스트 색상
           //           fontColor: "black", // 텍스트 색상
           //           usePointStyle: true,
@@ -94,3 +93,5 @@ export function DoughnutChart({
     </ChartWrap>
   );
 }
+
+export default DoughnutChart;

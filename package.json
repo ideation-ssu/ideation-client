@@ -21,6 +21,7 @@
     "canvas": "2.11.2",
     "chart.js": "^4.4.0",
     "date-fns": "^2.30.0",
+    "dayjs": "^1.11.9",
     "eslint": "^8.39.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "jwt-decode": "^3.1.2",
@@ -35,6 +36,7 @@
     "react-konva": "^18.2.10",
     "react-router": "^6.10.0",
     "react-router-dom": "^6.10.0",
+    "react-wordcloud": "^1.2.7",
     "sockjs-client": "^1.6.1",
     "styled-components": "^5.3.10"
   },
