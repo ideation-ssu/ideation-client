@@ -12,11 +12,17 @@ export interface IIdea {
   category: string;
   content: string;
   hashTags: string[];
+  ideaHashtags: IIdeaHashTag[];
   isLiked: boolean;
   likeCount: number;
   commentCount: number;
   status: string;
   createdAt: string;
+}
+
+export interface IIdeaHashTag {
+  color: string;
+  hashtag: string;
 }
 
 export interface IIdeaByStatus {

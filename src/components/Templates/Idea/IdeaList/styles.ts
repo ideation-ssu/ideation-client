@@ -140,7 +140,7 @@ export const HashTagWrap = styled("div")`
   gap: 5px;
 `;
 
-export const HashTag = styled("div")`
+export const HashTag = styled("div")<{ color: string }>`
   height: 20px;
   display: flex;
   justify-content: center;
@@ -149,7 +149,7 @@ export const HashTag = styled("div")`
   border-radius: 5px;
   font-size: 12px;
   font-weight: bold;
-  background-color: #d6f0e0;
+  background-color: ${({ color }) => color};
   color: #0d6832;
 `;
 
