@@ -21,6 +21,7 @@ export interface IIdea {
 }
 
 export interface IIdeaHashTag {
+  backgroundColor: string;
   color: string;
   hashtag: string;
 }
