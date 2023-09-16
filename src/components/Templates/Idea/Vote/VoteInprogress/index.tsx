@@ -7,6 +7,7 @@ import CloseVoteModal from "@/components/Molecules/CloseVoteModal";
 import DeleteVoteModal from "@/components/Molecules/DeleteVoteModal";
 import { IVoteMenuOption } from "@/components/Templates/Idea/Vote";
 import {
+  AvatarWrapper,
   Category,
   ConfigIcon,
   ConfigWrap,
@@ -30,6 +31,7 @@ import {
   TitleWrap,
   VoteDate,
   VotedIcon,
+  VoteHoverText,
   VoteTitle,
 } from "@/components/Templates/Idea/Vote/styles";
 import { IIdeaByStatus } from "@/interfaces/idea";
@@ -201,7 +203,10 @@ export default function VoteInprogress({
                   isFill={index % 2 != 0}
                 >
                   <TableData>
-                    <Avatar src={result.idea.user.image} />
+                    <AvatarWrapper>
+                      <Avatar src={result.idea.user.image} />
+                      <VoteHoverText>{result.idea.user.name}</VoteHoverText>
+                    </AvatarWrapper>
                   </TableData>
                   <TableData className={"title"} isTitle>
                     <VoteTitle>{result.idea.title}</VoteTitle>
@@ -218,7 +223,14 @@ export default function VoteInprogress({
                   </TableData>
                   <TableData>
                     {result.idea.relatedUsers.map((relatedUser, index) => {
-                      return <Avatar key={index} src={relatedUser.image} />;
+                      return (
+                        <AvatarWrapper
+                          key={`relateUser-${relatedUser.id}-${index}`}
+                        >
+                          <Avatar key={index} src={relatedUser.image} />
+                          <VoteHoverText>{relatedUser.name}</VoteHoverText>
+                        </AvatarWrapper>
+                      );
                     })}
                   </TableData>
                   <TableData className={"vote"}>

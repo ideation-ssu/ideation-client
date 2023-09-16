@@ -31,7 +31,7 @@ function CreateProjectModal({
 
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
-  const [dueDate, setDueDate] = useState<Dayjs>(dayjs().add(1, "day"));
+  const [dueDate, setDueDate] = useState<Dayjs>(dayjs().add(30, "day"));
   const [isPublic, setIsPublic] = useState(false);
   const [err, setErr] = useState("");
 
