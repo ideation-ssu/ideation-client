@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 import OutlineInputBox from "@/components/Atoms/OutlineInputBox";
 import RoundButton from "@/components/Atoms/RoundButton";
@@ -34,6 +35,7 @@ function InviteTeamModal({
   };
 
   const handleCopyLink = () => {
+    toast.success("초대 링크가 복사 되었습니다.");
     axios
       .get(`${process.env.NEXT_PUBLIC_BASEURL}/project/invite/${projectId}`)
       .then((res) => {
@@ -51,6 +53,7 @@ function InviteTeamModal({
       .post(`${process.env.NEXT_PUBLIC_BASEURL}/project/invite-accept`, data)
       .then((res) => {
         handleClose();
+        toast.success("초대 링크가 전송되었습니다.");
       });
   };
 
