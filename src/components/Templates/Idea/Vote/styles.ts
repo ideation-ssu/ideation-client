@@ -378,3 +378,28 @@ export const VoteMedalIcon = styled("img")`
   width: 30px;
   height: 30px;
 `;
+
+export const AvatarWrapper = styled("div")`
+  position: relative;
+
+  &:hover {
+    > p {
+      display: block;
+    }
+  }
+`;
+
+export const VoteHoverText = styled("p")`
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, calc(-100% - 5px));
+  padding: 4px 6px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+  font-size: 10px;
+  color: #fff;
+  line-height: 10px;
+  white-space: nowrap;
+`;
