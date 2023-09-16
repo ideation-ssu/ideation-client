@@ -71,7 +71,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
         id: decoded.id,
         email: data.data.email,
         name: data.data.name,
-        image: decoded.image,
+        profileImage: decoded.image,
       };
 
       setUser(userData);
