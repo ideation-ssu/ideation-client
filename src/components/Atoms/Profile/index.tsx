@@ -33,7 +33,7 @@ function Profile(): React.ReactElement {
   return (
     <>
       <Button onClick={handleClick}>
-        <Avatar src={user.image} />
+        <Avatar src={user.profileImage} />
       </Button>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
         <StyledMenuItem disabled={true}>

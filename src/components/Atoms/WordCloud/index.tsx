@@ -1,32 +1,24 @@
 import React from "react";
-import ReactWordcloud from "react-wordcloud";
+import WordCloud from "react-d3-cloud";
+import { Word } from "react-d3-cloud/lib/WordCloud";
 
 import { Container } from "@/components/Atoms/WordCloud/styles";
 import { IWordCloud } from "@/interfaces/statistics";
 
-function WordCloud({ words }: { words: IWordCloud[] }) {
-  const fontSizes: [number, number] = [20, 60];
-  const rotationAngles: [number, number] = [0, 90];
-
-  const options = {
-    colors: ["#1D1568", "#005E69", "#012777", "#080522", "#014C7F"],
-    enableTooltip: false,
-    deterministic: false,
-    fontFamily: "Pretendard-ExtraBold",
-    fontSizes: fontSizes,
-    fontStyle: "normal",
-    fontWeight: "bold",
-    padding: 1,
-    rotations: 3,
-    rotationAngles: rotationAngles,
-    transitionDuration: 1000,
-  };
-
+function IdeaWordCloud({ words }: { words: IWordCloud[] }) {
   return (
     <Container>
-      <ReactWordcloud words={words} options={options} />
+      <WordCloud
+        data={words}
+        width={500}
+        height={300}
+        font="Pretendard-ExtraBold"
+        fontSize={(word: Word) => Math.log2(word.value) * 5}
+        padding={5}
+        random={Math.random}
+      />
     </Container>
   );
 }
 
-export default WordCloud;
+export default IdeaWordCloud;

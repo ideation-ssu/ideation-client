@@ -135,7 +135,7 @@ function IdeaList({
   return (
     <>
       <Header className={"profile"}>
-        <Avatar src={user?.image} />
+        <Avatar src={user?.profileImage} />
       </Header>
       <Header className={"search"}>
         <Search>

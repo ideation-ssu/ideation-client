@@ -151,7 +151,7 @@ export default function VoteDone({
                       />
                     )}
                     <AvatarWrapper>
-                      <Avatar src={result.idea.user.image} />
+                      <Avatar src={result.idea.user.profileImage} />
                       <VoteHoverText>{result.idea.user.name}</VoteHoverText>
                     </AvatarWrapper>
                   </TableData>
@@ -174,7 +174,7 @@ export default function VoteDone({
                         <AvatarWrapper
                           key={`relateUser-${relatedUser.id}-${index}`}
                         >
-                          <Avatar key={index} src={relatedUser.image} />
+                          <Avatar key={index} src={relatedUser.profileImage} />
                           <VoteHoverText>{relatedUser.name}</VoteHoverText>
                         </AvatarWrapper>
                       );

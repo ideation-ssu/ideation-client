@@ -15,7 +15,7 @@ const initialUser: User = {
   id: 0,
   email: "",
   name: "",
-  image: "",
+  profileImage: "",
 };
 
 const AuthContext = createContext<AuthContextType | null>({

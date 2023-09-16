@@ -79,7 +79,11 @@ function Analysis({
               {statistics.statisticsIdeas.map((idea, index) => {
                 return (
                   <IdeaWrap key={index}>
-                    <Avatar src={idea.user.image} width={62} height={62} />
+                    <Avatar
+                      src={idea.user.profileImage}
+                      width={62}
+                      height={62}
+                    />
                     <IdeaTitleInfo>
                       <span className="title">{idea.ideaName}</span>
                       <span className="name">{idea.user.name}</span>
