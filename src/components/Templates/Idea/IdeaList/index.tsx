@@ -42,6 +42,7 @@ import {
   StatusTitle,
 } from "./styles";
 import backgroundColor = _default.defaults.backgroundColor;
+import { toast } from "react-toastify";
 
 function IdeaList({
   projectId,
@@ -78,7 +79,10 @@ function IdeaList({
   // idea detail modal
   const [ideaDetailOpen, setIdeaDetailOpen] = React.useState(false);
   const handleIdeaDetailOpen = () => setIdeaDetailOpen(true);
-  const handleIdeaDetailClose = () => setIdeaDetailOpen(false);
+  const handleIdeaDetailClose = () => {
+    setSelectedIdeaId(undefined);
+    setIdeaDetailOpen(false);
+  };
 
   // animation (drop & down)
   const [animationEnabled, setAnimationEnabled] = useState<boolean>(false);
@@ -125,6 +129,7 @@ function IdeaList({
         if (res.data.error) {
           updatedIdeas[sourceStatus].splice(source.index, 0, draggedIdea);
           setIdeas(updatedIdeas);
+          toast.error(res.data.error.message);
           return;
         }
         updatedIdeas[destStatus].splice(destination.index, 0, draggedIdea);
