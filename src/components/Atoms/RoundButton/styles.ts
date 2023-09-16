@@ -27,7 +27,7 @@ export const StyledButton = styled(Button)<{
   span {
     font-family: Pretendard, sans-serif;
     font-weight: 400;
-    font-size: 10px;
+    font-size: 15px;
     line-height: 11.93px;
     margin: auto;
   }

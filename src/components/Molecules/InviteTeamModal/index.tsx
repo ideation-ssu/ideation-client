@@ -86,12 +86,12 @@ function InviteTeamModal({
               />
               <ButtonWrap>
                 <RoundButton
-                  text={"Copy link"}
+                  text={"초대 링크 복사"}
                   isFilled={false}
                   onClick={handleCopyLink}
                 />
                 <RoundButton
-                  text={"Continue"}
+                  text={"초대하기"}
                   isFilled={true}
                   onClick={handleInvite}
                 />

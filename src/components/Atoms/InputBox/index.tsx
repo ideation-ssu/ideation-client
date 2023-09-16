@@ -10,7 +10,7 @@ function InputBox({
   setText,
   errText,
   autoComplete,
-  fontSize = 10,
+  fontSize = 15,
 }: {
   placeHolder: string;
   text: string;

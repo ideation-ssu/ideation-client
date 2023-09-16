@@ -75,7 +75,7 @@ function LoginForm({
   };
 
   return (
-    <TitleCard titleText={"LOGIN"}>
+    <TitleCard titleText={"로그인"}>
       <InnerContainer>
         <IdeationLabel />
         <FlexWrap gap={20}>

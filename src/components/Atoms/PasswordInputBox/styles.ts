@@ -12,7 +12,7 @@ export const StyledInput = styled(Input)<{ error: boolean }>`
 
   &.MuiInputBase-root {
     font-weight: 400;
-    font-size: 10px;
+    font-size: 15px;
     line-height: 11.93px;
   }
 

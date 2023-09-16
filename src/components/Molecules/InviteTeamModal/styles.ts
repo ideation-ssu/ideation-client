@@ -62,6 +62,6 @@ export const ButtonWrap = styled("div")`
   gap: 5px;
 
   button {
-    width: 100px;
+    width: max-content;
   }
 `;
