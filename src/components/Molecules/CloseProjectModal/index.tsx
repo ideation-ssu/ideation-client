@@ -53,7 +53,7 @@ function CloseProjectModal({
           <IdeationImg />
           <ButtonWrap>
             <RoundButton
-              text={"Continue"}
+              text={"확인"}
               isFilled={true}
               onClick={handleCloseProject}
             />

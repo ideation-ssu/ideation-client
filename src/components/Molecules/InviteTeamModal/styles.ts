@@ -52,6 +52,15 @@ export const Content = styled("div")`
   flex-direction: column;
   gap: 110px;
   padding: 45px 0;
+
+  > .modal-text-content {
+    text-align: center;
+    font-size: 18px;
+
+    > span {
+      font-weight: bold;
+    }
+  }
 `;
 
 export const ButtonWrap = styled("div")`
