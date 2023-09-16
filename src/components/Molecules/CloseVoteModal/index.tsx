@@ -46,9 +46,9 @@ function CloseVoteModal({
           </span>
         </Content>
         <ButtonWrap>
-          <RoundButton text={"Cancel"} isFilled={false} onClick={handleClose} />
+          <RoundButton text={"취소"} isFilled={false} onClick={handleClose} />
           <RoundButton
-            text={"Continue"}
+            text={"확인"}
             isFilled={true}
             onClick={handleCloseVote}
           />
