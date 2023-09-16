@@ -37,7 +37,7 @@ export const Input = styled(TextField)<{ error: boolean; normal: string }>`
     height: 100%;
     font-weight: 400;
     font-family: Pretendard, sans-serif;
-    font-size: 10px;
+    font-size: 15px;
     line-height: 11.93px;
   }
 `;

@@ -15,7 +15,7 @@ export const Header = styled("div")`
 export const ButtonWrap = styled("div")`
   display: flex;
   flex-direction: row;
-  width: 118px;
+  width: 148px;
   gap: 10px;
 `;
 

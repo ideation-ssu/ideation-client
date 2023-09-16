@@ -17,7 +17,7 @@ export const Input = styled(OutlinedInput)<{ error: boolean }>`
   &.MuiOutlinedInput-root {
     height: 47px;
     font-weight: 400;
-    font-size: 10px;
+    font-size: 15px;
     line-height: 11.93px;
   }
 `;
