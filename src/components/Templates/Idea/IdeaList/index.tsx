@@ -224,9 +224,11 @@ function IdeaList({
                                 </IdeaTop>
                                 <IdeaBottom>
                                   <HashTagWrap>
-                                    {idea.hashTags.map((tag, index) => {
+                                    {idea.ideaHashtags.map((tag, index) => {
                                       return (
-                                        <HashTag key={index}>{tag}</HashTag>
+                                        <HashTag key={index} color={tag.color}>
+                                          {tag.hashtag}
+                                        </HashTag>
                                       );
                                     })}
                                   </HashTagWrap>
