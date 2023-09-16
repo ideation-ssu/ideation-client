@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import axios, { AxiosResponse } from "axios";
+import React from "react";
 
 import MenuDrop from "@/components/Atoms/MenuDrop";
 import RoundButton from "@/components/Atoms/RoundButton";
@@ -7,7 +6,10 @@ import InviteTeamModal from "@/components/Molecules/InviteTeamModal";
 import LeaveTeamModal from "@/components/Molecules/LeaveTeamModal";
 import ProfileModal from "@/components/Molecules/ProfileModal";
 import { Joiner } from "@/interfaces/project";
+import { User } from "@/interfaces/user";
 import { useAuth } from "@/utils/auth";
+
+import RemoveMemberModal from "../../../Molecules/RemoveMemberModal";
 
 import {
   ButtonWrap,
@@ -32,13 +34,13 @@ function JoinerList({
   code,
   joiners,
   isOwner,
-  setJoiners,
+  getJoiners,
 }: {
   projectId: number;
   code: string;
   joiners: Joiner[];
   isOwner: boolean;
-  setJoiners: React.Dispatch<React.SetStateAction<Joiner[]>>;
+  getJoiners: () => void;
 }): React.ReactElement | null {
   const { user } = useAuth();
 
@@ -55,6 +57,11 @@ function JoinerList({
   // leave team modal
   const [showLeaveTeamModal, setShowLeaveTeamModal] = React.useState(false);
 
+  // block user modal
+  const [removeMemberInfo, setRemoveMemberInfo] = React.useState<null | User>(
+    null
+  );
+
   return (
     <>
       <LeaveTeamModal
@@ -63,6 +70,16 @@ function JoinerList({
         open={showLeaveTeamModal}
         handleClose={() => setShowLeaveTeamModal(false)}
       />
+      {removeMemberInfo && (
+        <RemoveMemberModal
+          projectId={projectId}
+          userId={user.id}
+          open={Boolean(removeMemberInfo)}
+          handleClose={() => setRemoveMemberInfo(null)}
+          userInfo={removeMemberInfo}
+          callback={getJoiners}
+        />
+      )}
       <Header className={"profile"}>
         <ProfileImg />
       </Header>
@@ -104,7 +121,7 @@ function JoinerList({
             if (!isMine) {
               menuOptionList.push({
                 label: "내보내기",
-                onClick: () => console.log("내보내기"),
+                onClick: () => setRemoveMemberInfo(joiner.userDto),
               });
             }
           } else {
