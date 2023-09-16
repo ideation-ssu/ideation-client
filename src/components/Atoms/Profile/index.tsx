@@ -7,7 +7,6 @@ import { useAuth } from "@/utils/auth";
 
 import {
   Button,
-  ConfigIcon,
   IconWrap,
   LogoutIcon,
   ProfileIcon,
@@ -47,12 +46,6 @@ function Profile(): React.ReactElement {
             <ProfileIcon />
           </IconWrap>
           <span>{"내 프로필"}</span>
-        </StyledMenuItem>
-        <StyledMenuItem>
-          <IconWrap>
-            <ConfigIcon />
-          </IconWrap>
-          <span>{"환경 설정"}</span>
         </StyledMenuItem>
         <StyledMenuItem
           onClick={() => {
