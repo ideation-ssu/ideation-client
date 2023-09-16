@@ -1,5 +1,5 @@
 import Grid from "@mui/material/Grid";
-import { styled } from "@mui/material/styles";
+import { css, styled } from "@mui/material/styles";
 
 export const Container = styled("div")`
   height: 100vh;
@@ -41,10 +41,10 @@ export const StyledGrid = styled(Grid)`
   }
 `;
 
-export const Category = styled("div")`
+export const Category = styled("div")<{ isDone: boolean }>`
   width: 17px;
   height: 100%;
-  background-color: yellow;
+  background-color: ${({ isDone }) => (isDone ? "#AFAFAF" : "yellow")};
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
 `;
@@ -67,7 +67,7 @@ export const Content = styled("div")`
   }
 `;
 
-export const DDay = styled("div")`
+export const DDay = styled("div")<{ isDone: boolean }>`
   width: 72.54px;
   height: 21px;
   border-radius: 5px;
@@ -79,6 +79,13 @@ export const DDay = styled("div")`
     font-size: 12px;
     margin: 0;
   }
+
+  ${({ isDone }) =>
+    isDone &&
+    css`
+      background-color: rgba(87, 87, 87, 0.2);
+      color: #000;
+    `};
 `;
 
 export const ProjectInfoWrap = styled("div")`
