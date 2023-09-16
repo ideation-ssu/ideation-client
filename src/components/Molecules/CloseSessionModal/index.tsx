@@ -4,7 +4,7 @@ import RoundButton from "@/components/Atoms/RoundButton";
 
 import { ButtonWrap, Container, Content, StyledModal, Title } from "./styles";
 
-function CloseVoteModal({
+function CloseSessionModal({
   open,
   handleClose,
   closeSession,
@@ -49,4 +49,4 @@ function CloseVoteModal({
   );
 }
 
-export default CloseVoteModal;
+export default CloseSessionModal;
