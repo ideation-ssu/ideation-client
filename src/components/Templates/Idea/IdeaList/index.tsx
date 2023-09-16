@@ -1,5 +1,6 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
+import _default from "chart.js/dist/plugins/plugin.tooltip";
 import {
   DragDropContext,
   Draggable,
@@ -40,6 +41,7 @@ import {
   SearchInput,
   StatusTitle,
 } from "./styles";
+import backgroundColor = _default.defaults.backgroundColor;
 
 function IdeaList({
   projectId,
@@ -226,7 +228,11 @@ function IdeaList({
                                   <HashTagWrap>
                                     {idea.ideaHashtags.map((tag, index) => {
                                       return (
-                                        <HashTag key={index} color={tag.color}>
+                                        <HashTag
+                                          key={index}
+                                          color={tag.color}
+                                          backgroundColor={tag.backgroundColor}
+                                        >
                                           {tag.hashtag}
                                         </HashTag>
                                       );

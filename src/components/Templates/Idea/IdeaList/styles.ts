@@ -140,7 +140,10 @@ export const HashTagWrap = styled("div")`
   gap: 5px;
 `;
 
-export const HashTag = styled("div")<{ color: string }>`
+export const HashTag = styled("div")<{
+  color: string;
+  backgroundColor: string;
+}>`
   height: 20px;
   display: flex;
   justify-content: center;
@@ -149,8 +152,8 @@ export const HashTag = styled("div")<{ color: string }>`
   border-radius: 5px;
   font-size: 12px;
   font-weight: bold;
-  background-color: ${({ color }) => color};
-  color: #0d6832;
+  color: ${({ color }) => color};
+  background-color: ${({ backgroundColor }) => backgroundColor};
 `;
 
 export const ReactionWrap = styled("div")`
