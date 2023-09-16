@@ -3,6 +3,7 @@ import Menu from "@mui/material/Menu";
 
 import Driver from "@/components/Atoms/Driver";
 import RoundButton from "@/components/Atoms/RoundButton";
+import { User } from "@/interfaces/user";
 
 import { StyledButton, StyledMenuItem } from "./styles";
 
@@ -13,7 +14,7 @@ function MenuDrop({
 }: {
   menuText?: string;
   menuIcon?: ReactNode;
-  options: { label: string; onClick: () => void }[];
+  options: { label: string; onClick: (userInfo?: User) => void }[];
 }): React.ReactElement {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
