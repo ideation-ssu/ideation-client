@@ -5,6 +5,7 @@ import MenuDrop from "@/components/Atoms/MenuDrop";
 import DeleteVoteModal from "@/components/Molecules/DeleteVoteModal";
 import { IVoteMenuOption } from "@/components/Templates/Idea/Vote";
 import {
+  AvatarWrapper,
   Category,
   ConfigIcon,
   ConfigWrap,
@@ -26,6 +27,7 @@ import {
   TitleDueDateText,
   TitleWrap,
   VoteDate,
+  VoteHoverText,
   VoteMedalIcon,
   VoteTitle,
 } from "@/components/Templates/Idea/Vote/styles";
@@ -148,7 +150,10 @@ export default function VoteDone({
                         alt="medal"
                       />
                     )}
-                    <Avatar src={result.idea.user.image} />
+                    <AvatarWrapper>
+                      <Avatar src={result.idea.user.image} />
+                      <VoteHoverText>{result.idea.user.name}</VoteHoverText>
+                    </AvatarWrapper>
                   </TableData>
                   <TableData className={"title"} isTitle>
                     <VoteTitle>{result.idea.title}</VoteTitle>
@@ -165,7 +170,14 @@ export default function VoteDone({
                   </TableData>
                   <TableData>
                     {result.idea.relatedUsers.map((relatedUser, index) => {
-                      return <Avatar key={index} src={relatedUser.image} />;
+                      return (
+                        <AvatarWrapper
+                          key={`relateUser-${relatedUser.id}-${index}`}
+                        >
+                          <Avatar key={index} src={relatedUser.image} />
+                          <VoteHoverText>{relatedUser.name}</VoteHoverText>
+                        </AvatarWrapper>
+                      );
                     })}
                   </TableData>
                   <TableData className={"vote"}>
