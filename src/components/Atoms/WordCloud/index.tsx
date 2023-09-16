@@ -14,6 +14,7 @@ function IdeaWordCloud({ words }: { words: IWordCloud[] }) {
         height={300}
         font="Pretendard-ExtraBold"
         fontSize={(word: Word) => Math.log2(word.value) * 5}
+        rotate={0}
         padding={5}
         random={Math.random}
       />
