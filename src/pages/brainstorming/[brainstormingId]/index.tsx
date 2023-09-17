@@ -9,6 +9,7 @@ import CloseSessionModal from "@/components/Molecules/CloseSessionModal";
 import WaitSessionModal from "@/components/Molecules/WaitSessionModal";
 import { ISession, IStatus, ITimer, ITopic } from "@/interfaces/brainstorming";
 import { ICircle } from "@/interfaces/circle";
+import { Joiner } from "@/interfaces/project";
 import {
   Container,
   Content,
@@ -43,6 +44,7 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
 
   const [brainstorming, setBrainstorming] = useState<ISession>();
   const [timer, setTimer] = useState<ITimer>();
+  const [joiners, setJoiners] = useState<Joiner[]>([]);
 
   const [idea, setIdea] = useState<string>("");
   const [circleValue, setCircleValue] = useState<string>("");
@@ -72,6 +74,15 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
         if (res.data.status === "FINISHED")
           router.push(`/idea/${res.data.projectId}?tab=3`);
         stompConnect(res.data.isStarted, res.data.brainstormingId);
+        getJoiners(res.data.projectId);
+      });
+  };
+
+  const getJoiners = (projectId: number) => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_BASEURL}/project/joiner/${projectId}`)
+      .then((res) => {
+        setJoiners(res.data.data?.joiners);
       });
   };
 
@@ -197,10 +208,10 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
       <Content>
         <RandomCircle
           brainstormingId={brainstormingId}
+          joiners={joiners}
           value={circleValue}
           setValue={setCircleValue}
           circles={circles}
-          setCircles={setCircles}
           sendCircle={stompSend}
         />
       </Content>

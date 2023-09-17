@@ -2,29 +2,47 @@ import React, { useEffect, useState } from "react";
 import Konva from "konva";
 import { Circle, Group, Layer, Stage, Text } from "react-konva";
 
+import Driver from "@/components/Atoms/Driver";
+import {
+  ContextItem,
+  ContextMenu,
+} from "@/components/Atoms/RandomCircle/styles";
+import NewIdeaModal from "@/components/Molecules/NewIdeaModal";
 import { ICircle } from "@/interfaces/circle";
+import { Joiner } from "@/interfaces/project";
 import { useAuth } from "@/utils/auth";
 
 const RandomCircle = ({
   brainstormingId,
+  joiners,
   value,
   setValue,
   circles,
-  setCircles,
   sendCircle,
 }: {
   brainstormingId: number;
+  joiners: Joiner[];
   value: string;
   setValue: (value: string) => void;
   circles: ICircle[];
-  setCircles: (circle: ICircle[]) => void;
   sendCircle: (circle: ICircle) => void;
 }) => {
-  const { user } = useAuth();
+  const { user, axios } = useAuth();
   const [canvasSize, setCanvasSize] = useState<{
     width: number;
     height: number;
   }>({ width: 0, height: 0 });
+
+  const [contextMenu, setContextMenu] = useState({
+    visible: false,
+    x: "0px",
+    y: "0px",
+  });
+
+  // new idea modal
+  const [newIdeaOpen, setNewIdeaOpen] = React.useState(false);
+  const handleNewIdeaOpen = () => setNewIdeaOpen(true);
+  const handleNewIdeaClose = () => setNewIdeaOpen(false);
 
   useEffect(() => {
     setCanvasSize({
@@ -55,14 +73,8 @@ const RandomCircle = ({
   const addCircle = (value: string) => {
     const x = Math.random() * canvasSize.width;
     const y = Math.random() * canvasSize.height;
-
     const radius = 60;
     const color = Konva.Util.getRandomColor();
-    const id = `${value}-${x}-${y}-${color}`;
-
-    // const ellipsis = "...";
-    // const text =
-    //   value.length > 32 ? value.slice(0, value.length - 3) + ellipsis : value;
 
     const userId = user.id;
     const sessionIdeaId = ""; // 새로운 원 추가 시 seesionIdeaId를 empty로 넘김
@@ -104,27 +116,6 @@ const RandomCircle = ({
     });
   };
 
-  const handleOnClick = (e: Konva.KonvaEventObject<MouseEvent>) => {
-    console.log(e);
-    switch (e.evt.detail) {
-      case 1: {
-        console.log("single click");
-        break;
-      }
-      case 2: {
-        console.log("double click");
-        break;
-      }
-      case 3: {
-        console.log("triple click");
-        break;
-      }
-      default: {
-        break;
-      }
-    }
-  };
-
   const handleDubleClick = (e: Konva.KonvaEventObject<MouseEvent>) => {
     circles.map((circle) => {
       if (circle.sessionIdeaId === e.target.name()) {
@@ -137,9 +128,31 @@ const RandomCircle = ({
     });
   };
 
+  const handleContextMenu = (e: Konva.KonvaEventObject<MouseEvent>) => {
+    e.evt.preventDefault();
+    setContextMenu({
+      visible: true,
+      x: `${e.evt.x}px`,
+      y: `${e.evt.y}px`,
+    });
+  };
+
+  const handleCloseContextMenu = () => {
+    setContextMenu({ visible: false, x: "0px", y: "0px" });
+  };
+
+  const handleClickOutside = (e: Konva.KonvaEventObject<MouseEvent>) => {
+    if (contextMenu.x != `${e.evt.x}px` && contextMenu.y != `${e.evt.y}px`)
+      handleCloseContextMenu();
+  };
+
   return (
     <>
-      <Stage width={canvasSize.width} height={canvasSize.height}>
+      <Stage
+        width={canvasSize.width}
+        height={canvasSize.height}
+        onClick={handleClickOutside}
+      >
         <Layer>
           {circles?.map((circle, index) => {
             return (
@@ -151,12 +164,12 @@ const RandomCircle = ({
                 y={circle.y}
                 onDragStart={handleDragStart}
                 onDragEnd={onDragEnd}
+                onContextMenu={handleContextMenu}
               >
                 <Circle
                   name={circle.sessionIdeaId}
                   fill={circle.color}
                   radius={circle.radius}
-                  onClick={handleOnClick}
                   onDblClick={handleDubleClick}
                 />
                 <Text
@@ -174,6 +187,25 @@ const RandomCircle = ({
           })}
         </Layer>
       </Stage>
+      {contextMenu.visible && (
+        <ContextMenu x={contextMenu.x} y={contextMenu.y}>
+          <ContextItem
+            onClick={() => {
+              handleNewIdeaOpen();
+              handleCloseContextMenu();
+            }}
+          >
+            {"아이디어로 생성하기"}
+          </ContextItem>
+          <Driver />
+          <ContextItem>{"삭제하기"}</ContextItem>
+        </ContextMenu>
+      )}
+      <NewIdeaModal
+        open={newIdeaOpen}
+        handleClose={handleNewIdeaClose}
+        joiners={joiners}
+      />
     </>
   );
 };

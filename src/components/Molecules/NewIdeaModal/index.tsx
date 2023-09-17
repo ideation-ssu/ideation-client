@@ -35,7 +35,7 @@ function NewIdeaModal({
 }: {
   open: boolean;
   handleClose: () => void;
-  updateIdeaList: () => void;
+  updateIdeaList?: () => void;
   joiners: Joiner[];
 }): React.ReactElement {
   const { axios } = useAuth();
@@ -93,7 +93,7 @@ function NewIdeaModal({
       else {
         setErr("");
         handleClose();
-        updateIdeaList();
+        if (updateIdeaList) updateIdeaList();
       }
     });
   };
