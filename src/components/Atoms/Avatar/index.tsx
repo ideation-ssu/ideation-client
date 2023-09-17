@@ -11,13 +11,7 @@ function Avatar({
   width?: number;
   height?: number;
 }): React.ReactElement {
-  return (
-    <StyledAvatar
-      src={src ? src : "/broken-image.jpg"}
-      width={width}
-      height={height}
-    />
-  );
+  return <StyledAvatar src={src} width={width} height={height} />;
 }
 
 export default Avatar;

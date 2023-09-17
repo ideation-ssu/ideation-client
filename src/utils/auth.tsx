@@ -3,11 +3,9 @@ import React, {
   ReactNode,
   useContext,
   useEffect,
-  useMemo,
   useState,
 } from "react";
 import axios from "axios";
-import jwt_decode from "jwt-decode";
 
 import { AuthContextType, User } from "@/interfaces/user";
 
@@ -20,6 +18,7 @@ const initialUser: User = {
 
 const AuthContext = createContext<AuthContextType | null>({
   user: initialUser,
+  setUser: () => {},
   authLogin: async () => false,
   authLogout: () => {},
   isLoggedIn: () => false,
@@ -57,28 +56,29 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
     };
 
     try {
-      const { data } = await axios.post(
+      // 로그인 요청
+      const { data: loginData } = await axios.post(
         `${process.env.NEXT_PUBLIC_BASEURL}/auth/login`,
         body
       );
-      if (data.error) throw Error();
+      if (loginData.error) throw Error();
+      console.log(loginData.data.token);
+      setToken(loginData.data.token);
+      localStorage.setItem("token", loginData.data.token);
 
-      const decoded = jwt_decode(data.data.token) as {
-        id: number;
-        image: string;
-      };
-      const userData = {
-        id: decoded.id,
-        email: data.data.email,
-        name: data.data.name,
-        profileImage: decoded.image,
-      };
+      // 로그인이 성공하면 사용자 정보를 가져옴
+      const { data: userData } = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASEURL}/user/my`,
+        {
+          headers: {
+            Authorization: `Bearer ${loginData.data.token}`,
+          },
+        }
+      );
+      if (userData.error) throw Error();
 
-      setUser(userData);
-      localStorage.setItem("user", JSON.stringify(userData));
+      setUserInfo(userData);
 
-      setToken(data.data.token);
-      localStorage.setItem("token", data.data.token);
       return true;
     } catch (e) {
       return false;
@@ -101,10 +101,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
     return <></>;
   }
 
+  const setUserInfo = (user: User) => {
+    setUser(user);
+    localStorage.setItem("user", JSON.stringify(user));
+  };
+
   return (
     <AuthContext.Provider
       value={{
         user: user,
+        setUser: setUserInfo,
         authLogin: authLogin,
         authLogout: authLogout,
         isLoggedIn: isLoggedIn,

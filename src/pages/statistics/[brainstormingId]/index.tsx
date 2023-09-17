@@ -51,7 +51,7 @@ const Statistics: NextPage<BrainstormingProps> = ({
   return (
     <Container>
       <Header>
-        <LogoWrap>
+        <LogoWrap onClick={goBrainstorming}>
           <LogoIcon />
         </LogoWrap>
         {user && (

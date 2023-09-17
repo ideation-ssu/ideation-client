@@ -3,4 +3,5 @@ import { styled } from "@mui/material/styles";
 
 export const StyledDriver = styled(Divider)`
   border-color: #eaeaea;
+  width: 100%;
 `;

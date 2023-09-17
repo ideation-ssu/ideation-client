@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 
+import EditProfileModal from "@/components/Molecules/EditProfileModal";
 import { useAuth } from "@/utils/auth";
 
 import {
@@ -21,6 +22,11 @@ function Profile(): React.ReactElement {
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
+  // edit profile modal
+  const [editProfileModal, setEditProfileModal] = React.useState(false);
+  const handleEditProfileOpen = () => setEditProfileModal(true);
+  const handleEditProfileClose = () => setEditProfileModal(false);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -41,7 +47,12 @@ function Profile(): React.ReactElement {
             <span className={"count"}>{"비즈니스 요금제"}</span>
           </UserInfo>
         </StyledMenuItem>
-        <StyledMenuItem>
+        <StyledMenuItem
+          onClick={() => {
+            handleClose();
+            handleEditProfileOpen();
+          }}
+        >
           <IconWrap>
             <ProfileIcon />
           </IconWrap>
@@ -64,6 +75,10 @@ function Profile(): React.ReactElement {
           </UpgradeButton>
         </StyledMenuItem>
       </Menu>
+      <EditProfileModal
+        open={editProfileModal}
+        handleClose={handleEditProfileClose}
+      />
     </>
   );
 }
