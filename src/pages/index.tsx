@@ -5,7 +5,7 @@ function Root(): void {
   const router = useRouter();
 
   useEffect(() => {
-    router.push("/main");
+    router.push("/login");
   }, []);
 }
 
