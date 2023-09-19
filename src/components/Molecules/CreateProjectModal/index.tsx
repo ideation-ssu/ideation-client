@@ -66,6 +66,11 @@ function CreateProjectModal({
 
   const closeAllModal = () => {
     handleConfirmClose();
+    setName("");
+    setDesc("");
+    setDueDate(dayjs().add(30, "day"));
+    setIsPublic(false);
+    setErr("");
     handleClose();
   };
 
