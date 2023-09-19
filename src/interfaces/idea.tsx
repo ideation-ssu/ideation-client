@@ -38,9 +38,9 @@ export interface IStatus {
 }
 
 export const IdeaStatus: IStatus[] = [
-  { id: "NOT_STARTED", title: "Not Started" },
-  { id: "IN_PROGRESS", title: "In Progress" },
-  { id: "DONE", title: "Done" },
+  { id: "NOT_STARTED", title: "시작 전" },
+  { id: "IN_PROGRESS", title: "진행 중" },
+  { id: "DONE", title: "완료" },
 ];
 
 export interface Comment {
