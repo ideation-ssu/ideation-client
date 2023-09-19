@@ -30,6 +30,7 @@ import {
   Idea,
   IdeaBottom,
   IdeaCreatorNameText,
+  IdeaHandleIcon,
   IdeaInner,
   IdeaTitleText,
   IdeaTop,
@@ -225,6 +226,7 @@ function IdeaList({
                               }}
                             >
                               <IdeaInner>
+                                <IdeaHandleIcon src="/icons/idea/ic_idea_handle.svg" />
                                 <IdeaTop>
                                   <IdeaTitleText>{idea.title}</IdeaTitleText>
                                   <IdeaCreatorNameText label={idea.userName} />
