@@ -32,9 +32,9 @@ function Workspace({ projects }: { projects: Project[] }): React.ReactElement {
                 goIdeaPage(project.id);
               }}
             >
-              <Category isDone={project.done} />
+              <Category isDone={project.done} backgroundColor={project.color} />
               <Content>
-                <DDay isDone={project.done}>
+                <DDay isDone={project.done} backgroundColor={project.color}>
                   <span>{project.done ? "마감" : `D-${project.dday}`}</span>
                 </DDay>
                 <span className={"title"}>{project.name}</span>
