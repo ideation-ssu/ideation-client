@@ -3,14 +3,7 @@ import React from "react";
 import RoundButton from "@/components/Atoms/RoundButton";
 import { useAuth } from "@/utils/auth";
 
-import {
-  ButtonWrap,
-  Container,
-  Content,
-  IdeationImg,
-  StyledModal,
-  Title,
-} from "./styles";
+import { ButtonWrap, Container, Content, StyledModal, Title } from "./styles";
 
 function CloseProjectModal({
   projectId,
@@ -46,19 +39,24 @@ function CloseProjectModal({
         <Title>
           <span className={"main_title"}>{"프로젝트 마감하기"}</span>
           <span className={"sub_title"}>
-            {"아이디어 선정이 완료됐다면 프로젝트를 마감하세요!"}
+            {"프로젝트를 마감하여 통계를 확인합니다."}
           </span>
         </Title>
         <Content>
-          <IdeationImg />
-          <ButtonWrap>
-            <RoundButton
-              text={"확인"}
-              isFilled={true}
-              onClick={handleCloseProject}
-            />
-          </ButtonWrap>
+          <span className={"guide-message"}>
+            {"프로젝트를 "}
+            <span className={"bold"}>{"마감"}</span>
+            {"할까요?"}
+          </span>
         </Content>
+        <ButtonWrap>
+          <RoundButton text={"취소"} isFilled={false} onClick={handleClose} />
+          <RoundButton
+            text={"확인"}
+            isFilled={true}
+            onClick={handleCloseProject}
+          />
+        </ButtonWrap>
       </Container>
     </StyledModal>
   );

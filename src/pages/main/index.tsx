@@ -62,7 +62,12 @@ function Main(): React.ReactElement {
 
   return (
     <Container>
-      <CreateProjectModal open={projectOpen} handleClose={projectModalClose} />
+      {projectOpen && (
+        <CreateProjectModal
+          open={projectOpen}
+          handleClose={projectModalClose}
+        />
+      )}
       <LoginModal open={loginOpen} handleClose={loginModalClose} />
       <Header>
         <LogoWrap>

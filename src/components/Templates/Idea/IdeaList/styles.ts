@@ -76,6 +76,12 @@ export const ProcessCard = styled("div")`
   }
 `;
 
+export const IdeaHandleIcon = styled("img")`
+  position: absolute;
+  left: 12px;
+  top: 14px;
+`;
+
 export const Idea = styled("div")`
   height: 95px;
   display: flex;
@@ -94,6 +100,7 @@ export const IdeaInner = styled("div")`
   flex-direction: column;
   justify-content: space-between;
   padding: 10px 20px;
+  position: relative;
 
   span {
     font-size: 15px;

@@ -41,10 +41,14 @@ export const StyledGrid = styled(Grid)`
   }
 `;
 
-export const Category = styled("div")<{ isDone: boolean }>`
+export const Category = styled("div")<{
+  isDone: boolean;
+  backgroundColor: string;
+}>`
   width: 17px;
   height: 100%;
-  background-color: ${({ isDone }) => (isDone ? "#AFAFAF" : "yellow")};
+  background-color: ${({ isDone, backgroundColor }) =>
+    isDone ? "#AFAFAF" : backgroundColor};
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
 `;
@@ -67,7 +71,7 @@ export const Content = styled("div")`
   }
 `;
 
-export const DDay = styled("div")<{ isDone: boolean }>`
+export const DDay = styled("div")<{ isDone: boolean; backgroundColor: string }>`
   width: 72.54px;
   height: 21px;
   border-radius: 5px;
@@ -80,12 +84,16 @@ export const DDay = styled("div")<{ isDone: boolean }>`
     margin: 0;
   }
 
-  ${({ isDone }) =>
-    isDone &&
-    css`
-      background-color: rgba(87, 87, 87, 0.2);
-      color: #000;
-    `};
+  ${({ isDone, backgroundColor }) =>
+    isDone
+      ? css`
+          background-color: rgba(87, 87, 87, 0.2);
+          color: #000;
+        `
+      : css`
+          background-color: ${backgroundColor};
+          color: #fff;
+        `};
 `;
 
 export const ProjectInfoWrap = styled("div")`

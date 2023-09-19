@@ -103,7 +103,7 @@ const Idea: NextPage<IdeaProps> = (props) => {
         </Logo>
         <StyledTab
           icon={<TabIcon className={"idealist"} selection={tab === 1} />}
-          label={"Idea List"}
+          label={"아이디어 목록"}
         />
         <StyledTab
           icon={<TabIcon className={"analysis"} selection={tab === 2} />}

@@ -5,6 +5,7 @@ export interface Project {
   name: string;
   desc: string;
   dueDate: string;
+  color: string;
   user: User;
   joiners: Joiner[];
   createdAt: string;
