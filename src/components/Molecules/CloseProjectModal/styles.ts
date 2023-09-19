@@ -8,8 +8,8 @@ export const StyledModal = styled(Modal)`
 `;
 
 export const Container = styled("div")`
-  width: 512px;
-  height: 406px;
+  width: 357px;
+  height: 305px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -52,6 +52,15 @@ export const Content = styled("div")`
   flex-direction: column;
   gap: 55px;
   padding: 45px 0;
+
+  .guide-message {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .bold {
+    font-weight: bold;
+  }
 `;
 
 export const IdeationImg = styled("div")`
@@ -63,10 +72,12 @@ export const IdeationImg = styled("div")`
 `;
 
 export const ButtonWrap = styled("div")`
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  align-items: center;
+  padding-right: 24px;
+  box-sizing: border-box;
   gap: 5px;
 
   button {
