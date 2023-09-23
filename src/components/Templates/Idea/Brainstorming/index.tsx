@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
+import Profile from "@/components/Atoms/Profile";
 import RoundButton from "@/components/Atoms/RoundButton";
 import CreateSessionModal from "@/components/Molecules/CreateSessionModal";
 import { ISession } from "@/interfaces/brainstorming";
-import { Joiner, Project } from "@/interfaces/project";
-import { User } from "@/interfaces/user";
+import { Joiner } from "@/interfaces/project";
 import { useAuth } from "@/utils/auth";
 
 import {
@@ -16,7 +16,6 @@ import {
   EmptyWrap,
   GridBox,
   Header,
-  IdeaIcon,
   ImageWrap,
   PersonIcon,
   ProfileImg,
@@ -57,7 +56,7 @@ function Brainstorming({
   return (
     <>
       <Header className={"profile"}>
-        <ProfileImg />
+        <Profile />
       </Header>
 
       <Header className={"add-button"}>

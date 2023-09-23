@@ -40,7 +40,13 @@ function Analysis({
                 <SubTitle>{"진행 시간"}</SubTitle>
                 <Content direction={"row"}>
                   <TimerIcon />
-                  <span>{`${statistics.progressMinutes} : ${statistics.progressSeconds}`}</span>
+                  <span>{`${String(statistics.progressMinutes).padStart(
+                    2,
+                    "0"
+                  )} : ${String(statistics.progressSeconds).padStart(
+                    2,
+                    "0"
+                  )}`}</span>
                 </Content>
               </TimerWrap>
               <IdeaAnalysisWarp>

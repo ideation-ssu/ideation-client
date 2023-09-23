@@ -6,6 +6,7 @@ import {
   Droppable,
   DropResult,
 } from "react-beautiful-dnd";
+import { toast } from "react-toastify";
 
 import MenuDrop from "@/components/Atoms/MenuDrop";
 import Profile from "@/components/Atoms/Profile";
@@ -42,8 +43,6 @@ import {
   SearchInput,
   StatusTitle,
 } from "./styles";
-import backgroundColor = _default.defaults.backgroundColor;
-import { toast } from "react-toastify";
 
 function IdeaList({
   projectId,

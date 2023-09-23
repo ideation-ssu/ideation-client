@@ -40,7 +40,6 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
 
   const client = useRef<CompatClient>();
   const [curTopic, setCurTopic] = useState<ITopic>();
-  const [status, setStatus] = useState<IStatus>();
   const [circles, setCircles] = useState<ICircle[]>([]);
 
   const [brainstorming, setBrainstorming] = useState<ISession>();
@@ -105,7 +104,6 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
 
     client.current.connect({}, () => {
       stompJoin(brainstormingId);
-      subScribeTimer();
       if (!isStarted) handleWaitSessionOpen();
     });
   };
@@ -125,6 +123,8 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
     );
 
     subScribeSend();
+    subScribeTimer();
+    subScribeStatus();
   };
 
   const stompStart = () => {
@@ -133,19 +133,10 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
       brainstormingId: brainstormingId,
     };
     client.current?.send("/app/session/start", {}, JSON.stringify(message));
-
-    client.current?.subscribe(
-      `/topic/session/${brainstormingId}/status`,
-      (message) => {
-        setStatus(JSON.parse(message.body));
-        handleWaitSessionClose();
-      }
-    );
   };
 
   const stompSend = (circle: ICircle) => {
     client.current?.send("/app/chat/idea", {}, JSON.stringify(circle));
-    subScribeSend();
   };
 
   const subScribeSend = () => {
@@ -172,12 +163,20 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
       brainstormingId: brainstormingId,
     };
     client.current?.send("/app/session/end", {}, JSON.stringify(message));
+  };
 
+  const subScribeStatus = () => {
     client.current?.subscribe(
       `/topic/session/${brainstormingId}/status`,
       (message) => {
-        setStatus(JSON.parse(message.body));
-        router.push(`/statistics/${brainstormingId}`);
+        const status = JSON.parse(message.body);
+        console.log(status.status);
+        if (status.status == "STARTED") {
+          handleWaitSessionClose();
+        }
+        if (status.status == "FINISHED") {
+          router.push(`/statistics/${brainstormingId}`);
+        }
       }
     );
   };
@@ -191,9 +190,7 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
       {brainstorming?.status === "PENDING" && curTopic && brainstorming && (
         <WaitSessionModal
           open={waitSessionOpen}
-          handleClose={() => {
-            stompStart();
-          }}
+          handleClose={stompStart}
           brainstorming={brainstorming}
           topic={curTopic}
         />

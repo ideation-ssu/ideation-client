@@ -35,7 +35,13 @@ function Workspace({ projects }: { projects: Project[] }): React.ReactElement {
               <Category isDone={project.done} backgroundColor={project.color} />
               <Content>
                 <DDay isDone={project.done} backgroundColor={project.color}>
-                  <span>{project.done ? "마감" : `D-${project.dday}`}</span>
+                  <span>
+                    {project.done
+                      ? "마감"
+                      : project.dday < 0
+                      ? `D+${project.dday * -1}`
+                      : `D${project.dday * -1}`}
+                  </span>
                 </DDay>
                 <span className={"title"}>{project.name}</span>
                 <span className={"desc"}>{project.desc}</span>
