@@ -1,5 +1,6 @@
 import MuiSearchIcon from "@mui/icons-material/Search";
 import { Chip } from "@mui/material";
+import AvatarGroup from "@mui/material/AvatarGroup";
 import Grid from "@mui/material/Grid";
 import InputBase from "@mui/material/InputBase";
 import { styled } from "@mui/material/styles";
@@ -76,10 +77,11 @@ export const ProcessCard = styled("div")`
   }
 `;
 
-export const IdeaHandleIcon = styled("img")`
-  position: absolute;
-  left: 12px;
-  top: 14px;
+export const IdeaHandleIcon = styled("div")`
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='14' viewBox='0 0 9 14' fill='none'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M2.76923 1.50502C2.76923 2.3362 2.1493 3.01003 1.38462 3.01003C0.619927 3.01003 0 2.3362 0 1.50502C0 0.673819 0.619927 0 1.38462 0C2.1493 0 2.76923 0.673819 2.76923 1.50502ZM1.38462 8.27759C2.1493 8.27759 2.76923 7.60376 2.76923 6.77258C2.76923 5.94139 2.1493 5.26756 1.38462 5.26756C0.619927 5.26756 0 5.94139 0 6.77258C0 7.60376 0.619927 8.27759 1.38462 8.27759ZM1.38462 13.5452C2.1493 13.5452 2.76923 12.8713 2.76923 12.0401C2.76923 11.209 2.1493 10.5351 1.38462 10.5351C0.619927 10.5351 0 11.209 0 12.0401C0 12.8713 0.619927 13.5452 1.38462 13.5452Z' fill='%236E6E6E'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M8.9997 1.50502C8.9997 2.3362 8.37977 3.01003 7.61508 3.01003C6.8504 3.01003 6.23047 2.3362 6.23047 1.50502C6.23047 0.673819 6.8504 0 7.61508 0C8.37977 0 8.9997 0.673819 8.9997 1.50502ZM7.61508 8.27759C8.37977 8.27759 8.9997 7.60376 8.9997 6.77258C8.9997 5.94139 8.37977 5.26756 7.61508 5.26756C6.8504 5.26756 6.23047 5.94139 6.23047 6.77258C6.23047 7.60376 6.8504 8.27759 7.61508 8.27759ZM7.61508 13.5452C8.37977 13.5452 8.9997 12.8713 8.9997 12.0401C8.9997 11.209 8.37977 10.5351 7.61508 10.5351C6.8504 10.5351 6.23047 11.209 6.23047 12.0401C6.23047 12.8713 6.8504 13.5452 7.61508 13.5452Z' fill='%236E6E6E'/%3E%3C/svg%3E");
+  background-size: cover;
+  width: 9px;
+  height: 14px;
 `;
 
 export const Idea = styled("div")`
@@ -99,7 +101,7 @@ export const IdeaInner = styled("div")`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 10px 20px;
+  padding: 10px 10px;
   position: relative;
 
   span {
@@ -112,26 +114,44 @@ export const IdeaTop = styled("div")`
   align-items: center;
 `;
 
+export const UserGroup = styled(AvatarGroup)<{ src: string }>`
+  div:first-of-type {
+    z-index: 1;
+    background-image: ${(props) => (props.src ? `url(${props.src})` : "none")};
+    background-size: cover;
+    background-color: transparent;
+    font-size: 15px;
+    font-family: Pretendard, sans-serif;
+  }
+
+  div:first-of-type::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+  }
+
+  div:nth-of-type(2) {
+    z-index: 2;
+  }
+
+  .MuiAvatar-root {
+    border: none;
+  }
+`;
+
 export const IdeaTitleText = styled("p")`
   width: 0;
   flex-grow: 1;
-  margin: 0;
+  margin: 0 0 0 10px;
   font-size: 15px;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-`;
-
-export const IdeaCreatorNameText = styled(Chip)`
-  margin: 0;
-  height: 20px;
-  background-color: #00b18c;
-
-  > span {
-    font-size: 12px;
-    color: #fff;
-    padding: 0 8px;
-  }
 `;
 
 export const IdeaBottom = styled("div")`

@@ -1,5 +1,4 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import _default from "chart.js/dist/plugins/plugin.tooltip";
 import {
   DragDropContext,
   Draggable,
@@ -8,6 +7,7 @@ import {
 } from "react-beautiful-dnd";
 import { toast } from "react-toastify";
 
+import Avatar from "@/components/Atoms/Avatar";
 import MenuDrop from "@/components/Atoms/MenuDrop";
 import Profile from "@/components/Atoms/Profile";
 import RoundButton from "@/components/Atoms/RoundButton";
@@ -30,7 +30,6 @@ import {
   Header,
   Idea,
   IdeaBottom,
-  IdeaCreatorNameText,
   IdeaHandleIcon,
   IdeaInner,
   IdeaTitleText,
@@ -42,6 +41,7 @@ import {
   SearchIconWrapper,
   SearchInput,
   StatusTitle,
+  UserGroup,
 } from "./styles";
 
 function IdeaList({
@@ -226,10 +226,26 @@ function IdeaList({
                               }}
                             >
                               <IdeaInner>
-                                <IdeaHandleIcon src="/icons/idea/ic_idea_handle.svg" />
                                 <IdeaTop>
+                                  <IdeaHandleIcon />
                                   <IdeaTitleText>{idea.title}</IdeaTitleText>
-                                  <IdeaCreatorNameText label={idea.userName} />
+                                  <UserGroup
+                                    max={2}
+                                    src={
+                                      joiners.length > 2
+                                        ? joiners[1].userDto.profileImage
+                                        : ""
+                                    }
+                                  >
+                                    {joiners.map((user, index) => {
+                                      return (
+                                        <Avatar
+                                          src={user.userDto.profileImage}
+                                          key={index}
+                                        />
+                                      );
+                                    })}
+                                  </UserGroup>
                                 </IdeaTop>
                                 <IdeaBottom>
                                   <HashTagWrap>
