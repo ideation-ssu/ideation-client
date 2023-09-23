@@ -186,11 +186,11 @@ const InputSection: React.FC<InputSectionProps> = ({
           <Line rate={2.5}>
             <FlexWrap gap={3}>
               <Calendar date={dueDate} setDate={setDueDate} />
-              <CheckBox
-                text={"투표 기한 마감시, 프로젝트를 자동으로 마감합니다."}
-                check={isAutoCloseProject}
-                setCheck={() => setIsAutoCloseProject(!isAutoCloseProject)}
-              />
+              {/*<CheckBox*/}
+              {/*  text={"투표 기한 마감시, 프로젝트를 자동으로 마감합니다."}*/}
+              {/*  check={isAutoCloseProject}*/}
+              {/*  setCheck={() => setIsAutoCloseProject(!isAutoCloseProject)}*/}
+              {/*/>*/}
             </FlexWrap>
           </Line>
         </Grid>

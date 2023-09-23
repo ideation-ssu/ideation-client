@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 import Avatar from "@/components/Atoms/Avatar";
 import Profile from "@/components/Atoms/Profile";
@@ -28,6 +29,7 @@ import { LogoIcon } from "../../../public/icons/Logo/styles.ts";
 
 function Main(): React.ReactElement {
   const { user, axios, isLoggedIn } = useAuth();
+  const router = useRouter();
 
   const [projects, setProjects] = useState<Project[]>([]);
 
@@ -51,11 +53,22 @@ function Main(): React.ReactElement {
   };
 
   useEffect(() => {
-    if (isLoggedIn()) getProjects();
+    if (isLoggedIn()) {
+      getProjects();
+    } else {
+      router.replace("/login");
+    }
   }, [isLoggedIn]);
 
   const getProjects = () => {
     axios.get(`${process.env.NEXT_PUBLIC_BASEURL}/project`).then((res) => {
+      console.log(res);
+      if (res.data.error?.code === "AUTH_ACCESS_DENIED") {
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+        router.replace("/login");
+        return;
+      }
       setProjects(res.data.data?.projects);
     });
   };
