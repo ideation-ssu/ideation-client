@@ -44,36 +44,15 @@ function Vote({
 
   if (!vote.vote) {
     return (
-      <VoteNotStarted
-        getVote={getVote}
-        ideas={ideas}
-        isOwner={isOwner}
-        projectId={projectId}
-      />
+      <VoteNotStarted getVote={getVote} ideas={ideas} projectId={projectId} />
     );
   }
 
   if (!vote.done) {
-    return (
-      <VoteInprogress
-        vote={vote}
-        getVote={getVote}
-        projectId={projectId}
-        ideas={ideas}
-        isOwner={isOwner}
-      />
-    );
+    return <VoteInprogress vote={vote} getVote={getVote} isOwner={isOwner} />;
   }
 
-  return (
-    <VoteDone
-      vote={vote}
-      getVote={getVote}
-      projectId={projectId}
-      ideas={ideas}
-      isOwner={isOwner}
-    />
-  );
+  return <VoteDone vote={vote} getVote={getVote} isOwner={isOwner} />;
 }
 
 export default Vote;

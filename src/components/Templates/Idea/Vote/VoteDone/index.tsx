@@ -2,6 +2,7 @@ import React from "react";
 import Avatar from "@mui/material/Avatar";
 
 import MenuDrop from "@/components/Atoms/MenuDrop";
+import Profile from "@/components/Atoms/Profile";
 import DeleteVoteModal from "@/components/Molecules/DeleteVoteModal";
 import { IVoteMenuOption } from "@/components/Templates/Idea/Vote";
 import {
@@ -41,18 +42,10 @@ import { LikedIcon } from "../../../../../../public/icons/Liked/styles.ts";
 interface PropsType {
   vote: IVote;
   getVote: () => void;
-  projectId: number;
-  ideas: IIdeaByStatus;
   isOwner: boolean;
 }
 
-export default function VoteDone({
-  getVote,
-  isOwner,
-  projectId,
-  ideas,
-  vote,
-}: PropsType) {
+export default function VoteDone({ getVote, isOwner, vote }: PropsType) {
   // delete vote modal
   const [deleteVoteOpen, setDeleteVoteOpen] = React.useState(false);
   const handleDeleteVoteOpen = () => setDeleteVoteOpen(true);
@@ -78,7 +71,7 @@ export default function VoteDone({
       />
 
       <Header className={"profile"}>
-        <ProfileImg />
+        <Profile />
       </Header>
 
       <Header className={"rate"}>

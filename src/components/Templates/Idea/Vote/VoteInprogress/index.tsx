@@ -3,6 +3,7 @@ import Avatar from "@mui/material/Avatar";
 import axios from "axios";
 
 import MenuDrop from "@/components/Atoms/MenuDrop";
+import Profile from "@/components/Atoms/Profile";
 import CloseVoteModal from "@/components/Molecules/CloseVoteModal";
 import DeleteVoteModal from "@/components/Molecules/DeleteVoteModal";
 import { IVoteMenuOption } from "@/components/Templates/Idea/Vote";
@@ -44,18 +45,10 @@ import { LikedIcon } from "../../../../../../public/icons/Liked/styles.ts";
 interface PropsType {
   vote: IVote;
   getVote: () => void;
-  projectId: number;
-  ideas: IIdeaByStatus;
   isOwner: boolean;
 }
 
-export default function VoteInprogress({
-  getVote,
-  isOwner,
-  projectId,
-  ideas,
-  vote,
-}: PropsType) {
+export default function VoteInprogress({ getVote, isOwner, vote }: PropsType) {
   // close vote modal
   const [closeVoteOpen, setCloseVoteOpen] = React.useState(false);
   const handleCloseVoteOpen = () => setCloseVoteOpen(true);
@@ -125,7 +118,7 @@ export default function VoteInprogress({
       />
 
       <Header className={"profile"}>
-        <ProfileImg />
+        <Profile />
       </Header>
 
       <Header className={"rate"}>

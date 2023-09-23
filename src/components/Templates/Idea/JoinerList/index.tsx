@@ -1,6 +1,7 @@
 import React from "react";
 
 import MenuDrop from "@/components/Atoms/MenuDrop";
+import Profile from "@/components/Atoms/Profile";
 import RoundButton from "@/components/Atoms/RoundButton";
 import InviteTeamModal from "@/components/Molecules/InviteTeamModal";
 import LeaveTeamModal from "@/components/Molecules/LeaveTeamModal";
@@ -81,7 +82,7 @@ function JoinerList({
         />
       )}
       <Header className={"profile"}>
-        <ProfileImg />
+        <Profile />
       </Header>
       <Header className={"search"}>
         <Search>

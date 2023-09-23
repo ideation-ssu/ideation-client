@@ -1,5 +1,6 @@
 import React from "react";
 
+import Profile from "@/components/Atoms/Profile";
 import RoundButton from "@/components/Atoms/RoundButton";
 import CreateVoteIdeaModal from "@/components/Molecules/CreateVoteIdeaModal";
 import {
@@ -8,7 +9,6 @@ import {
   EmptyWrap,
   GridBox,
   Header,
-  ProfileImg,
   VoteIcon,
 } from "@/components/Templates/Idea/Vote/styles";
 import { IIdeaByStatus } from "@/interfaces/idea";
@@ -17,13 +17,11 @@ interface PropsType {
   getVote: () => void;
   projectId: number;
   ideas: IIdeaByStatus;
-  isOwner: boolean;
 }
 
 export default function VoteNotStarted({
   getVote,
   ideas,
-  isOwner,
   projectId,
 }: PropsType) {
   const [newVoteIdeaOpen, setNewVoteIdeaOpen] = React.useState(false);
@@ -33,7 +31,7 @@ export default function VoteNotStarted({
   return (
     <>
       <Header className={"profile"}>
-        <ProfileImg />
+        <Profile />
       </Header>
 
       <Header className={"add-button"}>

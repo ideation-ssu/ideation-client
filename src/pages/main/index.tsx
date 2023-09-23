@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-import Avatar from "@/components/Atoms/Avatar";
 import Profile from "@/components/Atoms/Profile";
 import RoundButton from "@/components/Atoms/RoundButton";
 import CreateProjectModal from "@/components/Molecules/CreateProjectModal";

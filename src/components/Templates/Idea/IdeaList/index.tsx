@@ -1,5 +1,4 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import Avatar from "@mui/material/Avatar";
 import _default from "chart.js/dist/plugins/plugin.tooltip";
 import {
   DragDropContext,
@@ -9,6 +8,7 @@ import {
 } from "react-beautiful-dnd";
 
 import MenuDrop from "@/components/Atoms/MenuDrop";
+import Profile from "@/components/Atoms/Profile";
 import RoundButton from "@/components/Atoms/RoundButton";
 import CloseProjectModal from "@/components/Molecules/CloseProjectModal";
 import CreateVoteIdeaModal from "@/components/Molecules/CreateVoteIdeaModal";
@@ -141,7 +141,7 @@ function IdeaList({
   return (
     <>
       <Header className={"profile"}>
-        <Avatar src={user?.profileImage} />
+        <Profile />
       </Header>
       <Header className={"search"}>
         <Search>
