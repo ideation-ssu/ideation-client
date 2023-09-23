@@ -62,7 +62,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
         body
       );
       if (loginData.error) throw Error();
-      console.log(loginData.data.token);
       setToken(loginData.data.token);
       localStorage.setItem("token", loginData.data.token);
 

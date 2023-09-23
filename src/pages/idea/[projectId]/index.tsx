@@ -33,7 +33,7 @@ const Idea: NextPage<IdeaProps> = (props) => {
 
   const { user, axios } = useAuth();
   const [isOwner, setIsOwner] = useState<boolean>(false);
-  const [tab, setTab] = useState(code ? 4 : 1);
+  const [tab, setTab] = useState(1);
   const [ideas, setIdeas] = useState<IIdeaByStatus>({
     NOT_STARTED: [],
     IN_PROGRESS: [],
@@ -87,7 +87,7 @@ const Idea: NextPage<IdeaProps> = (props) => {
 
   useEffect(() => {
     if (!query.tab) {
-      setTab(1);
+      setTab(code ? 4 : 1);
       return;
     }
 

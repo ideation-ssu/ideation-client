@@ -51,7 +51,7 @@ function JoinerList({
   const handleClose = () => setOpen(false);
 
   // profile modal
-  const [profileOpen, setProfileOpen] = React.useState<boolean>(!!code);
+  const [profileOpen, setProfileOpen] = React.useState<boolean>(false);
   const handleProfileOpen = () => setProfileOpen(true);
   const handleProfileClose = () => setProfileOpen(false);
 
@@ -105,7 +105,10 @@ function JoinerList({
             projectId={projectId}
             code={code}
             open={open}
-            handleClose={handleClose}
+            handleClose={() => {
+              handleClose();
+              getJoiners();
+            }}
           />
         </ButtonWrap>
       </Header>

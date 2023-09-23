@@ -28,8 +28,6 @@ import { LogoIcon } from "../../../public/icons/Logo/styles.ts";
 
 function Main(): React.ReactElement {
   const { user, axios, isLoggedIn } = useAuth();
-  const router = useRouter();
-
   const [projects, setProjects] = useState<Project[]>([]);
 
   // project creation modal
