@@ -61,7 +61,6 @@ function IdeaDetailModal({
       .get(`${process.env.NEXT_PUBLIC_BASEURL}/idea/detail/${selectedIdeaId}`)
       .then((res) => {
         setIdea(res.data.data);
-        console.log(res.data.data);
       });
   };
 

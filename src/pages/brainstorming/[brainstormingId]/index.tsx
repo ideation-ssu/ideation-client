@@ -139,6 +139,14 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
     client.current?.send("/app/chat/idea", {}, JSON.stringify(circle));
   };
 
+  const stompRemove = (sessionIdeaId: string) => {
+    const message = {
+      sessionIdeaId: sessionIdeaId,
+      brainstormingId: brainstormingId,
+    };
+    client.current?.send("/app/remove/idea", {}, JSON.stringify(message));
+  };
+
   const subScribeSend = () => {
     client.current?.subscribe(
       `/topic/session/${brainstormingId}/chat`,
@@ -214,6 +222,7 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
             setValue={setCircleValue}
             circles={circles}
             sendCircle={stompSend}
+            removeCircle={stompRemove}
           />
         )}
       </Content>

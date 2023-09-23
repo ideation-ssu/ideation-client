@@ -20,6 +20,7 @@ const RandomCircle = ({
   setValue,
   circles,
   sendCircle,
+  removeCircle,
 }: {
   projectId: number;
   brainstormingId: number;
@@ -28,6 +29,7 @@ const RandomCircle = ({
   setValue: (value: string) => void;
   circles: ICircle[];
   sendCircle: (circle: ICircle) => void;
+  removeCircle: (sessionIdeaId: string) => void;
 }) => {
   const { user, axios } = useAuth();
   const [canvasSize, setCanvasSize] = useState<{
@@ -35,13 +37,23 @@ const RandomCircle = ({
     height: number;
   }>({ width: 0, height: 0 });
 
+  const defaultCircle = {
+    userId: 0,
+    brainstormingId: 0,
+    ideaName: "",
+    sessionIdeaId: "",
+    x: 0,
+    y: 0,
+    radius: 0,
+    color: "",
+  };
   const [contextMenu, setContextMenu] = useState({
     visible: false,
     x: "0px",
     y: "0px",
-    title: "",
+    circle: defaultCircle,
   });
-  const [title, setTitle] = useState<string>("");
+  const [selectedCircle, setSelectedCircle] = useState<ICircle>();
 
   // new idea modal
   const [newIdeaOpen, setNewIdeaOpen] = React.useState(false);
@@ -134,19 +146,24 @@ const RandomCircle = ({
 
   const handleContextMenu = (
     e: Konva.KonvaEventObject<MouseEvent>,
-    title: string
+    circle: ICircle
   ) => {
     e.evt.preventDefault();
     setContextMenu({
       visible: true,
       x: `${e.evt.x}px`,
       y: `${e.evt.y}px`,
-      title: title,
+      circle: circle,
     });
   };
 
   const handleCloseContextMenu = () => {
-    setContextMenu({ visible: false, x: "0px", y: "0px", title: "" });
+    setContextMenu({
+      visible: false,
+      x: "0px",
+      y: "0px",
+      circle: defaultCircle,
+    });
   };
 
   const handleClickOutside = (e: Konva.KonvaEventObject<MouseEvent>) => {
@@ -173,7 +190,7 @@ const RandomCircle = ({
                 onDragStart={handleDragStart}
                 onDragEnd={onDragEnd}
                 onContextMenu={(e: Konva.KonvaEventObject<MouseEvent>) => {
-                  handleContextMenu(e, circle.ideaName);
+                  handleContextMenu(e, circle);
                 }}
               >
                 <Circle
@@ -201,7 +218,7 @@ const RandomCircle = ({
         <ContextMenu x={contextMenu.x} y={contextMenu.y}>
           <ContextItem
             onClick={() => {
-              setTitle(contextMenu.title);
+              setSelectedCircle(contextMenu.circle);
               handleNewIdeaOpen();
               handleCloseContextMenu();
             }}
@@ -209,16 +226,23 @@ const RandomCircle = ({
             {"아이디어로 생성하기"}
           </ContextItem>
           <Driver />
-          <ContextItem>{"삭제하기"}</ContextItem>
+          <ContextItem
+            onClick={() => {
+              removeCircle(contextMenu.circle.sessionIdeaId);
+              handleCloseContextMenu();
+            }}
+          >
+            {"삭제하기"}
+          </ContextItem>
         </ContextMenu>
       )}
-      {title && (
+      {selectedCircle && (
         <NewIdeaModal
           projectId={projectId}
           open={newIdeaOpen}
           handleClose={handleNewIdeaClose}
           joiners={joiners}
-          defaultTitle={title}
+          defaultTitle={selectedCircle.ideaName}
         />
       )}
     </>
