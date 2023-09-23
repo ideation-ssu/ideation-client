@@ -16,6 +16,7 @@ import {
   ExitBtn,
   Footer,
   Header,
+  IdeaCountIcon,
   LogoWrap,
   SendBtn,
   SendIcon,
@@ -216,6 +217,9 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
         />
       </Content>
       <Footer>
+        <IdeaCountIcon>
+          <span>{circles?.length}</span>
+        </IdeaCountIcon>
         <OutlineInputBox
           placeHolder=""
           autoComplete="brainstorming"
