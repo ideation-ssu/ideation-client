@@ -181,6 +181,7 @@ function IdeaList({
             handleClose={projectCloseModalClose}
           />
           <NewIdeaModal
+            projectId={projectId}
             open={newIdeaOpen}
             handleClose={handleNewIdeaClose}
             updateIdeaList={updateIdeaList}

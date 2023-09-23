@@ -105,7 +105,6 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
 
     client.current.connect({}, () => {
       stompJoin(brainstormingId);
-      subScribeSend();
       subScribeTimer();
       if (!isStarted) handleWaitSessionOpen();
     });
@@ -124,6 +123,8 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
         setCurTopic(JSON.parse(message.body));
       }
     );
+
+    subScribeSend();
   };
 
   const stompStart = () => {
@@ -207,14 +208,17 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
         </TimerWrap>
       </Header>
       <Content>
-        <RandomCircle
-          brainstormingId={brainstormingId}
-          joiners={joiners}
-          value={circleValue}
-          setValue={setCircleValue}
-          circles={circles}
-          sendCircle={stompSend}
-        />
+        {brainstorming && (
+          <RandomCircle
+            projectId={brainstorming.projectId}
+            brainstormingId={brainstormingId}
+            joiners={joiners}
+            value={circleValue}
+            setValue={setCircleValue}
+            circles={circles}
+            sendCircle={stompSend}
+          />
+        )}
       </Content>
       <Footer>
         <IdeaCountIcon>

@@ -13,6 +13,7 @@ import { Joiner } from "@/interfaces/project";
 import { useAuth } from "@/utils/auth";
 
 const RandomCircle = ({
+  projectId,
   brainstormingId,
   joiners,
   value,
@@ -20,6 +21,7 @@ const RandomCircle = ({
   circles,
   sendCircle,
 }: {
+  projectId: number;
   brainstormingId: number;
   joiners: Joiner[];
   value: string;
@@ -37,7 +39,9 @@ const RandomCircle = ({
     visible: false,
     x: "0px",
     y: "0px",
+    title: "",
   });
+  const [title, setTitle] = useState<string>("");
 
   // new idea modal
   const [newIdeaOpen, setNewIdeaOpen] = React.useState(false);
@@ -128,17 +132,21 @@ const RandomCircle = ({
     });
   };
 
-  const handleContextMenu = (e: Konva.KonvaEventObject<MouseEvent>) => {
+  const handleContextMenu = (
+    e: Konva.KonvaEventObject<MouseEvent>,
+    title: string
+  ) => {
     e.evt.preventDefault();
     setContextMenu({
       visible: true,
       x: `${e.evt.x}px`,
       y: `${e.evt.y}px`,
+      title: title,
     });
   };
 
   const handleCloseContextMenu = () => {
-    setContextMenu({ visible: false, x: "0px", y: "0px" });
+    setContextMenu({ visible: false, x: "0px", y: "0px", title: "" });
   };
 
   const handleClickOutside = (e: Konva.KonvaEventObject<MouseEvent>) => {
@@ -164,7 +172,9 @@ const RandomCircle = ({
                 y={circle.y}
                 onDragStart={handleDragStart}
                 onDragEnd={onDragEnd}
-                onContextMenu={handleContextMenu}
+                onContextMenu={(e: Konva.KonvaEventObject<MouseEvent>) => {
+                  handleContextMenu(e, circle.ideaName);
+                }}
               >
                 <Circle
                   name={circle.sessionIdeaId}
@@ -191,6 +201,7 @@ const RandomCircle = ({
         <ContextMenu x={contextMenu.x} y={contextMenu.y}>
           <ContextItem
             onClick={() => {
+              setTitle(contextMenu.title);
               handleNewIdeaOpen();
               handleCloseContextMenu();
             }}
@@ -201,11 +212,15 @@ const RandomCircle = ({
           <ContextItem>{"삭제하기"}</ContextItem>
         </ContextMenu>
       )}
-      <NewIdeaModal
-        open={newIdeaOpen}
-        handleClose={handleNewIdeaClose}
-        joiners={joiners}
-      />
+      {title && (
+        <NewIdeaModal
+          projectId={projectId}
+          open={newIdeaOpen}
+          handleClose={handleNewIdeaClose}
+          joiners={joiners}
+          defaultTitle={title}
+        />
+      )}
     </>
   );
 };

@@ -28,26 +28,28 @@ import {
 } from "./styles";
 
 function NewIdeaModal({
+  projectId,
   open,
   handleClose,
   updateIdeaList,
   joiners,
+  defaultTitle,
 }: {
+  projectId: number;
   open: boolean;
   handleClose: () => void;
   updateIdeaList?: () => void;
   joiners: Joiner[];
+  defaultTitle?: string;
 }): React.ReactElement {
   const { axios } = useAuth();
   const router = useRouter();
   const { query } = router;
-  const projectId: number =
-    typeof query.projectId === "string" ? parseInt(query.projectId) : -1;
 
   const categorys: string[] = ["인문", "자연", "예술", "사회", "기타"];
   const statusOptions: string[] = IdeaStatus.map((status) => status.title);
 
-  const [title, setTitle] = useState<string>("");
+  const [title, setTitle] = useState<string>(defaultTitle ? defaultTitle : "");
   const [relatedUser, setRelatedUser] = useState<string[]>([]);
   const [category, setCategory] = useState<string>(categorys[0]);
   const [tags, setTags] = useState<string[]>([]);
