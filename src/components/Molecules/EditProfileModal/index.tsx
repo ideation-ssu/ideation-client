@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 
 import Avatar from "@/components/Atoms/Avatar";
 import Driver from "@/components/Atoms/Driver";
@@ -25,6 +25,7 @@ function EditProfileModal({
 }): React.ReactElement {
   const { user, setUser, axios } = useAuth();
   const [editMode, setEditMode] = useState<boolean>(false);
+  const imgRef = useRef<HTMLInputElement>(null);
 
   const [name, setName] = useState<string>(user.name ? user.name : "");
   const [status, setStatus] = useState<string>(user.status ? user.status : "");
@@ -61,6 +62,42 @@ function EditProfileModal({
     func(event.target.value);
   };
 
+  const uploadImage = () => {
+    const file = imgRef.current?.files?.[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append("profileImage", file);
+
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        axios
+          .patch(
+            `${process.env.NEXT_PUBLIC_BASEURL}/user/profile-image`,
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data", // Content-Type을 multipart/form-data로 설정
+              },
+            }
+          )
+          .then((res) => {
+            setUser(res.data);
+          })
+          .catch((error) => {
+            console.error("Error uploading image:", error);
+          });
+      };
+    }
+  };
+
+  const onUploadImageButtonClick = useCallback(() => {
+    if (!imgRef.current) {
+      return;
+    }
+    imgRef.current.click();
+  }, []);
+
   return (
     <StyledModal
       open={open}
@@ -74,7 +111,20 @@ function EditProfileModal({
         </Title>
         <Driver />
         <ImageWrap>
-          <Avatar src={user.profileImage} width={97} height={97} />
+          <Avatar
+            src={user.profileImage}
+            width={97}
+            height={97}
+            isEditMode={editMode}
+            onClick={editMode ? onUploadImageButtonClick : () => {}}
+          />
+          <input
+            type="file"
+            accept="image/*"
+            name="thumbnail"
+            ref={imgRef}
+            onChange={uploadImage}
+          />
           <EditIcon onClick={() => setEditMode(true)} />
         </ImageWrap>
         <ProfileWrap>

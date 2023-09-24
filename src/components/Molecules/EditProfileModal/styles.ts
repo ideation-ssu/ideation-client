@@ -39,6 +39,10 @@ export const ImageWrap = styled("div")`
   gap: 10px;
   padding: 10px;
   position: relative;
+
+  input {
+    display: none;
+  }
 `;
 
 export const EditIcon = styled("div")`
