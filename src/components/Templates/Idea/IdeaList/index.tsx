@@ -13,6 +13,7 @@ import Profile from "@/components/Atoms/Profile";
 import RoundButton from "@/components/Atoms/RoundButton";
 import CloseProjectModal from "@/components/Molecules/CloseProjectModal";
 import CreateVoteIdeaModal from "@/components/Molecules/CreateVoteIdeaModal";
+import DeleteProjectModal from "@/components/Molecules/DeleteProjectModal";
 import IdeaDetailModal from "@/components/Molecules/IdeaDetailModal";
 import NewIdeaModal from "@/components/Molecules/NewIdeaModal";
 import { IdeaStatus, IIdeaByStatus } from "@/interfaces/idea";
@@ -84,6 +85,11 @@ function IdeaList({
     setIdeaDetailOpen(false);
   };
 
+  // new vote idea modal
+  const [deleteProjectOpen, setDeleteProjectOpen] = React.useState(false);
+  const handleDeleteProjectOpen = () => setDeleteProjectOpen(true);
+  const handleDeleteProjectClose = () => setDeleteProjectOpen(false);
+
   // animation (drop & down)
   const [animationEnabled, setAnimationEnabled] = useState<boolean>(false);
 
@@ -104,6 +110,10 @@ function IdeaList({
     {
       label: "프로젝트 마감하기",
       onClick: () => projectCloseModalOpen(),
+    },
+    {
+      label: "프로젝트 삭제하기",
+      onClick: () => handleDeleteProjectOpen(),
     },
   ];
 
@@ -178,6 +188,11 @@ function IdeaList({
             projectId={projectId}
             open={closeModalOpen}
             handleClose={projectCloseModalClose}
+          />
+          <DeleteProjectModal
+            projectId={projectId}
+            open={deleteProjectOpen}
+            handleClose={handleDeleteProjectClose}
           />
           <NewIdeaModal
             projectId={projectId}
