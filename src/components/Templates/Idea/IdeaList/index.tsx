@@ -204,7 +204,10 @@ function IdeaList({
           {selectedIdeaId && (
             <IdeaDetailModal
               open={ideaDetailOpen}
-              handleClose={handleIdeaDetailClose}
+              handleClose={() => {
+                handleIdeaDetailClose();
+                updateIdeaList();
+              }}
               selectedIdeaId={selectedIdeaId}
             />
           )}
@@ -257,6 +260,8 @@ function IdeaList({
                                         <Avatar
                                           src={user.userDto.profileImage}
                                           key={index}
+                                          width={33}
+                                          height={33}
                                         />
                                       );
                                     })}
@@ -277,10 +282,18 @@ function IdeaList({
                                     })}
                                   </HashTagWrap>
                                   <ReactionWrap>
-                                    <CommentIcon />
-                                    <span>{idea.commentCount}</span>
-                                    <LikedIcon />
-                                    <span>{idea.likeCount}</span>
+                                    <CommentIcon isLiked={idea.isLiked} />
+                                    <span
+                                      className={idea.isLiked ? "isLiked" : ""}
+                                    >
+                                      {idea.commentCount}
+                                    </span>
+                                    <LikedIcon isLiked={idea.isLiked} />
+                                    <span
+                                      className={idea.isLiked ? "isLiked" : ""}
+                                    >
+                                      {idea.likeCount}
+                                    </span>
                                   </ReactionWrap>
                                 </IdeaBottom>
                               </IdeaInner>

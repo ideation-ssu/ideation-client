@@ -116,6 +116,8 @@ export const IdeaTop = styled("div")`
 
 export const UserGroup = styled(AvatarGroup)<{ src: string }>`
   div:first-of-type {
+    width: 33px;
+    height: 33px;
     z-index: 1;
     background-image: ${(props) => (props.src ? `url(${props.src})` : "none")};
     background-size: cover;
@@ -191,6 +193,10 @@ export const ReactionWrap = styled("div")`
   gap: 5px;
 
   span {
+    color: #d9d9d9;
+  }
+
+  .isLiked {
     color: #7b40f2;
   }
 `;

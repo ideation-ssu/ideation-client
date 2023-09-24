@@ -109,7 +109,9 @@ function IdeaDetailModal({
               </HashTagWrap>
               <LikeWrap>
                 <LikeIcon isLiked={idea.isLiked} onClick={likeIdea} />
-                {idea.likeCount}
+                <span className={idea.isLiked ? "isLiked" : ""}>
+                  {idea.likeCount}
+                </span>
               </LikeWrap>
             </Content>
 

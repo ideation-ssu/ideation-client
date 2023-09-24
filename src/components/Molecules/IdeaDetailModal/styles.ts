@@ -129,6 +129,10 @@ export const LikeWrap = styled("div")`
   align-items: center;
   gap: 5px;
   color: #d9d9d9;
+
+  .isLiked {
+    color: #7b40f2;
+  }
 `;
 
 export const LikeIcon = styled("div")<{ isLiked: boolean }>`
