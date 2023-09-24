@@ -122,6 +122,7 @@ export const UserGroup = styled(AvatarGroup)<{ src: string }>`
     background-image: ${(props) => (props.src ? `url(${props.src})` : "none")};
     background-size: cover;
     background-color: transparent;
+    background-position: 50% 50%;
     font-size: 15px;
     font-family: Pretendard, sans-serif;
   }
@@ -133,7 +134,7 @@ export const UserGroup = styled(AvatarGroup)<{ src: string }>`
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.3);
     z-index: -1;
   }
 
