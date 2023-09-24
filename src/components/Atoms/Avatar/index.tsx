@@ -13,7 +13,7 @@ function Avatar({
   width?: number;
   height?: number;
   onClick?: () => void;
-  isEditMode: boolean;
+  isEditMode?: boolean;
 }): React.ReactElement {
   return (
     <StyledAvatar
