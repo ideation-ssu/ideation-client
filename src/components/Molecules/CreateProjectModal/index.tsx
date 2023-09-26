@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useRouter } from "next/router";
 import dayjs, { Dayjs } from "dayjs";
 
 import Calendar from "@/components/Atoms/Calendar";
@@ -28,12 +29,15 @@ function CreateProjectModal({
   handleClose: () => void;
 }): React.ReactElement {
   const { axios } = useAuth();
+  const router = useRouter();
 
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
   const [dueDate, setDueDate] = useState<Dayjs>(dayjs().add(30, "day"));
   const [isPublic, setIsPublic] = useState(false);
   const [err, setErr] = useState("");
+
+  const [projectId, setProjectId] = useState<number>(0);
 
   // modal
   const [confirmModalOpen, setConfirmModalOpen] = React.useState(false);
@@ -60,6 +64,7 @@ function CreateProjectModal({
         else {
           setErr("");
           handleConfirmOpen();
+          setProjectId(res.data.data.id);
         }
       });
   };
@@ -72,6 +77,9 @@ function CreateProjectModal({
     setIsPublic(false);
     setErr("");
     handleClose();
+
+    // project로 이동
+    router.push(`idea/${projectId}`);
   };
 
   return (
@@ -83,7 +91,7 @@ function CreateProjectModal({
     >
       <Container>
         <Title>
-          <span>{"NEW PROJECT"}</span>
+          <span>{"새로운 프로젝트"}</span>
         </Title>
         <Driver />
         <Content>
