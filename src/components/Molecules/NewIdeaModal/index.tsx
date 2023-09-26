@@ -42,9 +42,8 @@ function NewIdeaModal({
   joiners: Joiner[];
   defaultTitle?: string;
 }): React.ReactElement {
-  const { axios } = useAuth();
+  const { user, axios } = useAuth();
   const router = useRouter();
-  const { query } = router;
 
   const categorys: string[] = ["ICT", "예술", "교육", "건강", "환경", "기타"];
   const statusOptions: string[] = IdeaStatus.map((status) => status.title);
@@ -87,7 +86,7 @@ function NewIdeaModal({
       content: content,
       projectId: projectId,
       hashTags: tags,
-      relatedUserIds: relatedIds,
+      relatedUserIds: [...relatedIds, user.id],
     };
 
     axios.post(`${process.env.NEXT_PUBLIC_BASEURL}/idea`, data).then((res) => {
@@ -148,7 +147,9 @@ function NewIdeaModal({
                 value={relatedUser}
                 setValue={setRelatedUser}
                 placeholder={"연관 담당자 추가"}
-                options={joiners?.map((joiner: Joiner) => joiner.userDto.name)}
+                options={joiners
+                  .filter((joiner: Joiner) => joiner.userDto.name !== user.name)
+                  .map((joiner: Joiner) => joiner.userDto.name)}
                 width={550}
               />
             </Line>
