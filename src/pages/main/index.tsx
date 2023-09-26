@@ -100,7 +100,7 @@ function Main(): React.ReactElement {
         <Header>
           <TitleWrap>
             <TitleBar />
-            <span>{"My Workspace"}</span>
+            <span>{"내 프로젝트"}</span>
           </TitleWrap>
           <RightHeaderWrap>
             <Search>
@@ -115,7 +115,7 @@ function Main(): React.ReactElement {
             <ButtonWrap>
               <RoundButton
                 isFilled={true}
-                text={"프로젝트 생성하기"}
+                text={"프로젝트 생성하기 +"}
                 isMainClr={false}
                 onClick={openAddProjectModal}
               />

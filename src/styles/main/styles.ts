@@ -24,6 +24,7 @@ export const Content = styled("div")`
 export const Header = styled("div")`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-top: 20px;
 
   &.title {
