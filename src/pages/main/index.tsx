@@ -108,7 +108,7 @@ function Main(): React.ReactElement {
                 <SearchIcon />
               </SearchIconWrapper>
               <SearchInput
-                placeholder="Search…"
+                placeholder="검색"
                 inputProps={{ "aria-label": "search" }}
               />
             </Search>

@@ -14,6 +14,7 @@ export const StyledGrid = styled(Grid)`
   background-color: white;
   border-radius: 5px;
   cursor: pointer;
+  overflow-y: auto;
 
   &.container {
     width: 100%;
