@@ -46,7 +46,7 @@ function NewIdeaModal({
   const router = useRouter();
   const { query } = router;
 
-  const categorys: string[] = ["인문", "자연", "예술", "사회", "기타"];
+  const categorys: string[] = ["ICT", "예술", "교육", "건강", "환경", "기타"];
   const statusOptions: string[] = IdeaStatus.map((status) => status.title);
 
   const [title, setTitle] = useState<string>(defaultTitle ? defaultTitle : "");
@@ -95,6 +95,7 @@ function NewIdeaModal({
       else {
         setErr("");
         handleClose();
+
         if (updateIdeaList) updateIdeaList();
       }
     });
@@ -103,13 +104,22 @@ function NewIdeaModal({
   return (
     <StyledModal
       open={open}
-      onClose={handleClose}
+      onClose={() => {
+        handleClose();
+
+        setTitle("");
+        setCategory("");
+        setRelatedUser([]);
+        setTags([]);
+        setContent("");
+        setStatus("");
+      }}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
       <Container>
         <Title>
-          <span>{"NEW IDEA"}</span>
+          <span>{"새로운 아이디어"}</span>
         </Title>
         <Driver />
         <Content>
@@ -119,7 +129,7 @@ function NewIdeaModal({
             </Line>
             <Line rate={11}>
               <InputBox
-                placeHolder={""}
+                placeHolder={"아이디어 명을 입력하세요."}
                 text={title}
                 setText={setTitle}
                 errText={err}
@@ -168,7 +178,7 @@ function NewIdeaModal({
 
           <Grid>
             <TextArea
-              placeholder={"* 내용을 입력하세요."}
+              placeholder={"내용을 입력하세요."}
               text={content}
               setText={setContent}
             />
