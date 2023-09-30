@@ -37,11 +37,9 @@ import {
   IdeaTop,
   ProcessCard,
   ReactionWrap,
-  Search,
-  SearchIcon,
-  SearchIconWrapper,
-  SearchInput,
   StatusTitle,
+  TitleBar,
+  TitleWrap,
   UserGroup,
 } from "./styles";
 
@@ -60,7 +58,7 @@ function IdeaList({
   setIdeas: Dispatch<SetStateAction<IIdeaByStatus>>;
   updateIdeaList: () => void;
 }): React.ReactElement | null {
-  const { user, axios } = useAuth();
+  const { axios } = useAuth();
 
   // project close modal
   const [closeModalOpen, setCloseModalOpen] = React.useState(false);
@@ -153,15 +151,10 @@ function IdeaList({
         <Profile />
       </Header>
       <Header className={"search"}>
-        <Search>
-          <SearchIconWrapper>
-            <SearchIcon />
-          </SearchIconWrapper>
-          <SearchInput
-            placeholder="Search…"
-            inputProps={{ "aria-label": "search" }}
-          />
-        </Search>
+        <TitleWrap>
+          <TitleBar />
+          <span>{"프로젝트 이름 드갈 예정"}</span>
+        </TitleWrap>
         <ButtonWrap>
           {isOwner && (
             <MenuDrop options={menuOptions} menuText={"프로젝트 관리"} />

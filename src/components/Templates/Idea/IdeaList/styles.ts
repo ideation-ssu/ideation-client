@@ -7,12 +7,29 @@ import { styled } from "@mui/material/styles";
 
 export const Header = styled("div")`
   display: flex;
+  align-items: center;
   &.profile {
     justify-content: flex-end;
   }
   &.search {
     justify-content: space-between;
   }
+`;
+
+export const TitleWrap = styled("div")`
+  display: flex;
+  align-items: flex-end;
+  span {
+    padding-left: 10px;
+    font-size: 24px;
+    font-weight: 600;
+  }
+`;
+
+export const TitleBar = styled("div")`
+  width: 7px;
+  height: 32px;
+  background: linear-gradient(0deg, #6e72fc 0%, #ad1deb 100%);
 `;
 
 export const ButtonWrap = styled("div")`
@@ -23,33 +40,6 @@ export const ButtonWrap = styled("div")`
   button {
     width: auto;
   }
-`;
-
-export const Search = styled("div")`
-  width: 420px;
-  height: 41px;
-  display: flex;
-  border-radius: 10px;
-  background-color: #edeef3;
-  :hover {
-    background-color: #e2e3e8;
-  }
-`;
-
-export const SearchIcon = styled(MuiSearchIcon)`
-  color: #cccccc;
-`;
-
-export const SearchIconWrapper = styled("div")`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-left: 15px;
-`;
-
-export const SearchInput = styled(InputBase)`
-  font-size: 18px;
-  padding-left: 10px;
 `;
 
 export const CardContainer = styled("div")`
