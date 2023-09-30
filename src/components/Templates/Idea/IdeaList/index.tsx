@@ -31,6 +31,7 @@ import {
   Header,
   Idea,
   IdeaBottom,
+  IdeaContent,
   IdeaHandleIcon,
   IdeaInner,
   IdeaTitleText,
@@ -236,60 +237,68 @@ function IdeaList({
                                 setSelectedIdeaId(idea.id);
                               }}
                             >
-                              <IdeaInner>
-                                <IdeaTop>
-                                  <IdeaHandleIcon />
-                                  <IdeaTitleText>{idea.title}</IdeaTitleText>
-                                  <UserGroup
-                                    max={2}
-                                    src={
-                                      joiners.length > 2
-                                        ? joiners[1].userDto.profileImage
-                                        : ""
-                                    }
-                                  >
-                                    {joiners.map((user, index) => {
-                                      return (
-                                        <Avatar
-                                          src={user.userDto.profileImage}
-                                          key={index}
-                                          width={33}
-                                          height={33}
-                                        />
-                                      );
-                                    })}
-                                  </UserGroup>
-                                </IdeaTop>
-                                <IdeaBottom>
-                                  <HashTagWrap>
-                                    {idea.ideaHashtags.map((tag, index) => {
-                                      return (
-                                        <HashTag
-                                          key={index}
-                                          color={tag.color}
-                                          backgroundColor={tag.backgroundColor}
-                                        >
-                                          {tag.hashtag}
-                                        </HashTag>
-                                      );
-                                    })}
-                                  </HashTagWrap>
-                                  <ReactionWrap>
-                                    <CommentIcon isLiked={idea.isLiked} />
-                                    <span
-                                      className={idea.isLiked ? "isLiked" : ""}
+                              <IdeaContent>
+                                <IdeaHandleIcon />
+                                <IdeaInner>
+                                  <IdeaTop>
+                                    <IdeaTitleText>{idea.title}</IdeaTitleText>
+                                    <UserGroup
+                                      max={2}
+                                      src={
+                                        joiners.length > 2
+                                          ? joiners[1].userDto.profileImage
+                                          : ""
+                                      }
                                     >
-                                      {idea.commentCount}
-                                    </span>
-                                    <LikedIcon isLiked={idea.isLiked} />
-                                    <span
-                                      className={idea.isLiked ? "isLiked" : ""}
-                                    >
-                                      {idea.likeCount}
-                                    </span>
-                                  </ReactionWrap>
-                                </IdeaBottom>
-                              </IdeaInner>
+                                      {joiners.map((user, index) => {
+                                        return (
+                                          <Avatar
+                                            src={user.userDto.profileImage}
+                                            key={index}
+                                            width={33}
+                                            height={33}
+                                          />
+                                        );
+                                      })}
+                                    </UserGroup>
+                                  </IdeaTop>
+                                  <IdeaBottom>
+                                    <HashTagWrap>
+                                      {idea.ideaHashtags.map((tag, index) => {
+                                        return (
+                                          <HashTag
+                                            key={index}
+                                            color={tag.color}
+                                            backgroundColor={
+                                              tag.backgroundColor
+                                            }
+                                          >
+                                            {tag.hashtag}
+                                          </HashTag>
+                                        );
+                                      })}
+                                    </HashTagWrap>
+                                    <ReactionWrap>
+                                      <CommentIcon isLiked={idea.isLiked} />
+                                      <span
+                                        className={
+                                          idea.isLiked ? "isLiked" : ""
+                                        }
+                                      >
+                                        {idea.commentCount}
+                                      </span>
+                                      <LikedIcon isLiked={idea.isLiked} />
+                                      <span
+                                        className={
+                                          idea.isLiked ? "isLiked" : ""
+                                        }
+                                      >
+                                        {idea.likeCount}
+                                      </span>
+                                    </ReactionWrap>
+                                  </IdeaBottom>
+                                </IdeaInner>
+                              </IdeaContent>
                             </Idea>
                           )}
                         </Draggable>

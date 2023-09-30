@@ -73,7 +73,6 @@ export const InputWrap = styled("div")<{ isshow: boolean }>`
 
   &.comment {
     display: flex;
-    margin-top: 15px;
   }
 `;
 

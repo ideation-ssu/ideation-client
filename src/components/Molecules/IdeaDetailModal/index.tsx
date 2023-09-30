@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Tab from "@mui/material/Tab";
 
+import Avatar from "@/components/Atoms/Avatar";
+import Driver from "@/components/Atoms/Driver";
 import FlexWrap from "@/components/Atoms/FlexWrap";
 import IdeaCommentPanel from "@/components/Molecules/IdeaCommmentPanel";
 import { _IdeaStatus, IDEA_STATUS_TYPE } from "@/enums/ideaStatus";
@@ -13,8 +15,10 @@ import {
   Container,
   Content,
   Date,
+  EditIcon,
   HashTag,
   HashTagWrap,
+  HeaderWrap,
   IdeaStatusChip,
   LikeIcon,
   LikeWrap,
@@ -24,6 +28,7 @@ import {
   StyledModal,
   StyledTabs,
   Title,
+  UserInfo,
 } from "./styles";
 
 export enum CommentType {
@@ -91,28 +96,47 @@ function IdeaDetailModal({
         {idea && (
           <Container>
             <FlexWrap gap={8}>
-              <IdeaStatusChip
-                status={idea.status as IDEA_STATUS_TYPE}
-                label={_IdeaStatus[idea.status as IDEA_STATUS_TYPE]}
-              ></IdeaStatusChip>
-              <Category>{idea.category}</Category>
-              <Title>{idea.title}</Title>
+              <HeaderWrap>
+                <Category>{idea.category}</Category>
+                <IdeaStatusChip
+                  status={idea.status as IDEA_STATUS_TYPE}
+                  label={_IdeaStatus[idea.status as IDEA_STATUS_TYPE]}
+                />
+              </HeaderWrap>
+              <HeaderWrap>
+                <Title>{idea.title}</Title>
+                <EditIcon />
+              </HeaderWrap>
             </FlexWrap>
             <Content>
-              <Name>{idea.userName}</Name>
+              <UserInfo>
+                <Avatar src={idea.user.profileImage} width={24} height={24} />
+                <Name>{idea.userName}</Name>
+              </UserInfo>
               <Date>{idea.createdAt}</Date>
+              <Driver />
               <MainText>{idea.content}</MainText>
               <HashTagWrap>
-                {idea.hashTags.map((tag: string, index: number) => {
-                  return <HashTag key={index}>{tag}</HashTag>;
+                {idea.ideaHashtags.map((tag, index) => {
+                  return (
+                    <HashTag
+                      key={index}
+                      color={tag.color}
+                      backgroundColor={tag.backgroundColor}
+                    >
+                      {tag.hashtag}
+                    </HashTag>
+                  );
                 })}
               </HashTagWrap>
+              <Driver />
               <LikeWrap>
                 <LikeIcon isLiked={idea.isLiked} onClick={likeIdea} />
                 <span className={idea.isLiked ? "isLiked" : ""}>
                   {idea.likeCount}
                 </span>
               </LikeWrap>
+              <Driver />
             </Content>
 
             <StyledTabs value={tab} onChange={handleTabChange}>
