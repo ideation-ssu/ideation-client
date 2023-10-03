@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
+import AvatarGroup from "@/components/Atoms/AvatarGroup";
 import Profile from "@/components/Atoms/Profile";
 import RoundButton from "@/components/Atoms/RoundButton";
 import CreateSessionModal from "@/components/Molecules/CreateSessionModal";
@@ -13,7 +14,9 @@ import { Joiner } from "@/interfaces/project";
 import { useAuth } from "@/utils/auth";
 
 import {
+  BottomColorBar,
   BrainstorminIcon,
+  Card,
   Content,
   CreateVoteButtonWrap,
   EmptyMessage,
@@ -22,9 +25,12 @@ import {
   Header,
   ImageWrap,
   PersonIcon,
+  ProfileWrap,
   ProjectInfoWrap,
   RelatedUser,
+  Status,
   StyledGrid,
+  TimeIcon,
 } from "./styles";
 
 function Brainstorming({
@@ -101,35 +107,35 @@ function Brainstorming({
           <StyledGrid container className={"container"} spacing={1}>
             {brainstormings &&
               brainstormings.map((session: ISession) => (
-                <StyledGrid
-                  key={session.brainstormingId}
-                  onClick={() => {
-                    if (session.status === "FINISHED")
-                      router.push(`/statistics/${session.brainstormingId}`);
-                    else
-                      router.push(`/brainstorming/${session.brainstormingId}`);
-                  }}
-                >
-                  <Content>
-                    <ImageWrap />
-                    <span className={"title"}>{session.title}</span>
-                    <span className={"desc"}>{session.description}</span>
-                    <ProjectInfoWrap>
-                      <span>
-                        {
-                          session.users.find(
-                            (user) => user.id === session.userId
-                          )?.name
-                        }
-                      </span>
-
-                      <RelatedUser>
+                <Card>
+                  <StyledGrid
+                    key={session.brainstormingId}
+                    onClick={() => {
+                      if (session.status === "FINISHED")
+                        router.push(`/statistics/${session.brainstormingId}`);
+                      else
+                        router.push(
+                          `/brainstorming/${session.brainstormingId}`
+                        );
+                    }}
+                  >
+                    <Status enable={session.status === "STARTED"} />
+                    <Content>
+                      <span className={"title"}>{session.title}</span>
+                      <span className={"desc"}>{session.description}</span>
+                      <ProjectInfoWrap>
+                        <TimeIcon />
+                        <span>{`${session.processMinutes}M`}</span>
                         <PersonIcon />
                         <span>{session.users.length}</span>
-                      </RelatedUser>
-                    </ProjectInfoWrap>
-                  </Content>
-                </StyledGrid>
+                      </ProjectInfoWrap>
+                      <ProfileWrap>
+                        <AvatarGroup users={session.users} max={6} />
+                      </ProfileWrap>
+                    </Content>
+                  </StyledGrid>
+                  <BottomColorBar />
+                </Card>
               ))}
           </StyledGrid>
         )}

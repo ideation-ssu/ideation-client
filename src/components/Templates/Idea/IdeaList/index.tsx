@@ -7,7 +7,7 @@ import {
 } from "react-beautiful-dnd";
 import { toast } from "react-toastify";
 
-import Avatar from "@/components/Atoms/Avatar";
+import AvatarGroup from "@/components/Atoms/AvatarGroup";
 import MenuDrop from "@/components/Atoms/MenuDrop";
 import Profile from "@/components/Atoms/Profile";
 import RoundButton from "@/components/Atoms/RoundButton";
@@ -41,7 +41,6 @@ import {
   StatusTitle,
   TitleBar,
   TitleWrap,
-  UserGroup,
 } from "./styles";
 
 function IdeaList({
@@ -242,25 +241,14 @@ function IdeaList({
                                 <IdeaInner>
                                   <IdeaTop>
                                     <IdeaTitleText>{idea.title}</IdeaTitleText>
-                                    <UserGroup
+                                    <AvatarGroup
+                                      users={joiners.map(
+                                        (joiner) => joiner.userDto
+                                      )}
                                       max={2}
-                                      src={
-                                        joiners.length > 2
-                                          ? joiners[1].userDto.profileImage
-                                          : ""
-                                      }
-                                    >
-                                      {joiners.map((user, index) => {
-                                        return (
-                                          <Avatar
-                                            src={user.userDto.profileImage}
-                                            key={index}
-                                            width={33}
-                                            height={33}
-                                          />
-                                        );
-                                      })}
-                                    </UserGroup>
+                                      width={33}
+                                      height={33}
+                                    />
                                   </IdeaTop>
                                   <IdeaBottom>
                                     <HashTagWrap>
