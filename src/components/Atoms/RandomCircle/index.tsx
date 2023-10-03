@@ -116,7 +116,6 @@ const RandomCircle = ({
     );
     const [draggedCircle] = updatedCircles.splice(circleIndex, 1);
     updatedCircles.push(draggedCircle);
-    // setCircles(updatedCircles);
   };
 
   const onDragEnd = (e: Konva.KonvaEventObject<DragEvent>) => {
@@ -137,7 +136,7 @@ const RandomCircle = ({
       if (circle.sessionIdeaId === e.target.name()) {
         const updateCircle: ICircle = {
           ...circle,
-          radius: e.target.attrs.radius + 2,
+          radius: e.target.attrs.radius + 6,
         };
         sendCircle(updateCircle);
       }
