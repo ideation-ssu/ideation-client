@@ -90,6 +90,7 @@ export const IdeaListWrap = styled("div")`
   gap: 20px;
   background-color: #f8f8ff;
   border-radius: 10px;
+  overflow-x: hidden;
   overflow-y: auto;
   padding: 20px 10px;
 `;

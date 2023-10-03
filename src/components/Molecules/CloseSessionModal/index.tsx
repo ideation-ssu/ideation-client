@@ -21,16 +21,15 @@ function CloseSessionModal({
     >
       <Container>
         <Title>
-          <span className={"main_title"}>{"세션 종료하기"}</span>
+          <span className={"main_title"}>{"브레인스토밍 종료하기"}</span>
           <span className={"sub_title"}>
-            {"세션을 종료하면 통계를 확인 할 수 있어요."}
+            {"세션을 종료하면 통계를 확인합니다."}
           </span>
         </Title>
         <Content>
           <span className={"guide-message"}>
-            {"세션을 "}
-            <span className={"bold"}>{"종료"}</span>
-            {"하시겠습니까?"}
+            <span className={"bold"}>{"브레인스토밍"}</span>
+            {"을 종료하시겠습니까?"}
           </span>
         </Content>
         <ButtonWrap>
