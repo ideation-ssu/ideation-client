@@ -1,5 +1,6 @@
 import React from "react";
 
+import Avatar from "@/components/Atoms/Avatar";
 import MenuDrop from "@/components/Atoms/MenuDrop";
 import Profile from "@/components/Atoms/Profile";
 import RoundButton from "@/components/Atoms/RoundButton";
@@ -23,11 +24,8 @@ import {
   Header,
   MenuIcon,
   MenuWrap,
-  ProfileImg,
-  Search,
-  SearchIcon,
-  SearchIconWrapper,
-  SearchInput,
+  TitleBar,
+  TitleWrap,
 } from "./styles";
 
 function JoinerList({
@@ -84,16 +82,11 @@ function JoinerList({
       <Header className={"profile"}>
         <Profile />
       </Header>
-      <Header className={"search"}>
-        <Search>
-          <SearchIconWrapper>
-            <SearchIcon />
-          </SearchIconWrapper>
-          <SearchInput
-            placeholder="Search…"
-            inputProps={{ "aria-label": "search" }}
-          />
-        </Search>
+      <Header className={"header"}>
+        <TitleWrap>
+          <TitleBar />
+          <span>참여자 리스트</span>
+        </TitleWrap>
         <ButtonWrap>
           <RoundButton
             text={"팀원 초대하기 +"}
@@ -101,16 +94,16 @@ function JoinerList({
             isMainClr={false}
             onClick={handleOpen}
           />
-          <InviteTeamModal
-            projectId={projectId}
-            code={code}
-            open={open}
-            handleClose={() => {
-              handleClose();
-              getJoiners();
-            }}
-          />
         </ButtonWrap>
+        <InviteTeamModal
+          projectId={projectId}
+          code={code}
+          open={open}
+          handleClose={() => {
+            handleClose();
+            getJoiners();
+          }}
+        />
       </Header>
       <GridBox>
         {joiners?.map((joiner, index) => {
@@ -143,8 +136,15 @@ function JoinerList({
               <Card>
                 <ColorBar color={joiner.color} />
                 <Content>
-                  <span className={"name"}>{joiner.userDto.name}</span>
-                  <span className={"email"}>{joiner.userDto.email}</span>
+                  <Avatar
+                    src={joiner.userDto.profileImage}
+                    width={63}
+                    height={63}
+                  />
+                  <div>
+                    <span className={"name"}>{joiner.userDto.name}</span>
+                    <span className={"email"}>{joiner.userDto.email}</span>
+                  </div>
                 </Content>
                 <MenuWrap>
                   <MenuDrop
@@ -154,7 +154,7 @@ function JoinerList({
                 </MenuWrap>
               </Card>
               <ProfileModal
-                user={joiner}
+                isEdit={user.id === joiner.userDto.id}
                 open={profileOpen}
                 handleClose={handleProfileClose}
               />

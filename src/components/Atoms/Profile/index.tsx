@@ -3,8 +3,9 @@ import { useRouter } from "next/router";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 
-import EditProfileModal from "@/components/Molecules/EditProfileModal";
 import { useAuth } from "@/utils/auth";
+
+import EditProfileModal from "../../Molecules/ProfileModal";
 
 import {
   Button,
