@@ -34,7 +34,7 @@ function CreateSessionModal({
 
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
-  const [processMinutes, setProcessMinutes] = useState<string>("15M");
+  const [processMinutes, setProcessMinutes] = useState<string>("15분");
   const [relatedUser, setRelatedUser] = useState<string[]>([]);
   const [err, setErr] = useState("");
 
@@ -117,7 +117,7 @@ function CreateSessionModal({
                 placeholder={""}
                 value={processMinutes}
                 setValue={setProcessMinutes}
-                options={["15M", "30M", "45M", "60M"]}
+                options={["15분", "30분", "45분", "60분"]}
               />
             </Line>
           </Grid>
