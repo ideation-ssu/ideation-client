@@ -21,7 +21,7 @@ function ProfileModal({
   open,
   handleClose,
 }: {
-  isEdit: boolean;
+  isEdit?: boolean;
   open: boolean;
   handleClose: () => void;
 }): React.ReactElement {
