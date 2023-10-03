@@ -23,7 +23,6 @@ import {
   JoinerWrap,
   SessionFuncWrap,
   SessionName,
-  StatisticsIcon,
   StyledModal,
   TimerIcon,
   Title,

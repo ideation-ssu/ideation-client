@@ -1,16 +1,5 @@
-import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import { styled } from "@mui/material/styles";
-
-export const StyledAvatar = styled(Avatar)<{
-  width: number;
-  height: number;
-  edit: string;
-}>`
-  width: ${(props) => props.width}px;
-  height: ${(props) => props.height}px;
-  cursor: ${(props) => (props.edit === "true" ? "pointer" : "default")};
-`;
 
 export const UserGroup = styled(AvatarGroup)<{ src: string }>`
   div:first-of-type {

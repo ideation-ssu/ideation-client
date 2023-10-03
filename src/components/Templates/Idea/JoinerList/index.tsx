@@ -73,7 +73,6 @@ function JoinerList({
       {removeMemberInfo && (
         <RemoveMemberModal
           projectId={projectId}
-          userId={user.id}
           open={Boolean(removeMemberInfo)}
           handleClose={() => setRemoveMemberInfo(null)}
           userInfo={removeMemberInfo}

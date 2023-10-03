@@ -15,7 +15,6 @@ import {
   MessageBox,
   Percent,
   PercentWrap,
-  ProfileImg,
   Slider,
   SliderBackground,
   SliderWrap,
@@ -32,7 +31,6 @@ import {
   VoteMedalIcon,
   VoteTitle,
 } from "@/components/Templates/Idea/Vote/styles";
-import { IIdeaByStatus } from "@/interfaces/idea";
 import { IVote } from "@/interfaces/vote";
 import { getDueDate, parseIsoDate } from "@/utils/date";
 

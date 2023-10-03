@@ -12,7 +12,6 @@ function SignUpModal({
   open: boolean;
   handleClose: () => void;
 }): React.ReactElement {
-  const [token, setToken] = useState("");
   const [projectOpen, setProjectOpen] = React.useState(false);
   const handleProjectOpen = () => setProjectOpen(true);
   const handleProjectClose = () => setProjectOpen(false);

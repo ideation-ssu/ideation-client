@@ -7,7 +7,7 @@ import OutlineInputBox from "@/components/Atoms/OutlineInputBox";
 import RandomCircle from "@/components/Atoms/RandomCircle";
 import CloseSessionModal from "@/components/Molecules/CloseSessionModal";
 import WaitSessionModal from "@/components/Molecules/WaitSessionModal";
-import { ISession, IStatus, ITimer, ITopic } from "@/interfaces/brainstorming";
+import { ISession, ITimer, ITopic } from "@/interfaces/brainstorming";
 import { ICircle } from "@/interfaces/circle";
 import { Joiner } from "@/interfaces/project";
 import {

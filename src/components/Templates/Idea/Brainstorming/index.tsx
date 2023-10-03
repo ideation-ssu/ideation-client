@@ -107,9 +107,8 @@ function Brainstorming({
           <StyledGrid container className={"container"} spacing={1}>
             {brainstormings &&
               brainstormings.map((session: ISession) => (
-                <Card>
+                <Card key={session.brainstormingId}>
                   <StyledGrid
-                    key={session.brainstormingId}
                     onClick={() => {
                       if (session.status === "FINISHED")
                         router.push(`/statistics/${session.brainstormingId}`);
