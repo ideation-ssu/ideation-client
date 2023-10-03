@@ -4,11 +4,13 @@ import Profile from "@/components/Atoms/Profile";
 import RoundButton from "@/components/Atoms/RoundButton";
 import CreateVoteIdeaModal from "@/components/Molecules/CreateVoteIdeaModal";
 import {
-  CreateVoteButtonWrap,
+  ButtonWrap,
   EmptyMessage,
   EmptyWrap,
   GridBox,
   Header,
+  TitleBar,
+  TitleWrap,
   VoteIcon,
 } from "@/components/Templates/Idea/Vote/styles";
 import { IIdeaByStatus } from "@/interfaces/idea";
@@ -35,7 +37,11 @@ export default function VoteNotStarted({
       </Header>
 
       <Header className={"add-button"}>
-        <CreateVoteButtonWrap>
+        <TitleWrap>
+          <TitleBar />
+          <span>{"투표하기"}</span>
+        </TitleWrap>
+        <ButtonWrap>
           <RoundButton
             isFilled={true}
             text={"아이디어 선정하기"}
@@ -52,13 +58,15 @@ export default function VoteNotStarted({
               getVote();
             }}
           />
-        </CreateVoteButtonWrap>
+        </ButtonWrap>
       </Header>
 
       <GridBox>
         <EmptyWrap>
           <VoteIcon />
-          <EmptyMessage>{"진행 중인 투표가 없어요!"}</EmptyMessage>
+          <EmptyMessage>
+            현재 <span>{"진행 중인\n투표"}</span>가 없습니다.
+          </EmptyMessage>
         </EmptyWrap>
       </GridBox>
     </>
