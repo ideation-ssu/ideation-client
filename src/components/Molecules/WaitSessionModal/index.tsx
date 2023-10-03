@@ -68,7 +68,9 @@ function WaitSessionModal({
           <span className={"sub_title"}>
             {isStarted
               ? "아이데이션의 브레인스토밍 기능을 효율적으로 사용해보세요!"
-              : "세션 담당자가 세션을 시작하기 전까지 기다려주세요."}
+              : isOwner
+              ? "아래 버튼 눌러 브레인스토밍을 시작합니다."
+              : "팀원들의 브레인스토밍 참가를 기다리고 있습니다."}
           </span>
         </Title>
         {isStarted ? (
@@ -79,10 +81,6 @@ function WaitSessionModal({
                   <TimerIcon />
                   <FuncTag>{"시간 10분 연장"}</FuncTag>
                 </Item>
-                <Item>
-                  <ClusteringIcon />
-                  <FuncTag>{"클러스터링"}</FuncTag>
-                </Item>
               </Grid>
               <Grid>
                 <Item className={"first-child"}>
@@ -90,8 +88,8 @@ function WaitSessionModal({
                   <FuncTag>{"브레인스토밍 통계"}</FuncTag>
                 </Item>
                 <Item>
-                  <StatisticsIcon />
-                  <FuncTag>{"통계"}</FuncTag>
+                  <ClusteringIcon />
+                  <FuncTag>{"아이디어 그룹화"}</FuncTag>
                 </Item>
               </Grid>
             </SessionFuncWrap>

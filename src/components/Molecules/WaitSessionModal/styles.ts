@@ -126,10 +126,6 @@ export const Grid = styled("div")`
   display: flex;
   flex-direction: row;
   flex: 1;
-
-  &.first-child {
-    border-bottom: 1px solid #000;
-  }
 `;
 
 export const Item = styled("div")`
@@ -139,10 +135,6 @@ export const Item = styled("div")`
   justify-content: end;
   align-items: center;
   gap: 20px;
-
-  &.first-child {
-    border-right: 1px solid #000;
-  }
 `;
 
 export const TimerIcon = styled("div")`
