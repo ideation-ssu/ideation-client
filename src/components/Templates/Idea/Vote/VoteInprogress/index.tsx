@@ -96,7 +96,6 @@ export default function VoteInprogress({ getVote, isOwner, vote }: PropsType) {
       label: "투표 종료하기",
       onClick: () => {
         handleCloseVoteOpen();
-        getVote();
       },
     },
     {
@@ -113,6 +112,7 @@ export default function VoteInprogress({ getVote, isOwner, vote }: PropsType) {
         voteId={vote.vote.voteId}
         open={closeVoteOpen}
         handleClose={handleCloseVoteClose}
+        getVote={getVote}
       />
 
       <DeleteVoteModal
@@ -120,7 +120,7 @@ export default function VoteInprogress({ getVote, isOwner, vote }: PropsType) {
         voteName={vote.vote.title}
         open={deleteVoteOpen}
         handleClose={handleDeleteVoteClose}
-        callback={getVote}
+        getVote={getVote}
       />
 
       <IdeaDetailModal
@@ -152,6 +152,7 @@ export default function VoteInprogress({ getVote, isOwner, vote }: PropsType) {
               voteId={vote.vote.voteId}
               open={closeVoteOpen}
               handleClose={handleCloseVoteClose}
+              getVote={getVote}
             />
           )}
           {vote && (
@@ -160,7 +161,7 @@ export default function VoteInprogress({ getVote, isOwner, vote }: PropsType) {
               voteName={vote.vote.title}
               open={deleteVoteOpen}
               handleClose={handleDeleteVoteClose}
-              callback={getVote}
+              getVote={getVote}
             />
           )}
 

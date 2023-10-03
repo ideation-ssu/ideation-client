@@ -9,10 +9,12 @@ function CloseVoteModal({
   voteId,
   open,
   handleClose,
+  getVote,
 }: {
   voteId: number;
   open: boolean;
   handleClose: () => void;
+  getVote: () => void;
 }): React.ReactElement {
   const { axios } = useAuth();
 
@@ -21,6 +23,7 @@ function CloseVoteModal({
       .put(`${process.env.NEXT_PUBLIC_BASEURL}/vote/${voteId}/done`)
       .then((res) => {
         handleClose();
+        getVote();
       });
   };
 
@@ -35,14 +38,14 @@ function CloseVoteModal({
         <Title>
           <span className={"main_title"}>{"투표 종료하기"}</span>
           <span className={"sub_title"}>
-            {"투표를 종료하면 결과를 확인할 수 있어요."}
+            {"투표를 종료하여 결과를 확인합니다."}
           </span>
         </Title>
         <Content>
           <span className={"guide-message"}>
             {"투표를 "}
             <span className={"bold"}>{"종료"}</span>
-            {"하시겠습니까?"}
+            {"할까요?"}
           </span>
         </Content>
         <ButtonWrap>

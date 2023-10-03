@@ -67,7 +67,7 @@ export default function VoteDone({ getVote, isOwner, vote }: PropsType) {
         voteName={vote.vote.title}
         open={deleteVoteOpen}
         handleClose={handleDeleteVoteClose}
-        callback={getVote}
+        getVote={getVote}
       />
 
       <Header className={"profile"}>
@@ -93,7 +93,7 @@ export default function VoteDone({ getVote, isOwner, vote }: PropsType) {
             voteName={vote.vote.title}
             open={deleteVoteOpen}
             handleClose={handleDeleteVoteClose}
-            callback={getVote}
+            getVote={getVote}
           />
 
           <SliderWrap isShow>
@@ -119,7 +119,7 @@ export default function VoteDone({ getVote, isOwner, vote }: PropsType) {
         <Table>
           <TableHead>
             <TableRow>
-              <TableHeader className={"assign"}>{"담당자"}</TableHeader>
+              <TableHeader className={"assign"}>{"순위"}</TableHeader>
               <TableHeader>{"아이디어 명"}</TableHeader>
               <TableHeader>{"카테고리"}</TableHeader>
               <TableHeader>{"반응"}</TableHeader>

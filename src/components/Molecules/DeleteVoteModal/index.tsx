@@ -10,13 +10,13 @@ function CloseVoteModal({
   voteName,
   open,
   handleClose,
-  callback,
+  getVote,
 }: {
   voteId: number;
   voteName: string;
   open: boolean;
   handleClose: () => void;
-  callback: () => void;
+  getVote: () => void;
 }): React.ReactElement {
   const { axios } = useAuth();
 
@@ -24,8 +24,8 @@ function CloseVoteModal({
     axios
       .delete(`${process.env.NEXT_PUBLIC_BASEURL}/vote/${voteId}`)
       .then((res) => {
-        callback();
         handleClose();
+        getVote();
       });
   };
 
