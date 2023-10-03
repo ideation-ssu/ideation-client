@@ -1,12 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { KeyboardEvent, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
+import CheckBox from "@/components/Atoms/CheckBox";
 import OutlineInputBox from "@/components/Atoms/OutlineInputBox";
 import RoundButton from "@/components/Atoms/RoundButton";
+import { LinkIcon } from "@/components/Templates/Idea/JoinerList/styles";
 import { Project } from "@/interfaces/project";
 import { useAuth } from "@/utils/auth";
 
-import { ButtonWrap, Container, Content, StyledModal, Title } from "./styles";
+import {
+  ButtonWrap,
+  Container,
+  Content,
+  EmailList,
+  InputBoxWrap,
+  Item,
+  ListInner,
+  StyledModal,
+  Title,
+} from "./styles";
 
 function InviteTeamModal({
   projectId,
@@ -23,17 +35,31 @@ function InviteTeamModal({
 
   const [email, setEmail] = useState<string>("");
   const [projectInfo, setProjectInfo] = useState<null | Project>(null);
+  const [inviteList, setInviteList] = useState<string[]>([]);
+  const [isCheck, setIsCheck] = useState<boolean[]>([]);
 
   const handleInvite = () => {
-    const data = {
-      email: email,
-      projectId: projectId,
-    };
-    axios
-      .post(`${process.env.NEXT_PUBLIC_BASEURL}/project/invite`, data)
-      .then((res) => {
-        handleClose();
-      });
+    const checkedInviteList = inviteList.filter((_, index) => isCheck[index]);
+
+    if (checkedInviteList.length < 1) {
+      toast.error("초대할 계정을 선택해주세요.");
+      return;
+    }
+
+    checkedInviteList.map((email) => {
+      const data = {
+        email: email,
+        projectId: projectId,
+      };
+      axios.post(`${process.env.NEXT_PUBLIC_BASEURL}/project/invite`, data);
+    });
+
+    handleClose();
+    setEmail("");
+    setInviteList([]);
+    setIsCheck([]);
+    toast.success("초대가 완료되었습니다.");
+    return;
   };
 
   const handleCopyLink = () => {
@@ -79,14 +105,34 @@ function InviteTeamModal({
     }
   }, [code]);
 
+  const handleKeyUp = (e: KeyboardEvent<HTMLInputElement>) => {
+    const finish = ["Enter", "NumpadEnter"];
+    if (!finish.includes(e.key)) return;
+
+    const target = e.target as HTMLInputElement;
+    setInviteList([...inviteList, target.value]);
+    setEmail("");
+  };
+
+  const handleCheckboxChange = (index: number) => {
+    const newIsCheck = [...isCheck];
+    newIsCheck[index] = !newIsCheck[index];
+    setIsCheck(newIsCheck);
+  };
+
   return (
     <StyledModal
       open={open}
-      onClose={handleClose}
+      onClose={() => {
+        handleClose();
+        setEmail("");
+        setInviteList([]);
+        setIsCheck([]);
+      }}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Container>
+      <Container existInviteUser={inviteList.length > 0}>
         <Title>
           <span className={"main_title"}>
             {!code ? "팀원 초대하기" : "프로젝트 참가하기"}
@@ -100,16 +146,37 @@ function InviteTeamModal({
         <Content>
           {!code ? (
             <>
-              <OutlineInputBox
-                text={email}
-                setText={setEmail}
-                placeHolder={"이메일을 입력하세요"}
-                autoComplete={"email"}
-              />
+              <InputBoxWrap>
+                <OutlineInputBox
+                  text={email}
+                  setText={setEmail}
+                  placeHolder={"이메일을 입력하세요"}
+                  autoComplete={"email"}
+                  onKeyUp={handleKeyUp}
+                />
+              </InputBoxWrap>
+              <EmailList existInviteUser={inviteList.length > 0}>
+                <ListInner>
+                  <span>추가된 계정</span>
+                  {inviteList.map((email, index) => {
+                    return (
+                      <Item key={index}>
+                        <span>{email}</span>
+                        <CheckBox
+                          check={isCheck[index]}
+                          setCheck={() => handleCheckboxChange(index)}
+                          isBig={true}
+                        />
+                      </Item>
+                    );
+                  })}
+                </ListInner>
+              </EmailList>
               <ButtonWrap>
                 <RoundButton
                   text={"초대 링크 복사"}
                   isFilled={false}
+                  startIcon={<LinkIcon />}
                   onClick={handleCopyLink}
                 />
                 <RoundButton

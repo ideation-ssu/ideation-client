@@ -7,14 +7,15 @@ export const StyledModal = styled(Modal)`
   align-items: center;
 `;
 
-export const Container = styled("div")`
+export const Container = styled("div")<{ existInviteUser: boolean }>`
   width: 512px;
-  height: 406px;
+  height: ${(props) => (props.existInviteUser ? "552" : "406")}px;
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: white;
   border-radius: 10px;
+  position: relative;
 `;
 
 export const Title = styled("div")`
@@ -50,7 +51,7 @@ export const Content = styled("div")`
   width: calc(100% - 100px);
   display: flex;
   flex-direction: column;
-  gap: 110px;
+  gap: 12px;
   padding: 45px 0;
 
   > .modal-text-content {
@@ -63,12 +64,49 @@ export const Content = styled("div")`
   }
 `;
 
+export const InputBoxWrap = styled("div")`
+  width: 100%;
+  height: 54px;
+`;
+
+export const EmailList = styled("div")<{ existInviteUser: boolean }>`
+  width: 100%;
+  height: 234px;
+  display: ${(props) => (props.existInviteUser ? "block" : "none")};
+  overflow-y: auto;
+  border: 1px solid #f5f6f7;
+  border-radius: 10px;
+`;
+
+export const ListInner = styled("div")`
+  padding: 10px;
+  span {
+    font-size: 12px;
+  }
+`;
+
+export const Item = styled("div")`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 10px;
+
+  span {
+    font-size: 14px;
+    font-weight: bold;
+  }
+`;
+
 export const ButtonWrap = styled("div")`
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
   gap: 5px;
+  position: absolute;
+  bottom: 35px;
+  right: 47px;
 
   button {
     width: max-content;

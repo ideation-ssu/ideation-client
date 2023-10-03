@@ -22,6 +22,7 @@ import {
   CrownIcon,
   GridBox,
   Header,
+  LinkIcon,
   MenuIcon,
   MenuWrap,
   TitleBar,
