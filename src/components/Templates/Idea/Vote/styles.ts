@@ -78,6 +78,7 @@ export const ProfileImg = styled("div")`
 export const TitleDueDateText = styled("p")`
   display: block;
   padding: 4px 6px;
+  margin: 0 8px;
   background-color: rgba(123, 64, 242, 0.1);
   color: #7b40f2;
   border-radius: 5px;
@@ -258,12 +259,12 @@ export const TableData = styled("td")<{ isTitle?: boolean }>`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 10px 5px;
   flex: 1;
   position: relative;
 
   &.title {
     font-weight: bold;
+    cursor: pointer;
   }
 
   &.liked {

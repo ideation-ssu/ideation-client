@@ -1,11 +1,12 @@
-import React from "react";
-import Avatar from "@mui/material/Avatar";
+import React, { useState } from "react";
 import axios from "axios";
 
+import Avatar from "@/components/Atoms/Avatar";
 import MenuDrop from "@/components/Atoms/MenuDrop";
 import Profile from "@/components/Atoms/Profile";
 import CloseVoteModal from "@/components/Molecules/CloseVoteModal";
 import DeleteVoteModal from "@/components/Molecules/DeleteVoteModal";
+import IdeaDetailModal from "@/components/Molecules/IdeaDetailModal";
 import { IVoteMenuOption } from "@/components/Templates/Idea/Vote";
 import {
   AvatarWrapper,
@@ -18,7 +19,6 @@ import {
   MessageBox,
   Percent,
   PercentWrap,
-  ProfileImg,
   Slider,
   SliderBackground,
   SliderWrap,
@@ -35,7 +35,6 @@ import {
   VoteHoverText,
   VoteTitle,
 } from "@/components/Templates/Idea/Vote/styles";
-import { IIdeaByStatus } from "@/interfaces/idea";
 import { IVote } from "@/interfaces/vote";
 import { getDueDate, parseIsoDate } from "@/utils/date";
 
@@ -49,6 +48,8 @@ interface PropsType {
 }
 
 export default function VoteInprogress({ getVote, isOwner, vote }: PropsType) {
+  const [selectedIdeaId, setSelectedIdeaId] = useState<number>(-1);
+
   // close vote modal
   const [closeVoteOpen, setCloseVoteOpen] = React.useState(false);
   const handleCloseVoteOpen = () => setCloseVoteOpen(true);
@@ -58,6 +59,11 @@ export default function VoteInprogress({ getVote, isOwner, vote }: PropsType) {
   const [deleteVoteOpen, setDeleteVoteOpen] = React.useState(false);
   const handleDeleteVoteOpen = () => setDeleteVoteOpen(true);
   const handleDeleteVoteClose = () => setDeleteVoteOpen(false);
+
+  // idea detail modal
+  const [ideaDetailOpen, setIdeaDetaileOpen] = React.useState(false);
+  const handleIdeaDetailOpen = () => setIdeaDetaileOpen(true);
+  const handleIdeaDetailClose = () => setIdeaDetaileOpen(false);
 
   const voteDo = (ideaId: number) => {
     const data = {
@@ -115,6 +121,12 @@ export default function VoteInprogress({ getVote, isOwner, vote }: PropsType) {
         open={deleteVoteOpen}
         handleClose={handleDeleteVoteClose}
         callback={getVote}
+      />
+
+      <IdeaDetailModal
+        open={ideaDetailOpen}
+        handleClose={handleIdeaDetailClose}
+        selectedIdeaId={selectedIdeaId}
       />
 
       <Header className={"profile"}>
@@ -201,7 +213,14 @@ export default function VoteInprogress({ getVote, isOwner, vote }: PropsType) {
                       <VoteHoverText>{result.idea.user.name}</VoteHoverText>
                     </AvatarWrapper>
                   </TableData>
-                  <TableData className={"title"} isTitle>
+                  <TableData
+                    className={"title"}
+                    isTitle
+                    onClick={() => {
+                      setSelectedIdeaId(result.idea.id);
+                      handleIdeaDetailOpen();
+                    }}
+                  >
                     <VoteTitle>{result.idea.title}</VoteTitle>
                     <VoteDate>{parseIsoDate(result.idea.createdAt)}</VoteDate>
                   </TableData>
@@ -220,7 +239,12 @@ export default function VoteInprogress({ getVote, isOwner, vote }: PropsType) {
                         <AvatarWrapper
                           key={`relateUser-${relatedUser.id}-${index}`}
                         >
-                          <Avatar key={index} src={relatedUser.profileImage} />
+                          <Avatar
+                            key={index}
+                            src={relatedUser.profileImage}
+                            width={33}
+                            height={33}
+                          />
                           <VoteHoverText>{relatedUser.name}</VoteHoverText>
                         </AvatarWrapper>
                       );

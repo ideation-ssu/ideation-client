@@ -32,9 +32,7 @@ function Vote({
     axios
       .get(`${process.env.NEXT_PUBLIC_BASEURL}/vote/${projectId}`)
       .then((res) => {
-        setVote(() => {
-          return res.data;
-        });
+        setVote(res.data);
       });
   };
 
