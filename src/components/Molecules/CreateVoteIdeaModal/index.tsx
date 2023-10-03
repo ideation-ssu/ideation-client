@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
+import { toast } from "react-toastify";
 
 import Calendar from "@/components/Atoms/Calendar";
 import CheckBox from "@/components/Atoms/CheckBox";
-import ConfirmModal from "@/components/Atoms/ConfirmModal";
 import Driver from "@/components/Atoms/Driver";
 import FlexWrap from "@/components/Atoms/FlexWrap";
 import InputBox from "@/components/Atoms/InputBox";
@@ -286,7 +286,10 @@ const SelectIdeaSection: React.FC<SelectIdeaSectionProps> = ({
         <RoundButton
           text={`${isCheck.filter((v) => v).length}개 아이디어로 투표 시작하기`}
           isFilled={true}
-          onClick={handleVoteIdea}
+          onClick={() => {
+            if (isCheck.filter((v) => v).length > 1) handleVoteIdea();
+            else toast.error("아이디어를 2개 이상 골라주세요.");
+          }}
         />
       </ButtonWrap>
     </>
