@@ -4,6 +4,10 @@ import { useRouter } from "next/router";
 import Profile from "@/components/Atoms/Profile";
 import RoundButton from "@/components/Atoms/RoundButton";
 import CreateSessionModal from "@/components/Molecules/CreateSessionModal";
+import {
+  TitleBar,
+  TitleWrap,
+} from "@/components/Templates/Idea/JoinerList/styles";
 import { ISession } from "@/interfaces/brainstorming";
 import { Joiner } from "@/interfaces/project";
 import { useAuth } from "@/utils/auth";
@@ -18,7 +22,6 @@ import {
   Header,
   ImageWrap,
   PersonIcon,
-  ProfileImg,
   ProjectInfoWrap,
   RelatedUser,
   StyledGrid,
@@ -53,6 +56,8 @@ function Brainstorming({
       });
   };
 
+  console.log(brainstormings);
+
   return (
     <>
       <Header className={"profile"}>
@@ -60,10 +65,14 @@ function Brainstorming({
       </Header>
 
       <Header className={"add-button"}>
+        <TitleWrap>
+          <TitleBar />
+          <span>브레인스토밍</span>
+        </TitleWrap>
         <CreateVoteButtonWrap>
           <RoundButton
             isFilled={true}
-            text={"세션 생성하기"}
+            text={"세션 생성하기 +"}
             isMainClr={false}
             onClick={handleNewSessionOpen}
           />
@@ -81,10 +90,12 @@ function Brainstorming({
       </Header>
 
       <GridBox>
-        {!brainstormings ? (
+        {brainstormings.length <= 0 ? (
           <EmptyWrap>
             <BrainstorminIcon />
-            <EmptyMessage>{"진행 중인 세션이 없어요!"}</EmptyMessage>
+            <EmptyMessage>
+              현재 <span>{"진행 중인\n세션"}</span>이 없습니다.
+            </EmptyMessage>
           </EmptyWrap>
         ) : (
           <StyledGrid container className={"container"} spacing={1}>

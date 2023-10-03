@@ -134,7 +134,7 @@ function JoinerList({
           return (
             <CardContainer key={index}>
               {isOwnerAccount && <CrownIcon />}
-              <Card>
+              <Card onClick={handleProfileOpen}>
                 <ColorBar color={joiner.color} />
                 <Content>
                   <Avatar

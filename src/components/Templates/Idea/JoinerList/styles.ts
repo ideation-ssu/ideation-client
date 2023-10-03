@@ -68,6 +68,7 @@ export const Card = styled("div")`
   flex-direction: row;
   border-radius: 5px;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
 `;
 
 export const ColorBar = styled("div")<{ color: string }>`
