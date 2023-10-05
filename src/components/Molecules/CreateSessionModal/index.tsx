@@ -49,7 +49,7 @@ function CreateSessionModal({
     const data = {
       title: title,
       description: desc,
-      processMinutes: Number(processMinutes.replace("M", "")),
+      processMinutes: Number(processMinutes.replace("분", "")),
       projectId: projectId,
       userIds: relatedIds,
     };

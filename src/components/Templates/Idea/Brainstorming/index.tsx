@@ -62,8 +62,6 @@ function Brainstorming({
       });
   };
 
-  console.log(brainstormings);
-
   return (
     <>
       <Header className={"profile"}>
