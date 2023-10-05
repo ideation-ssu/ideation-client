@@ -19,6 +19,7 @@ import NewIdeaModal from "@/components/Molecules/NewIdeaModal";
 import { IdeaStatus, IIdeaByStatus } from "@/interfaces/idea";
 import { Joiner } from "@/interfaces/project";
 import { useAuth } from "@/utils/auth";
+import { project } from "@react-native-community/cli-platform-ios/build/config/__fixtures__/projects";
 
 import { CommentIcon } from "../../../../../public/icons/Comment/styles.ts";
 import { LikedIcon } from "../../../../../public/icons/Liked/styles.ts";
@@ -93,6 +94,7 @@ function IdeaList({
 
   const [selectedIdeaId, setSelectedIdeaId] = useState<number>();
   const [existVote, setExistVote] = useState<boolean>(false);
+  const [projectName, setProjectName] = useState<string>("");
 
   const getVote = () => {
     axios
@@ -102,8 +104,17 @@ function IdeaList({
       });
   };
 
+  const getProjectName = () => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_BASEURL}/project/${projectId}`)
+      .then((res) => {
+        setProjectName(res.data.data.name);
+      });
+  };
+
   useEffect(() => {
     getVote();
+    getProjectName();
 
     const animation = requestAnimationFrame(() => setAnimationEnabled(true));
     return () => {
@@ -170,7 +181,7 @@ function IdeaList({
       <Header className={"search"}>
         <TitleWrap>
           <TitleBar />
-          <span>{"프로젝트 이름 드갈 예정"}</span>
+          <span>{projectName}</span>
         </TitleWrap>
         <ButtonWrap>
           {isOwner && (
