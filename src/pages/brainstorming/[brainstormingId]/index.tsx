@@ -189,8 +189,8 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
     );
   };
 
-  const goHome = () => {
-    router.push("/main");
+  const goBrainstorming = () => {
+    router.push(`/idea/${brainstorming?.projectId}?tab=2`);
   };
 
   return (
@@ -204,7 +204,7 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
         />
       )}
       <Header>
-        <LogoWrap onClick={goHome}>
+        <LogoWrap onClick={goBrainstorming}>
           <LogoIcon />
         </LogoWrap>
         <TimerWrap>

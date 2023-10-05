@@ -45,7 +45,7 @@ const Statistics: NextPage<BrainstormingProps> = ({
   };
 
   const goBrainstorming = () => {
-    router.push(`/idea/${statistics?.projectId}?tab=3`);
+    router.push(`/idea/${statistics?.projectId}?tab=2`);
   };
 
   return (
