@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useRouter } from "next/router";
 import dayjs, { Dayjs } from "dayjs";
 import { toast } from "react-toastify";
 
@@ -37,6 +38,7 @@ function CreateVoteIdeaModal({
   ideas: IIdeaByStatus;
 }): React.ReactElement {
   const { axios } = useAuth();
+  const router = useRouter();
 
   enum pageState {
     inputVoteInfo,
@@ -71,7 +73,12 @@ function CreateVoteIdeaModal({
     };
     axios.post(`${process.env.NEXT_PUBLIC_BASEURL}/vote`, data).then((res) => {
       handleClose();
+      goVote();
     });
+  };
+
+  const goVote = () => {
+    router.push(`/idea/${projectId}?tab=4`);
   };
 
   const renderContent = () => {

@@ -92,8 +92,19 @@ function IdeaList({
   const [animationEnabled, setAnimationEnabled] = useState<boolean>(false);
 
   const [selectedIdeaId, setSelectedIdeaId] = useState<number>();
+  const [existVote, setExistVote] = useState<boolean>(false);
+
+  const getVote = () => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_BASEURL}/vote/${projectId}`)
+      .then((res) => {
+        setExistVote(!res.data.error);
+      });
+  };
 
   useEffect(() => {
+    getVote();
+
     const animation = requestAnimationFrame(() => setAnimationEnabled(true));
     return () => {
       cancelAnimationFrame(animation);
@@ -104,7 +115,14 @@ function IdeaList({
   if (!animationEnabled) return null;
 
   const menuOptions = [
-    { label: "아이디어 선정하기", onClick: () => handleNewVoteIdeaOpen() },
+    {
+      label: "아이디어 선정하기",
+      onClick: () => {
+        console.log(existVote);
+        if (existVote) toast.error("이미 진행 중인 투표가 있습니다.");
+        else handleNewVoteIdeaOpen();
+      },
+    },
     {
       label: "프로젝트 마감하기",
       onClick: () => projectCloseModalOpen(),
@@ -114,7 +132,6 @@ function IdeaList({
       onClick: () => handleDeleteProjectOpen(),
     },
   ];
-
   const onDragEnd = (result: DropResult) => {
     const { source, destination } = result;
 
