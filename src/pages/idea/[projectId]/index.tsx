@@ -87,7 +87,7 @@ const Idea: NextPage<IdeaProps> = (props) => {
 
   useEffect(() => {
     if (!query.tab) {
-      setTab(code ? 4 : 1);
+      setTab(code ? 3 : 1);
       return;
     }
 
@@ -106,19 +106,15 @@ const Idea: NextPage<IdeaProps> = (props) => {
           label={"아이디어 목록"}
         />
         <StyledTab
-          icon={<TabIcon className={"analysis"} selection={tab === 2} />}
-          label={"통계 및 분석"}
-        />
-        <StyledTab
-          icon={<TabIcon className={"brainstorming"} selection={tab === 3} />}
+          icon={<TabIcon className={"brainstorming"} selection={tab === 2} />}
           label={"브레인 스토밍"}
         />
         <StyledTab
-          icon={<TabIcon className={"joiner-list"} selection={tab === 4} />}
+          icon={<TabIcon className={"joiner-list"} selection={tab === 3} />}
           label={"참여자 리스트"}
         />
         <StyledTab
-          icon={<TabIcon className={"vote"} selection={tab === 5} />}
+          icon={<TabIcon className={"vote"} selection={tab === 4} />}
           label={"투표하기"}
         />
       </StyledTabs>
@@ -136,14 +132,11 @@ const Idea: NextPage<IdeaProps> = (props) => {
           </TabContainer>
         </TabPanel>
         <TabPanel value={tab} index={2}>
-          통계 및 분석
-        </TabPanel>
-        <TabPanel value={tab} index={3}>
           <TabContainer>
             <Brainstorming projectId={projectId} joiners={joiners} />
           </TabContainer>
         </TabPanel>
-        <TabPanel value={tab} index={4}>
+        <TabPanel value={tab} index={3}>
           <TabContainer>
             <JoinerList
               projectId={projectId}
@@ -154,7 +147,7 @@ const Idea: NextPage<IdeaProps> = (props) => {
             />
           </TabContainer>
         </TabPanel>
-        <TabPanel value={tab} index={5}>
+        <TabPanel value={tab} index={4}>
           <TabContainer>
             <Vote projectId={projectId} ideas={ideas} isOwner={isOwner} />
           </TabContainer>
