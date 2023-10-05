@@ -2,7 +2,13 @@ import React, { Dispatch, SetStateAction, useRef, useState } from "react";
 
 import { useAuth } from "@/utils/auth";
 
-import { ContextItem, ContextMenu, Progress, StyledTextArea } from "./styles";
+import {
+  AIIcon,
+  ContextItem,
+  ContextMenu,
+  Progress,
+  StyledTextArea,
+} from "./styles";
 
 function TextArea({
   placeholder,
@@ -80,7 +86,7 @@ function TextArea({
               getStretchedIdea();
             }}
           >
-            {"AI로 늘려쓰기"}
+            <AIIcon />
           </ContextItem>
         </ContextMenu>
       )}
