@@ -9,6 +9,7 @@ export const Header = styled("div")`
   }
   &.header {
     justify-content: space-between;
+    align-items: center;
   }
 `;
 
