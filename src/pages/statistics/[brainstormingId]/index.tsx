@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import Profile from "@/components/Atoms/Profile";
 import RoundButton from "@/components/Atoms/RoundButton";
 import Analysis from "@/components/Templates/Idea/Analysis";
-import { IStatistics } from "@/interfaces/statistics";
+import { IStatistics, IStatisticsIdeas } from "@/interfaces/statistics";
 import {
   AvatarWrap,
   ButtonWrap,
@@ -40,7 +40,11 @@ const Statistics: NextPage<BrainstormingProps> = ({
     axios
       .get(`${process.env.NEXT_PUBLIC_BASEURL}/statistics/${brainstormingId}`)
       .then((res) => {
-        setStatistics(res.data);
+        const sortedIdeas = res.data.statisticsIdeas.sort(
+          (a: IStatisticsIdeas, b: IStatisticsIdeas) =>
+            b.likeCount - a.likeCount
+        );
+        setStatistics({ ...res.data, statisticsIdeas: sortedIdeas });
       });
   };
 

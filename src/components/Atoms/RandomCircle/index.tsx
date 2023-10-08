@@ -21,6 +21,7 @@ const RandomCircle = ({
   circles,
   sendCircle,
   removeCircle,
+  likeCircle,
 }: {
   projectId: number;
   brainstormingId: number;
@@ -30,6 +31,7 @@ const RandomCircle = ({
   circles: ICircle[];
   sendCircle: (circle: ICircle) => void;
   removeCircle: (sessionIdeaId: string) => void;
+  likeCircle: (sessionIdeaId: string) => void;
 }) => {
   const { user, axios } = useAuth();
   const [canvasSize, setCanvasSize] = useState<{
@@ -139,6 +141,7 @@ const RandomCircle = ({
           radius: e.target.attrs.radius + 6,
         };
         sendCircle(updateCircle);
+        likeCircle(circle.sessionIdeaId);
       }
     });
   };
