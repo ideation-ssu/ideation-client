@@ -5,7 +5,7 @@ import Menu from "@mui/material/Menu";
 
 import { useAuth } from "@/utils/auth";
 
-import EditProfileModal from "../../Molecules/ProfileModal";
+import ProfileModal from "../../Molecules/ProfileModal";
 
 import {
   Button,
@@ -76,7 +76,8 @@ function Profile(): React.ReactElement {
           </UpgradeButton>
         </StyledMenuItem>
       </Menu>
-      <EditProfileModal
+      <ProfileModal
+        user={user}
         open={editProfileModal}
         handleClose={handleEditProfileClose}
       />

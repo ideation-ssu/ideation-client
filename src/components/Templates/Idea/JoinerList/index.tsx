@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Avatar from "@/components/Atoms/Avatar";
 import MenuDrop from "@/components/Atoms/MenuDrop";
@@ -22,7 +22,6 @@ import {
   CrownIcon,
   GridBox,
   Header,
-  LinkIcon,
   MenuIcon,
   MenuWrap,
   TitleBar,
@@ -43,6 +42,8 @@ function JoinerList({
   getJoiners: () => void;
 }): React.ReactElement | null {
   const { user } = useAuth();
+
+  const [selectedUser, setSelectedUser] = useState<User>();
 
   // invite team members
   const [open, setOpen] = React.useState<boolean>(!!code);
@@ -133,7 +134,12 @@ function JoinerList({
           return (
             <CardContainer key={index}>
               {isOwnerAccount && <CrownIcon />}
-              <Card onClick={handleProfileOpen}>
+              <Card
+                onClick={() => {
+                  setSelectedUser(joiner.userDto);
+                  handleProfileOpen();
+                }}
+              >
                 <ColorBar color={joiner.color} />
                 <Content>
                   <Avatar
@@ -153,14 +159,20 @@ function JoinerList({
                   />
                 </MenuWrap>
               </Card>
-              <ProfileModal
-                isEdit={user.id === joiner.userDto.id}
-                open={profileOpen}
-                handleClose={handleProfileClose}
-              />
             </CardContainer>
           );
         })}
+        {selectedUser && (
+          <ProfileModal
+            user={selectedUser}
+            isEdit={selectedUser.id === user.id}
+            open={profileOpen}
+            handleClose={() => {
+              handleProfileClose();
+              setSelectedUser(undefined);
+            }}
+          />
+        )}
       </GridBox>
     </>
   );

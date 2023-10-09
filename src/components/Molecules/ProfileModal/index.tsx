@@ -2,6 +2,7 @@ import React, { useCallback, useRef, useState } from "react";
 
 import Avatar from "@/components/Atoms/Avatar";
 import Driver from "@/components/Atoms/Driver";
+import { User } from "@/interfaces/user";
 import { useAuth } from "@/utils/auth";
 
 import {
@@ -17,15 +18,18 @@ import {
 } from "./styles";
 
 function ProfileModal({
+  user,
   isEdit = true,
   open,
   handleClose,
 }: {
+  user: User;
   isEdit?: boolean;
   open: boolean;
   handleClose: () => void;
 }): React.ReactElement {
-  const { user, setUser, axios } = useAuth();
+  const { setUser, axios } = useAuth();
+
   const [editMode, setEditMode] = useState<boolean>(false);
   const imgRef = useRef<HTMLInputElement>(null);
 
