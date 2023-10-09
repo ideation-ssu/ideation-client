@@ -23,6 +23,7 @@ const AuthContext = createContext<AuthContextType | null>({
   authLogout: () => {},
   isLoggedIn: () => false,
   axios: axios.create(),
+  setToken: (string) => {},
 });
 
 interface AuthProviderProps {
@@ -114,6 +115,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
         authLogout: authLogout,
         isLoggedIn: isLoggedIn,
         axios,
+        setToken,
       }}
     >
       {children}
