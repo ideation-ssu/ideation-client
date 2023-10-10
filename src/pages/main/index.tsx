@@ -38,8 +38,6 @@ function Main(): React.ReactElement {
   const loginModalOpen = () => setLoginOpen(true);
   const loginModalClose = () => setLoginOpen(false);
 
-  const [isLoading, setIsLoading] = useState(false);
-
   const openAddProjectModal = async () => {
     if (isLoggedIn()) projectModalOpen();
     else loginModalOpen();
@@ -52,28 +50,12 @@ function Main(): React.ReactElement {
 
   useEffect(() => {
     getProjects();
-  }, []);
+  }, [axios]);
 
-  const getProjects = async () => {
-    if (isLoading) {
-      return;
-    }
-
-    setIsLoading(true);
-    try {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_BASEURL}/project`);
-
-      if (res.data.error?.code === "AUTH_ACCESS_DENIED") {
-        throw new Error("");
-      }
+  const getProjects = () => {
+    axios.get(`${process.env.NEXT_PUBLIC_BASEURL}/project`).then((res) => {
       setProjects(res.data.data?.projects);
-    } catch (e) {
-      localStorage.removeItem("user");
-      localStorage.removeItem("token");
-      window.location.href = "/login";
-    } finally {
-      setIsLoading(false);
-    }
+    });
   };
 
   return (

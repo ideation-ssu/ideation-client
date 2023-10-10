@@ -44,10 +44,22 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
     const savedUser = localStorage.getItem("user");
     setUser(savedUser ? JSON.parse(savedUser) : initialUser);
 
-    const token = localStorage.getItem("token");
-    setToken(token ? token : "");
-    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    const localToken = localStorage.getItem("token");
+    setToken(localToken ? localToken : "");
+    axios.defaults.headers.common["Authorization"] = `Bearer ${localToken}`;
     setIsLoading(true);
+
+    axios.interceptors.response.use(
+      function (res) {
+        if (res.data.error?.code === "AUTH_ACCESS_DENIED") {
+          localStorage.removeItem("user");
+          localStorage.removeItem("token");
+          window.location.href = "/login";
+        }
+        return res;
+      },
+      function (error) {}
+    );
   }, [token]);
 
   const authLogin = async (email: string, pw: string) => {
