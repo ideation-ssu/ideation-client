@@ -187,11 +187,11 @@ function IdeaList({
           {isOwner && (
             <MenuDrop options={menuOptions} menuText={"프로젝트 관리"} />
           )}
-          <RoundButton
-            text={"아이디어 정렬"}
-            isFilled={false}
-            isMainClr={false}
-          />
+          {/*<RoundButton*/}
+          {/*  text={"아이디어 정렬"}*/}
+          {/*  isFilled={false}*/}
+          {/*  isMainClr={false}*/}
+          {/*/>*/}
           <RoundButton
             text={"아이디어 생성하기 +"}
             isFilled={true}
