@@ -162,13 +162,12 @@ export const MessageBox = styled("div")`
 `;
 
 export const GridBox = styled("div")`
-  width: 94%;
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: row;
   gap: 25px;
   margin-left: 0;
-  padding: 30px;
   border-radius: 5px;
   background-color: #fff;
 `;
@@ -194,6 +193,7 @@ export const Content = styled("div")`
 export const Table = styled("table")`
   width: 100%;
   height: 100%;
+  padding: 20px;
 `;
 
 export const TableHead = styled("thead")``;
@@ -224,6 +224,7 @@ export const TableRow = styled("tr")<{ isFill?: boolean; rank?: number }>`
   margin-top: 7px;
 
   &.body {
+    padding: 13px 0;
     background-color: ${(props) =>
       props.isFill ? "rgba(113, 62, 220, 0.05)" : "rgba(113, 62, 220, 0.02)"};
     border-radius: 5px;
@@ -375,11 +376,12 @@ export const VoteDate = styled("p")`
 
 export const VoteMedalIcon = styled("img")`
   position: absolute;
-  left: 5px;
-  top: 50%;
+  left: -12px;
+  top: 2px;
   transform: translate(0px, -50%);
   width: 30px;
   height: 30px;
+  z-index: 1;
 `;
 
 export const AvatarWrapper = styled("div")`
@@ -390,19 +392,4 @@ export const AvatarWrapper = styled("div")`
       display: block;
     }
   }
-`;
-
-export const VoteHoverText = styled("p")`
-  display: none;
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translate(-50%, calc(-100% - 5px));
-  padding: 4px 6px;
-  background-color: rgba(0, 0, 0, 0.3);
-  border-radius: 20px;
-  font-size: 10px;
-  color: #fff;
-  line-height: 10px;
-  white-space: nowrap;
 `;

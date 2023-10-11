@@ -210,7 +210,11 @@ export default function VoteInprogress({ getVote, isOwner, vote }: PropsType) {
                 >
                   <TableData>
                     <AvatarWrapper>
-                      <Avatar src={result.idea.user.profileImage} />
+                      <Avatar
+                        src={result.idea.user.profileImage}
+                        width={40}
+                        height={40}
+                      />
                       <VoteHoverText>{result.idea.user.name}</VoteHoverText>
                     </AvatarWrapper>
                   </TableData>
@@ -223,7 +227,9 @@ export default function VoteInprogress({ getVote, isOwner, vote }: PropsType) {
                     }}
                   >
                     <VoteTitle>{result.idea.title}</VoteTitle>
-                    <VoteDate>{parseIsoDate(result.idea.createdAt)}</VoteDate>
+                    <VoteDate>{`${result.idea.userName} | ${parseIsoDate(
+                      result.idea.createdAt
+                    )}`}</VoteDate>
                   </TableData>
                   <TableData>
                     <Category>{result.idea.category}</Category>

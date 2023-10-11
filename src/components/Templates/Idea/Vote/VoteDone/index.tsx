@@ -1,6 +1,7 @@
 import React from "react";
-import Avatar from "@mui/material/Avatar";
 
+import Avatar from "@/components/Atoms/Avatar";
+import AvatarGroup from "@/components/Atoms/AvatarGroup";
 import MenuDrop from "@/components/Atoms/MenuDrop";
 import Profile from "@/components/Atoms/Profile";
 import DeleteVoteModal from "@/components/Molecules/DeleteVoteModal";
@@ -27,7 +28,6 @@ import {
   TitleDueDateText,
   TitleWrap,
   VoteDate,
-  VoteHoverText,
   VoteMedalIcon,
   VoteTitle,
 } from "@/components/Templates/Idea/Vote/styles";
@@ -135,20 +135,25 @@ export default function VoteDone({ getVote, isOwner, vote }: PropsType) {
                   rank={result.rank}
                 >
                   <TableData>
-                    {result.rank <= 3 && (
-                      <VoteMedalIcon
-                        src={`/icons/Vote/medal-${result.rank}.svg`}
-                        alt="medal"
-                      />
-                    )}
                     <AvatarWrapper>
-                      <Avatar src={result.idea.user.profileImage} />
-                      <VoteHoverText>{result.idea.user.name}</VoteHoverText>
+                      {result.rank <= 3 && (
+                        <VoteMedalIcon
+                          src={`/icons/Vote/medal-${result.rank}.svg`}
+                          alt="medal"
+                        />
+                      )}
+                      <Avatar
+                        src={result.idea.user.profileImage}
+                        showHoverName={true}
+                        userName={result.idea.user.name}
+                      />
                     </AvatarWrapper>
                   </TableData>
                   <TableData className={"title"} isTitle>
                     <VoteTitle>{result.idea.title}</VoteTitle>
-                    <VoteDate>{parseIsoDate(result.idea.createdAt)}</VoteDate>
+                    <VoteDate>{`${result.idea.userName} | ${parseIsoDate(
+                      result.idea.createdAt
+                    )}`}</VoteDate>
                   </TableData>
                   <TableData>
                     <Category>{result.idea.category}</Category>
@@ -160,16 +165,13 @@ export default function VoteDone({ getVote, isOwner, vote }: PropsType) {
                     {result.idea.likeCount}
                   </TableData>
                   <TableData>
-                    {result.idea.relatedUsers.map((relatedUser, index) => {
-                      return (
-                        <AvatarWrapper
-                          key={`relateUser-${relatedUser.id}-${index}`}
-                        >
-                          <Avatar key={index} src={relatedUser.profileImage} />
-                          <VoteHoverText>{relatedUser.name}</VoteHoverText>
-                        </AvatarWrapper>
-                      );
-                    })}
+                    <AvatarGroup
+                      users={result.idea.relatedUsers}
+                      max={2}
+                      width={33}
+                      height={33}
+                      showHoverName={true}
+                    />
                   </TableData>
                   <TableData className={"vote"}>
                     <PercentWrap>

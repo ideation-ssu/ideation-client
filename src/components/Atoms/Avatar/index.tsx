@@ -14,6 +14,8 @@ function Avatar({
   height?: number;
   onClick?: () => void;
   isEditMode?: boolean;
+  showHoverName?: boolean;
+  userName?: string;
 }): React.ReactElement {
   return (
     <StyledAvatar
