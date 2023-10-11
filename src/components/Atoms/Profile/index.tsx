@@ -2,6 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
+import { toast } from "react-toastify";
 
 import { useAuth } from "@/utils/auth";
 
@@ -71,7 +72,11 @@ function Profile(): React.ReactElement {
           <span>{"로그아웃"}</span>
         </StyledMenuItem>
         <StyledMenuItem>
-          <UpgradeButton>
+          <UpgradeButton
+            onClick={() => {
+              toast.warning("해당 서비스는 준비 중입니다.");
+            }}
+          >
             <span>{"서비스 업그레이드"}</span>
           </UpgradeButton>
         </StyledMenuItem>
