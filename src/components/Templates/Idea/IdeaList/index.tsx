@@ -17,8 +17,9 @@ import DeleteProjectModal from "@/components/Molecules/DeleteProjectModal";
 import IdeaDetailModal from "@/components/Molecules/IdeaDetailModal";
 import NewIdeaModal from "@/components/Molecules/NewIdeaModal";
 import { IdeaStatus, IIdeaByStatus } from "@/interfaces/idea";
-import { Joiner } from "@/interfaces/project";
+import { Joiner, Project } from "@/interfaces/project";
 import { useAuth } from "@/utils/auth";
+import { getDueDate } from "@/utils/date";
 import { project } from "@react-native-community/cli-platform-ios/build/config/__fixtures__/projects";
 
 import { CommentIcon } from "../../../../../public/icons/Comment/styles.ts";
@@ -41,6 +42,7 @@ import {
   ReactionWrap,
   StatusTitle,
   TitleBar,
+  TitleDueDateText,
   TitleWrap,
 } from "./styles";
 
@@ -94,7 +96,7 @@ function IdeaList({
 
   const [selectedIdeaId, setSelectedIdeaId] = useState<number>();
   const [existVote, setExistVote] = useState<boolean>(false);
-  const [projectName, setProjectName] = useState<string>("");
+  const [project, setProject] = useState<Project>();
 
   const getVote = () => {
     axios
@@ -104,17 +106,17 @@ function IdeaList({
       });
   };
 
-  const getProjectName = () => {
+  const getProject = () => {
     axios
       .get(`${process.env.NEXT_PUBLIC_BASEURL}/project/${projectId}`)
       .then((res) => {
-        setProjectName(res.data.data.name);
+        setProject(res.data.data);
       });
   };
 
   useEffect(() => {
     getVote();
-    getProjectName();
+    getProject();
 
     const animation = requestAnimationFrame(() => setAnimationEnabled(true));
     return () => {
@@ -179,10 +181,15 @@ function IdeaList({
         <Profile />
       </Header>
       <Header className={"search"}>
-        <TitleWrap>
-          <TitleBar />
-          <span>{projectName}</span>
-        </TitleWrap>
+        {project && (
+          <TitleWrap>
+            <TitleBar />
+            <span>{project.name}</span>
+            <TitleDueDateText>
+              D - {getDueDate(project.dueDate)}
+            </TitleDueDateText>
+          </TitleWrap>
+        )}
         <ButtonWrap>
           {isOwner && (
             <MenuDrop options={menuOptions} menuText={"프로젝트 관리"} />

@@ -191,3 +191,12 @@ export const StatusTitle = styled("div")`
     background: rgba(83, 177, 245, 0.04);
   }
 `;
+
+export const TitleDueDateText = styled("p")`
+  display: block;
+  padding: 4px 6px;
+  margin: 0 8px;
+  background-color: rgba(123, 64, 242, 0.1);
+  color: #7b40f2;
+  border-radius: 5px;
+`;
