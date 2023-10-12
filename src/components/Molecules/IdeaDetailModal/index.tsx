@@ -53,8 +53,10 @@ function IdeaDetailModal({
   const [tab, setTab] = React.useState(1);
 
   useEffect(() => {
-    getDetailIdea();
-    getComments();
+    if (selectedIdeaId != -1) {
+      getDetailIdea();
+      getComments();
+    }
   }, [selectedIdeaId]);
 
   const handleTabChange = (event: React.SyntheticEvent, newTab: number) => {
