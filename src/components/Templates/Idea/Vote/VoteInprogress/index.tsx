@@ -32,7 +32,6 @@ import {
   TitleWrap,
   VoteDate,
   VotedIcon,
-  VoteHoverText,
   VoteTitle,
 } from "@/components/Templates/Idea/Vote/styles";
 import { IVote } from "@/interfaces/vote";
@@ -215,7 +214,6 @@ export default function VoteInprogress({ getVote, isOwner, vote }: PropsType) {
                         width={40}
                         height={40}
                       />
-                      <VoteHoverText>{result.idea.user.name}</VoteHoverText>
                     </AvatarWrapper>
                   </TableData>
                   <TableData
@@ -252,7 +250,6 @@ export default function VoteInprogress({ getVote, isOwner, vote }: PropsType) {
                             width={33}
                             height={33}
                           />
-                          <VoteHoverText>{relatedUser.name}</VoteHoverText>
                         </AvatarWrapper>
                       );
                     })}
