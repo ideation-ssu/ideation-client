@@ -44,9 +44,10 @@ function KakaoButton({ text }: { text: string }): React.ReactElement {
 
         const localToken = localStorage.getItem("token");
         setToken(localToken ? localToken : "");
-        if (localToken) setUserInfo(localToken);
-
-        router.push("/main");
+        if (localToken) {
+          setUserInfo(localToken);
+          router.push("/main");
+        }
       }
     }, 1000);
   };
