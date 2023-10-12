@@ -112,7 +112,13 @@ function JoinerList({
           const isMine = joiner.userDto.id === user.id;
 
           const menuOptionList: { label: string; onClick: () => void }[] = [
-            { label: "정보 확인하기", onClick: handleProfileOpen },
+            {
+              label: "정보 확인하기",
+              onClick: () => {
+                setSelectedUser(joiner.userDto);
+                handleProfileOpen();
+              },
+            },
           ];
 
           if (isOwner) {
@@ -134,14 +140,14 @@ function JoinerList({
           return (
             <CardContainer key={index}>
               {isOwnerAccount && <CrownIcon />}
-              <Card
-                onClick={() => {
-                  setSelectedUser(joiner.userDto);
-                  handleProfileOpen();
-                }}
-              >
+              <Card>
                 <ColorBar color={joiner.color} />
-                <Content>
+                <Content
+                  onClick={() => {
+                    setSelectedUser(joiner.userDto);
+                    handleProfileOpen();
+                  }}
+                >
                   <Avatar
                     src={joiner.userDto.profileImage}
                     width={63}
