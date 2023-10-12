@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Avatar from "@mui/material/Avatar";
 
+import Avatar from "@/components/Atoms/Avatar";
 import RoundButton from "@/components/Atoms/RoundButton";
 import { ISession, ITopic } from "@/interfaces/brainstorming";
 import { useAuth } from "@/utils/auth";
@@ -110,7 +110,7 @@ function WaitSessionModal({
                   return (
                     <JoinerList key={index}>
                       <AvatarWrap>
-                        <Avatar />
+                        <Avatar src={session.user.profileImage} />
                       </AvatarWrap>
                       <span>{session.user.name}</span>
                       <ActiveWrap>
@@ -124,7 +124,7 @@ function WaitSessionModal({
                   return (
                     <JoinerList key={index}>
                       <AvatarWrap>
-                        <Avatar />
+                        <Avatar src={session.user.profileImage} />
                       </AvatarWrap>
                       <span>{session.user.name}</span>
                       <ActiveWrap>

@@ -35,14 +35,13 @@ function CreateSessionModal({
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [processMinutes, setProcessMinutes] = useState<string>("15분");
-  const [relatedUser, setRelatedUser] = useState<string[]>([]);
+  const [relatedUser, setRelatedUser] = useState<
+    { id: number; name: string }[]
+  >([]);
   const [err, setErr] = useState("");
 
-  const relatedIds: number[] = [...relatedUser, user].flatMap((user) => {
-    const matchingJoiners = joiners?.filter(
-      (joiner) => joiner.userDto.name === user
-    );
-    return matchingJoiners?.map((joiner) => joiner.userDto.id);
+  const relatedIds: number[] = relatedUser.map((user) => {
+    return user.id;
   });
 
   const handleCreateSession = () => {
@@ -133,8 +132,18 @@ function CreateSessionModal({
                 setValue={setRelatedUser}
                 placeholder={"연관 담당자 추가"}
                 options={joiners
-                  ?.filter((joiner) => joiner.userDto.id !== user.id)
-                  .map((joiner) => joiner.userDto.name)}
+                  .filter(
+                    (joiner: Joiner) =>
+                      !relatedUser.some(
+                        (user) => user.id === joiner.userDto.id
+                      ) && joiner.userDto.id !== user.id
+                  )
+                  .map((joiner: Joiner) => {
+                    return {
+                      id: joiner.userDto.id,
+                      name: joiner.userDto.name,
+                    };
+                  })}
                 width={250}
               />
             </Line>
