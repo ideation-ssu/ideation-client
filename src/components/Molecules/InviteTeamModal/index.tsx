@@ -119,9 +119,14 @@ function InviteTeamModal({
     const finish = ["Enter", "NumpadEnter"];
     if (!finish.includes(e.key)) return;
 
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const target = e.target as HTMLInputElement;
-    setInviteList([...inviteList, target.value]);
-    setEmail("");
+    if (emailPattern.test(target.value)) {
+      setInviteList([...inviteList, target.value]);
+      setEmail("");
+    } else {
+      toast.error("이메일 형식이 아닙니다.");
+    }
   };
 
   const handleCheckboxChange = (index: number) => {
