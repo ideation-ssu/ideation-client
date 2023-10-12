@@ -135,7 +135,7 @@ export default function VoteInprogress({ getVote, isOwner, vote }: PropsType) {
       <Header className={"rate"}>
         <TitleWrap>
           <TitleBar />
-          <span>{vote.project.name}</span>
+          <span>{vote.vote.title}</span>
           <TitleDueDateText>
             D - {getDueDate(vote.project.dueDate)}
           </TitleDueDateText>
@@ -232,11 +232,13 @@ export default function VoteInprogress({ getVote, isOwner, vote }: PropsType) {
                   <TableData>
                     <Category>{result.idea.category}</Category>
                   </TableData>
-                  <TableData className={"liked"}>
+                  <TableData className={"reaction"}>
                     <CommentIcon />
-                    {result.idea.commentCount}
-                    <LikedIcon />
-                    {result.idea.likeCount}
+                    <span>{result.idea.commentCount}</span>
+                    <LikedIcon isLiked={result.idea.isLiked} />
+                    <span className={result.idea.isLiked ? "liked" : ""}>
+                      {result.idea.likeCount}
+                    </span>
                   </TableData>
                   <TableData>
                     {result.idea.relatedUsers.map((relatedUser, index) => {

@@ -75,7 +75,7 @@ export default function VoteDone({ getVote, isOwner, vote }: PropsType) {
       <Header className={"rate"}>
         <TitleWrap>
           <TitleBar />
-          <span>{vote.project.name}</span>
+          <span>{vote.vote.title}</span>
           <TitleDueDateText>
             D - {getDueDate(vote.project.dueDate)}
           </TitleDueDateText>
