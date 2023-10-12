@@ -87,7 +87,7 @@ function SignUp({
   };
 
   return (
-    <Card titleText={"SIGN UP"}>
+    <Card titleText={"회원가입"}>
       <InnerContainer>
         {page == pageState.Done ? (
           <DonePage name={name} handleClick={handleRegisterDone} />

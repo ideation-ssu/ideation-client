@@ -20,7 +20,6 @@ import { IdeaStatus, IIdeaByStatus } from "@/interfaces/idea";
 import { Joiner, Project } from "@/interfaces/project";
 import { useAuth } from "@/utils/auth";
 import { getDueDate } from "@/utils/date";
-import { project } from "@react-native-community/cli-platform-ios/build/config/__fixtures__/projects";
 
 import { CommentIcon } from "../../../../../public/icons/Comment/styles.ts";
 import { LikedIcon } from "../../../../../public/icons/Liked/styles.ts";

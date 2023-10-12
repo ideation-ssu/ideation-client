@@ -1,6 +1,6 @@
 import React from "react";
 
-import { StyledAvatar } from "./styles";
+import { StyledAvatar, StyledBadge, UserName } from "./styles";
 
 function Avatar({
   src,
@@ -8,6 +8,8 @@ function Avatar({
   height = 40,
   onClick,
   isEditMode = false,
+  showHoverName = false,
+  userName = "",
 }: {
   src: string;
   width?: number;
@@ -18,13 +20,18 @@ function Avatar({
   userName?: string;
 }): React.ReactElement {
   return (
-    <StyledAvatar
-      src={src}
-      width={width}
-      height={height}
-      onClick={onClick}
-      edit={isEditMode ? "true" : "false"}
-    />
+    <StyledBadge
+      overlap="circular"
+      badgeContent={showHoverName ? <UserName>{userName}</UserName> : <></>}
+    >
+      <StyledAvatar
+        src={src}
+        width={width}
+        height={height}
+        onClick={onClick}
+        edit={isEditMode ? "true" : "false"}
+      />
+    </StyledBadge>
   );
 }
 
