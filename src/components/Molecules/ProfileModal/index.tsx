@@ -113,7 +113,7 @@ function ProfileModal({
     >
       <ModalWrap>
         <Title>
-          <span>{"내 프로필"}</span>
+          <span>{isEdit ? "내 프로필" : "프로필"}</span>
         </Title>
         <Driver />
         <ImageWrap>
