@@ -131,7 +131,10 @@ function IdeaList({
       label: "아이디어 선정하기",
       onClick: () => {
         console.log(existVote);
-        if (existVote) toast.error("이미 진행 중인 투표가 있습니다.");
+        if (existVote)
+          toast.error("이미 진행 중인 투표가 있습니다.", {
+            autoClose: 2000,
+          });
         else handleNewVoteIdeaOpen();
       },
     },
@@ -166,7 +169,9 @@ function IdeaList({
         if (res.data.error) {
           updatedIdeas[sourceStatus].splice(source.index, 0, draggedIdea);
           setIdeas(updatedIdeas);
-          toast.error(res.data.error.message);
+          toast.error(res.data.error.message, {
+            autoClose: 2000,
+          });
           return;
         }
         updatedIdeas[destStatus].splice(destination.index, 0, draggedIdea);

@@ -23,7 +23,9 @@ function Done({
           isFilled={true}
           text={"튜토리얼 확인하러 가기"}
           onClick={() => {
-            toast.warning("준비중입니다.");
+            toast.warning("준비중입니다.", {
+              autoClose: 2000,
+            });
           }}
         />
         <RoundButton

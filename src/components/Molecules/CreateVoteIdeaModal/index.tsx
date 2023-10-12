@@ -295,7 +295,10 @@ const SelectIdeaSection: React.FC<SelectIdeaSectionProps> = ({
           isFilled={true}
           onClick={() => {
             if (isCheck.filter((v) => v).length > 1) handleVoteIdea();
-            else toast.error("아이디어를 2개 이상 골라주세요.");
+            else
+              toast.error("아이디어를 2개 이상 골라주세요.", {
+                autoClose: 2000,
+              });
           }}
         />
       </ButtonWrap>

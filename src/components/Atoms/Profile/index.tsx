@@ -74,7 +74,9 @@ function Profile(): React.ReactElement {
         <StyledMenuItem>
           <UpgradeButton
             onClick={() => {
-              toast.warning("해당 서비스는 준비 중입니다.");
+              toast.warning("해당 서비스는 준비 중입니다.", {
+                autoClose: 2000,
+              });
             }}
           >
             <span>{"서비스 업그레이드"}</span>

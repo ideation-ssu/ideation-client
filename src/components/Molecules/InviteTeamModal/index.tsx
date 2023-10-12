@@ -42,7 +42,9 @@ function InviteTeamModal({
     const checkedInviteList = inviteList.filter((_, index) => isCheck[index]);
 
     if (checkedInviteList.length < 1) {
-      toast.error("초대할 계정을 선택해주세요.");
+      toast.error("초대할 계정을 선택해주세요.", {
+        autoClose: 2000,
+      });
       return;
     }
 
@@ -58,12 +60,16 @@ function InviteTeamModal({
     setEmail("");
     setInviteList([]);
     setIsCheck([]);
-    toast.success("초대가 완료되었습니다.");
+    toast.success("초대가 완료되었습니다.", {
+      autoClose: 2000,
+    });
     return;
   };
 
   const handleCopyLink = () => {
-    toast.success("초대 링크가 복사 되었습니다.");
+    toast.success("초대 링크가 복사 되었습니다.", {
+      autoClose: 2000,
+    });
     axios
       .get(`${process.env.NEXT_PUBLIC_BASEURL}/project/invite/${projectId}`)
       .then((res) => {
@@ -82,10 +88,14 @@ function InviteTeamModal({
       .then((res) => {
         handleClose();
         if (code) {
-          toast.success("프로젝트 참가를 수락했습니다.");
+          toast.success("프로젝트 참가를 수락했습니다.", {
+            autoClose: 2000,
+          });
           return;
         }
-        toast.success("초대 링크가 전송되었습니다.");
+        toast.success("초대 링크가 전송되었습니다.", {
+          autoClose: 2000,
+        });
       });
   };
 
