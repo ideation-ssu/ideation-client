@@ -168,7 +168,9 @@ export default function VoteDone({ getVote, isOwner, vote }: PropsType) {
                   </TableData>
                   <TableData>
                     <AvatarGroup
-                      users={result.idea.relatedUsers}
+                      users={result.idea.relatedUsers.filter(
+                        (relatedUser) => relatedUser.id != result.idea.userId
+                      )}
                       max={2}
                       width={33}
                       height={33}

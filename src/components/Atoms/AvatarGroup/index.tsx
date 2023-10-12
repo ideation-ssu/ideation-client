@@ -21,6 +21,7 @@ function AvatarGroup({
   return (
     <UserGroup
       max={max}
+      maxText={users.length - 2}
       src={users.length > 2 ? users[1].profileImage : ""}
       width={width}
       height={height}

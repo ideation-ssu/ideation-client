@@ -281,9 +281,7 @@ function IdeaList({
                                   <IdeaTop>
                                     <IdeaTitleText>{idea.title}</IdeaTitleText>
                                     <AvatarGroup
-                                      users={idea.relatedUsers.map(
-                                        (user) => user
-                                      )}
+                                      users={idea.relatedUsers}
                                       max={2}
                                       width={33}
                                       height={33}

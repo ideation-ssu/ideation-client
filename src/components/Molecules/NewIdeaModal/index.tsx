@@ -43,13 +43,14 @@ function NewIdeaModal({
   defaultTitle?: string;
 }): React.ReactElement {
   const { user, axios } = useAuth();
-  const router = useRouter();
 
   const categorys: string[] = ["ICT", "예술", "교육", "건강", "환경", "기타"];
   const statusOptions: string[] = IdeaStatus.map((status) => status.title);
 
   const [title, setTitle] = useState<string>(defaultTitle ? defaultTitle : "");
-  const [relatedUser, setRelatedUser] = useState<string[]>([]);
+  const [relatedUser, setRelatedUser] = useState<
+    { id: number; name: string }[]
+  >([]);
   const [category, setCategory] = useState<string>(categorys[0]);
   const [tags, setTags] = useState<string[]>([]);
   const [content, setContent] = useState<string>("");
@@ -70,11 +71,8 @@ function NewIdeaModal({
       return;
     }
 
-    const relatedIds: number[] = relatedUser.flatMap((user) => {
-      const matchingJoiners = joiners.filter(
-        (joiner) => joiner.userDto.name === user
-      );
-      return matchingJoiners.map((joiner) => joiner.userDto.id);
+    const relatedIds: number[] = relatedUser.map((user) => {
+      return user.id;
     });
 
     const ideaStatus = IdeaStatus.find((idea) => idea.title === status)?.id;
@@ -94,6 +92,12 @@ function NewIdeaModal({
       else {
         setErr("");
         handleClose();
+        setTitle("");
+        setCategory("");
+        setRelatedUser([]);
+        setTags([]);
+        setContent("");
+        setStatus("");
 
         if (updateIdeaList) updateIdeaList();
       }
@@ -148,8 +152,18 @@ function NewIdeaModal({
                 setValue={setRelatedUser}
                 placeholder={"연관 담당자 추가"}
                 options={joiners
-                  .filter((joiner: Joiner) => joiner.userDto.name !== user.name)
-                  .map((joiner: Joiner) => joiner.userDto.name)}
+                  .filter(
+                    (joiner: Joiner) =>
+                      !relatedUser.some(
+                        (user) => user.id === joiner.userDto.id
+                      ) && joiner.userDto.id !== user.id
+                  )
+                  .map((joiner: Joiner) => {
+                    return {
+                      id: joiner.userDto.id,
+                      name: joiner.userDto.name,
+                    };
+                  })}
                 width={550}
               />
             </Line>

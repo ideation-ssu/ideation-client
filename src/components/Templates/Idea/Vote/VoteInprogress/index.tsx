@@ -241,8 +241,11 @@ export default function VoteInprogress({ getVote, isOwner, vote }: PropsType) {
                     </span>
                   </TableData>
                   <TableData>
-                    {result.idea.relatedUsers.map((relatedUser, index) => {
-                      return (
+                    {result.idea.relatedUsers
+                      .filter(
+                        (relatedUser) => relatedUser.id != result.idea.userId
+                      )
+                      .map((relatedUser, index) => (
                         <AvatarWrapper
                           key={`relateUser-${relatedUser.id}-${index}`}
                         >
@@ -253,8 +256,7 @@ export default function VoteInprogress({ getVote, isOwner, vote }: PropsType) {
                             height={33}
                           />
                         </AvatarWrapper>
-                      );
-                    })}
+                      ))}
                   </TableData>
                   <TableData className={"vote"}>
                     <PercentWrap>
