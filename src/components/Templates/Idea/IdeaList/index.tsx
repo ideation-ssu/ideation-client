@@ -306,14 +306,8 @@ function IdeaList({
                                       })}
                                     </HashTagWrap>
                                     <ReactionWrap>
-                                      <CommentIcon isLiked={idea.isLiked} />
-                                      <span
-                                        className={
-                                          idea.isLiked ? "isLiked" : ""
-                                        }
-                                      >
-                                        {idea.commentCount}
-                                      </span>
+                                      <CommentIcon />
+                                      <span>{idea.commentCount}</span>
                                       <LikedIcon isLiked={idea.isLiked} />
                                       <span
                                         className={

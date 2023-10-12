@@ -268,8 +268,12 @@ export const TableData = styled("td")<{ isTitle?: boolean }>`
     cursor: pointer;
   }
 
-  &.liked {
+  &.reaction {
     gap: 5px;
+    color: #d9d9d9;
+  }
+
+  span.liked {
     color: #7b40f2;
   }
 

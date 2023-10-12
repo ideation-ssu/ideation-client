@@ -158,11 +158,13 @@ export default function VoteDone({ getVote, isOwner, vote }: PropsType) {
                   <TableData>
                     <Category>{result.idea.category}</Category>
                   </TableData>
-                  <TableData className={"liked"}>
+                  <TableData className={"reaction"}>
                     <CommentIcon />
-                    {result.idea.commentCount}
-                    <LikedIcon />
-                    {result.idea.likeCount}
+                    <span>{result.idea.commentCount}</span>
+                    <LikedIcon isLiked={result.idea.isLiked} />
+                    <span className={result.idea.isLiked ? "liked" : ""}>
+                      {result.idea.likeCount}
+                    </span>
                   </TableData>
                   <TableData>
                     <AvatarGroup
