@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Avatar from "@/components/Atoms/Avatar";
 import AvatarGroup from "@/components/Atoms/AvatarGroup";
 import MenuDrop from "@/components/Atoms/MenuDrop";
 import Profile from "@/components/Atoms/Profile";
 import DeleteVoteModal from "@/components/Molecules/DeleteVoteModal";
+import IdeaDetailModal from "@/components/Molecules/IdeaDetailModal";
 import { IVoteMenuOption } from "@/components/Templates/Idea/Vote";
 import {
   AvatarWrapper,
@@ -44,10 +45,17 @@ interface PropsType {
 }
 
 export default function VoteDone({ getVote, isOwner, vote }: PropsType) {
+  const [selectedIdeaId, setSelectedIdeaId] = useState<number>(-1);
+
   // delete vote modal
   const [deleteVoteOpen, setDeleteVoteOpen] = React.useState(false);
   const handleDeleteVoteOpen = () => setDeleteVoteOpen(true);
   const handleDeleteVoteClose = () => setDeleteVoteOpen(false);
+
+  // idea detail modal
+  const [ideaDetailOpen, setIdeaDetaileOpen] = React.useState(false);
+  const handleIdeaDetailOpen = () => setIdeaDetaileOpen(true);
+  const handleIdeaDetailClose = () => setIdeaDetaileOpen(false);
 
   const menuOptions: IVoteMenuOption[] = [
     {
@@ -66,6 +74,12 @@ export default function VoteDone({ getVote, isOwner, vote }: PropsType) {
         open={deleteVoteOpen}
         handleClose={handleDeleteVoteClose}
         getVote={getVote}
+      />
+
+      <IdeaDetailModal
+        open={ideaDetailOpen}
+        handleClose={handleIdeaDetailClose}
+        selectedIdeaId={selectedIdeaId}
       />
 
       <Header className={"profile"}>
@@ -149,7 +163,14 @@ export default function VoteDone({ getVote, isOwner, vote }: PropsType) {
                       />
                     </AvatarWrapper>
                   </TableData>
-                  <TableData className={"title"} isTitle>
+                  <TableData
+                    className={"title"}
+                    isTitle
+                    onClick={() => {
+                      setSelectedIdeaId(result.idea.id);
+                      handleIdeaDetailOpen();
+                    }}
+                  >
                     <VoteTitle>{result.idea.title}</VoteTitle>
                     <VoteDate>{`${result.idea.userName} | ${parseIsoDate(
                       result.idea.createdAt
