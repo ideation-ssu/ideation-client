@@ -24,6 +24,7 @@ import {
   Header,
   MenuIcon,
   MenuWrap,
+  StyledGrid,
   TitleBar,
   TitleWrap,
 } from "./styles";
@@ -107,78 +108,80 @@ function JoinerList({
         />
       </Header>
       <GridBox>
-        {joiners?.map((joiner, index) => {
-          const isOwnerAccount = joiner.role === "OWNER";
-          const isMine = joiner.userDto.id === user.id;
+        <StyledGrid container className={"container"} spacing={1}>
+          {joiners?.map((joiner, index) => {
+            const isOwnerAccount = joiner.role === "OWNER";
+            const isMine = joiner.userDto.id === user.id;
 
-          const menuOptionList: { label: string; onClick: () => void }[] = [
-            {
-              label: "정보 확인하기",
-              onClick: () => {
-                setSelectedUser(joiner.userDto);
-                handleProfileOpen();
+            const menuOptionList: { label: string; onClick: () => void }[] = [
+              {
+                label: "정보 확인하기",
+                onClick: () => {
+                  setSelectedUser(joiner.userDto);
+                  handleProfileOpen();
+                },
               },
-            },
-          ];
+            ];
 
-          if (isOwner) {
-            if (!isMine) {
-              menuOptionList.push({
-                label: "내보내기",
-                onClick: () => setRemoveMemberInfo(joiner.userDto),
-              });
+            if (isOwner) {
+              if (!isMine) {
+                menuOptionList.push({
+                  label: "내보내기",
+                  onClick: () => setRemoveMemberInfo(joiner.userDto),
+                });
+              }
+            } else {
+              if (isMine) {
+                menuOptionList.push({
+                  label: "팀 나가기",
+                  onClick: () => setShowLeaveTeamModal(true),
+                });
+              }
             }
-          } else {
-            if (isMine) {
-              menuOptionList.push({
-                label: "팀 나가기",
-                onClick: () => setShowLeaveTeamModal(true),
-              });
-            }
-          }
 
-          return (
-            <CardContainer key={index}>
-              {isOwnerAccount && <CrownIcon />}
-              <Card>
-                <ColorBar color={joiner.color} />
-                <Content
-                  onClick={() => {
-                    setSelectedUser(joiner.userDto);
-                    handleProfileOpen();
-                  }}
-                >
-                  <Avatar
-                    src={joiner.userDto.profileImage}
-                    width={63}
-                    height={63}
-                  />
-                  <div>
-                    <span className={"name"}>{joiner.userDto.name}</span>
-                    <span className={"email"}>{joiner.userDto.email}</span>
-                  </div>
-                </Content>
-                <MenuWrap>
-                  <MenuDrop
-                    menuIcon={MenuIconReactNode}
-                    options={menuOptionList}
-                  />
-                </MenuWrap>
-              </Card>
-            </CardContainer>
-          );
-        })}
-        {selectedUser && (
-          <ProfileModal
-            user={selectedUser}
-            isEdit={selectedUser.id === user.id}
-            open={profileOpen}
-            handleClose={() => {
-              handleProfileClose();
-              setSelectedUser(undefined);
-            }}
-          />
-        )}
+            return (
+              <CardContainer key={index}>
+                {isOwnerAccount && <CrownIcon />}
+                <Card>
+                  <ColorBar color={joiner.color} />
+                  <Content
+                    onClick={() => {
+                      setSelectedUser(joiner.userDto);
+                      handleProfileOpen();
+                    }}
+                  >
+                    <Avatar
+                      src={joiner.userDto.profileImage}
+                      width={63}
+                      height={63}
+                    />
+                    <div>
+                      <span className={"name"}>{joiner.userDto.name}</span>
+                      <span className={"email"}>{joiner.userDto.email}</span>
+                    </div>
+                  </Content>
+                  <MenuWrap>
+                    <MenuDrop
+                      menuIcon={MenuIconReactNode}
+                      options={menuOptionList}
+                    />
+                  </MenuWrap>
+                </Card>
+              </CardContainer>
+            );
+          })}
+          {selectedUser && (
+            <ProfileModal
+              user={selectedUser}
+              isEdit={selectedUser.id === user.id}
+              open={profileOpen}
+              handleClose={() => {
+                handleProfileClose();
+                setSelectedUser(undefined);
+              }}
+            />
+          )}
+        </StyledGrid>
       </GridBox>
     </>
   );

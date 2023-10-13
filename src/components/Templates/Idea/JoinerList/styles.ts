@@ -1,4 +1,5 @@
 import MuiSearchIcon from "@mui/icons-material/Search";
+import Grid from "@mui/material/Grid";
 import InputBase from "@mui/material/InputBase";
 import { styled } from "@mui/material/styles";
 
@@ -44,15 +45,49 @@ export const TitleBar = styled("div")`
 `;
 
 export const GridBox = styled("div")`
-  width: 94%;
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: row;
   gap: 25px;
   margin-left: 0;
-  padding: 30px;
   border-radius: 5px;
   background-color: #fff;
+`;
+
+export const StyledGrid = styled(Grid)`
+  display: flex;
+  width: 351px;
+  height: 175px;
+  padding: 10px;
+  background-color: white;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  cursor: pointer;
+  box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.1), -2px -2px 4px rgba(0, 0, 0, 0.1),
+    3px -3px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+
+  &.container {
+    width: 100%;
+    height: 70vh;
+    gap: 25px;
+    display: flex;
+    flex-direction: row;
+    background-color: transparent;
+    cursor: auto;
+    box-shadow: none;
+    overflow-y: auto;
+    margin: 20px;
+
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 2px;
+      background: #ccc;
+    }
+  }
 `;
 
 export const CardContainer = styled("div")`

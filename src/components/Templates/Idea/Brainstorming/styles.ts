@@ -79,13 +79,12 @@ export const ProfileImg = styled("div")`
 `;
 
 export const GridBox = styled("div")`
-  width: 94%;
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: row;
   gap: 25px;
   margin-left: 0;
-  padding: 20px;
   border-radius: 5px;
   background-color: #fff;
 `;
@@ -114,11 +113,19 @@ export const StyledGrid = styled(Grid)`
     gap: 25px;
     display: flex;
     flex-direction: row;
-    margin-left: 0;
     background-color: transparent;
     cursor: auto;
     box-shadow: none;
     overflow-y: auto;
+    margin: 20px;
+
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 2px;
+      background: #ccc;
+    }
   }
 `;
 
