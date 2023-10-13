@@ -1,9 +1,9 @@
 import React from "react";
 import { useRouter } from "next/router";
-import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import { toast } from "react-toastify";
 
+import Avatar from "@/components/Atoms/Avatar";
 import { useAuth } from "@/utils/auth";
 
 import ProfileModal from "../../Molecules/ProfileModal";
@@ -40,7 +40,7 @@ function Profile(): React.ReactElement {
   return (
     <>
       <Button onClick={handleClick}>
-        <Avatar src={user.profileImage} />
+        <Avatar src={user.profileImage} width={45} height={45} />
       </Button>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
         <StyledMenuItem disabled={true}>

@@ -10,8 +10,9 @@ export const Header = styled("div")`
   align-items: center;
   &.profile {
     justify-content: flex-end;
+    gap: 15px;
   }
-  &.search {
+  &.info {
     justify-content: space-between;
   }
 `;

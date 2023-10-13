@@ -3,7 +3,7 @@ import { styled } from "@mui/material/styles";
 
 export const UserGroup = styled(AvatarGroup)<{
   src: string;
-  maxText: number;
+  text: number;
   width: number;
   height: number;
 }>`
@@ -26,7 +26,7 @@ export const UserGroup = styled(AvatarGroup)<{
     font-family: Pretendard, sans-serif;
 
     &:before {
-      content: "+${(props) => props.maxText - 1}";
+      content: "+${(props) => props.text - 1}";
       position: absolute;
       top: 0;
       right: 0;

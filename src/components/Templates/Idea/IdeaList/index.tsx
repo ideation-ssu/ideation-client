@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 
 import AvatarGroup from "@/components/Atoms/AvatarGroup";
 import MenuDrop from "@/components/Atoms/MenuDrop";
+import Notification from "@/components/Atoms/Notification";
 import Profile from "@/components/Atoms/Profile";
 import RoundButton from "@/components/Atoms/RoundButton";
 import CloseProjectModal from "@/components/Molecules/CloseProjectModal";
@@ -182,9 +183,10 @@ function IdeaList({
   return (
     <>
       <Header className={"profile"}>
+        <Notification />
         <Profile />
       </Header>
-      <Header className={"search"}>
+      <Header className={"info"}>
         {project && (
           <TitleWrap>
             <TitleBar />

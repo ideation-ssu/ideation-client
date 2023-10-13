@@ -51,7 +51,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
 
     axios.interceptors.response.use(
       function (res) {
-        if (res.data?.error?.code === "AUTH_ACCESS_DENIED") {
+        if (res?.data?.error?.code === "AUTH_ACCESS_DENIED") {
           localStorage.removeItem("user");
           localStorage.removeItem("token");
           window.location.href = "/login";
