@@ -21,11 +21,11 @@ export const StyledMenu = styled(Menu)`
   }
 `;
 
-export const StyledMenuItem = styled(MenuItem)<{ isRead: boolean }>`
+export const StyledMenuItem = styled(MenuItem)<{ read: string }>`
   width: 350px;
   height: 45px;
   background-color: ${(props) =>
-    props.isRead ? "#fff" : " rgba(113, 62, 220, 0.10)"};
+    props.read === "true" ? "#fff" : " rgba(113, 62, 220, 0.10)"};
   border-bottom: 0.5px solid var(--Gray6, #eaeaea);
 `;
 

@@ -53,6 +53,15 @@ function Notification({
     setAnchorEl(null);
   };
 
+  const handleNoti = (notificationId: number) => {
+    const data = { notificationId: notificationId };
+    axios
+      .patch(`${process.env.NEXT_PUBLIC_BASEURL}/notification/read`, data)
+      .then((res) => {
+        getNotiList();
+      });
+  };
+
   return (
     <>
       <IconButton aria-label="delete" size="small" onClick={handleClick}>
@@ -68,8 +77,9 @@ function Notification({
               <StyledMenuItem
                 onClick={() => {
                   handleClose();
+                  handleNoti(menu.notificationId);
                 }}
-                isRead={menu.isRead}
+                read={menu.isRead ? "true" : "false"}
               >
                 <Inner>
                   <IconWrap color={projectColor}>{menuContent[0]}</IconWrap>
