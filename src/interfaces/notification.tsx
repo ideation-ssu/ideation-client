@@ -1,3 +1,5 @@
+import { Project } from "@/interfaces/project";
+
 export interface INoti {
   createdAt: string;
   daysAgo: number;
@@ -8,6 +10,7 @@ export interface INoti {
   notificationId: number;
   type: string;
   typeId: number;
+  project: Project;
 }
 
 export enum NotiType {

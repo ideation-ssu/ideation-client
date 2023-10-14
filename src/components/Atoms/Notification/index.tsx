@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import IconButton from "@mui/material/IconButton";
 import dayjs from "dayjs";
 
@@ -21,14 +22,9 @@ import {
   VoteIcon,
 } from "./styles";
 
-function Notification({
-  projectName,
-  projectColor,
-}: {
-  projectName: string;
-  projectColor: string;
-}): React.ReactElement {
+function Notification(): React.ReactElement {
   const { axios } = useAuth();
+  const router = useRouter();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const [notiList, setNotiList] = useState<INoti[]>([]);
@@ -70,7 +66,7 @@ function Notification({
       <StyledMenu anchorEl={anchorEl} open={open} onClose={handleClose}>
         {notiList.map((menu, index) => {
           const menuContent: [JSX.Element, string, string, string, string] =
-            getTitle({ type: menu.type, typeId: menu.typeId });
+            getTitle({ menu: menu });
           const date = dayjs(menu.createdAt).format("YYYY-MM-DD");
           return (
             <div key={index}>
@@ -78,13 +74,16 @@ function Notification({
                 onClick={() => {
                   handleClose();
                   handleNoti(menu.notificationId);
+                  router.push(menuContent[4]);
                 }}
                 read={menu.isRead ? "true" : "false"}
               >
                 <Inner>
-                  <IconWrap color={projectColor}>{menuContent[0]}</IconWrap>
-                  <Content color={projectColor}>
-                    <span className="sub-title">{projectName}</span>
+                  <IconWrap color={menu.project.color}>
+                    {menuContent[0]}
+                  </IconWrap>
+                  <Content color={menu.project.color}>
+                    <span className="sub-title">{menu.project.name}</span>
                     <span className="title">
                       <span>{menuContent[1]}</span>
                       <span className="highlight">{menuContent[2]}</span>
@@ -115,20 +114,18 @@ function Notification({
 export default Notification;
 
 function getTitle({
-  type,
-  typeId,
+  menu,
 }: {
-  type: string;
-  typeId: number;
+  menu: INoti;
 }): [JSX.Element, string, string, string, string] {
-  switch (type) {
+  switch (menu.type) {
     case NotiType.PROJECT_INVITED:
       return [
         <ProjectIcon key="project" />,
         "새로운",
         "프로젝트",
         "에 초대되었습니다.",
-        `/idea/${typeId}`,
+        `/idea/${menu.project.id}`,
       ];
     case NotiType.PROJECT_CREATED:
       return [
@@ -136,7 +133,7 @@ function getTitle({
         "새로운",
         "프로젝트",
         "가 등록되었습니다.",
-        `/idea/${typeId}`,
+        `/idea/${menu.project.id}`,
       ];
     case NotiType.PROJECT_DONE:
       return [
@@ -152,7 +149,7 @@ function getTitle({
         "새로운",
         "투표",
         "가 등록되었습니다.",
-        `/idea/${typeId}?tab=4`,
+        `/idea/${menu.project.id}?tab=4`,
       ];
     case NotiType.VOTE_DONE:
       return [
@@ -160,39 +157,39 @@ function getTitle({
         "",
         "투표",
         "가 종료되었습니다.",
-        `/idea/${typeId}?tab=4`,
+        `/idea/${menu.project.id}?tab=4`,
       ];
     case NotiType.COMMENT_MENTIONED:
       return [
         <MetionIcon key="mention" />,
-        "내가",
+        "내가 ",
         "멘션",
         "되었습니다.",
-        `/idea/${typeId}?tab=4`,
+        `/idea/${menu.project.id}`,
       ];
     case NotiType.FEEDBACK_CREATED:
       return [
         <FeedbackIcon key="feedback" />,
-        "새로운",
+        "새로운 ",
         "피드백",
         "이 등록되었습니다.",
-        `/idea/${typeId}?tab=4`,
+        `/idea/${menu.project.id}`,
       ];
     case NotiType.COMMENT_CREATED:
       return [
         <FeedbackIcon key="feedback" />,
-        "새로운",
+        "새로운 ",
         "댓글",
         "이 등록되었습니다.",
-        `/idea/${typeId}?tab=4`,
+        `/idea/${menu.project.id}`,
       ];
     case NotiType.IDEA_CREATED:
       return [
         <IdeaIcon key="feedback" />,
-        "새로운",
+        "새로운 ",
         "아이디어",
         "가 등록되었습니다.",
-        `/idea/${typeId}`,
+        `/idea/${menu.project.id}`,
       ];
     case NotiType.IDEA_RELATED:
       return [
@@ -200,23 +197,23 @@ function getTitle({
         "",
         "연관자",
         "에 추가되었습니다.",
-        `/idea/${typeId}`,
+        `/idea/${menu.project.id}`,
       ];
     case NotiType.BRAINSTORMING_CREATED:
       return [
         <IdeaIcon key="idea" />,
-        "새로운",
+        "새로운 ",
         "브레인스토밍",
         "이 등록되었습니다.",
-        `/idea/${typeId}?tab=2`,
+        `/idea/${menu.project.id}?tab=2`,
       ];
     case NotiType.JOINER_JOINED:
       return [
         <ProjectIcon key="project" />,
-        "새로운",
+        "새로운 ",
         "팀원",
         "이 추가되었습니다.",
-        `/idea/${typeId}?tab=3`,
+        `/idea/${menu.project.id}?tab=3`,
       ];
     default:
       return [<div key={"none"}></div>, "", "", "", ""];
