@@ -152,7 +152,7 @@ function NewIdeaModal({
                 setValue={setRelatedUser}
                 placeholder={"연관 담당자 추가"}
                 options={joiners
-                  .filter(
+                  ?.filter(
                     (joiner: Joiner) =>
                       !relatedUser.some(
                         (user) => user.id === joiner.userDto.id

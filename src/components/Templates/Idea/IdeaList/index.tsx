@@ -183,7 +183,12 @@ function IdeaList({
   return (
     <>
       <Header className={"profile"}>
-        <Notification />
+        {project && (
+          <Notification
+            projectName={project.name}
+            projectColor={project.color}
+          />
+        )}
         <Profile />
       </Header>
       <Header className={"info"}>
