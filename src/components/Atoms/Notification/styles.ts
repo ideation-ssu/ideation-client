@@ -13,6 +13,8 @@ export const NotiIcon = styled("div")`
 export const StyledMenu = styled(Menu)`
   .MuiList-root {
     padding: 0;
+    height: 310px;
+    overflow-y: auto;
   }
 
   hr {

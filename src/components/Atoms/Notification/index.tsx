@@ -92,7 +92,12 @@ function Notification({
                     </span>
                   </Content>
                   <DateWrap>
-                    <span>{date}</span>
+                    <span>{`${date} | ${detailDate(
+                      menu.secondsAgo,
+                      menu.minutesAgo,
+                      menu.hoursAgo,
+                      menu.daysAgo
+                    )}`}</span>
                   </DateWrap>
                 </Inner>
               </StyledMenuItem>
@@ -217,3 +222,15 @@ function getTitle({
       return [<div key={"none"}></div>, "", "", "", ""];
   }
 }
+
+const detailDate = (
+  seconds: number,
+  minutes: number,
+  hours: number,
+  days: number
+) => {
+  if (seconds < 60) return `방금 전`;
+  if (minutes < 60) return `${Math.floor(minutes)}분 전`;
+  if (hours < 24) return `${Math.floor(hours)}시간 전`;
+  if (days) return `${Math.floor(days)}일 전`;
+};
