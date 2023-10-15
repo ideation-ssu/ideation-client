@@ -32,7 +32,6 @@ function Notification(): React.ReactElement {
   const getNotiList = () => {
     axios.get(`${process.env.NEXT_PUBLIC_BASEURL}/notification`).then((res) => {
       setNotiList(res.data.notifications);
-      console.log(res.data.notifications);
     });
   };
 
@@ -49,12 +48,12 @@ function Notification(): React.ReactElement {
     setAnchorEl(null);
   };
 
-  const handleNoti = (notificationId: number) => {
+  const handleNoti = (notificationId: number, url: string) => {
     const data = { notificationId: notificationId };
     axios
       .patch(`${process.env.NEXT_PUBLIC_BASEURL}/notification/read`, data)
       .then((res) => {
-        getNotiList();
+        router.push(url);
       });
   };
 
@@ -73,8 +72,7 @@ function Notification(): React.ReactElement {
               <StyledMenuItem
                 onClick={() => {
                   handleClose();
-                  handleNoti(menu.notificationId);
-                  router.push(menuContent[4]);
+                  handleNoti(menu.notificationId, menuContent[4]);
                 }}
                 read={menu.isRead ? "true" : "false"}
               >
@@ -173,7 +171,7 @@ function getTitle({
         "새로운 ",
         "피드백",
         "이 등록되었습니다.",
-        `/idea/${menu.project.id}`,
+        `/idea/${menu.project.id}?detail=${menu.typeId}`,
       ];
     case NotiType.COMMENT_CREATED:
       return [
@@ -181,7 +179,7 @@ function getTitle({
         "새로운 ",
         "댓글",
         "이 등록되었습니다.",
-        `/idea/${menu.project.id}`,
+        `/idea/${menu.project.id}?detail=${menu.typeId}`,
       ];
     case NotiType.IDEA_CREATED:
       return [

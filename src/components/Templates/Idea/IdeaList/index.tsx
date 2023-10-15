@@ -1,4 +1,5 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import {
   DragDropContext,
   Draggable,
@@ -62,6 +63,8 @@ function IdeaList({
   updateIdeaList: () => void;
 }): React.ReactElement | null {
   const { axios } = useAuth();
+  const router = useRouter();
+  const query = router.query;
 
   // project close modal
   const [closeModalOpen, setCloseModalOpen] = React.useState(false);
@@ -107,6 +110,7 @@ function IdeaList({
   };
 
   const getProject = () => {
+    console.log("Get");
     axios
       .get(`${process.env.NEXT_PUBLIC_BASEURL}/project/${projectId}`)
       .then((res) => {
@@ -115,6 +119,11 @@ function IdeaList({
   };
 
   useEffect(() => {
+    if (query.detail) {
+      handleIdeaDetailOpen();
+      setSelectedIdeaId(Number(query.detail));
+    }
+
     getVote();
     getProject();
 
@@ -123,7 +132,7 @@ function IdeaList({
       cancelAnimationFrame(animation);
       setAnimationEnabled(false);
     };
-  }, []);
+  }, [router.query]);
 
   if (!animationEnabled) return null;
 
