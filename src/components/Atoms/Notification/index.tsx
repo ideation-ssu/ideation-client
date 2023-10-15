@@ -67,7 +67,7 @@ function Notification(): React.ReactElement {
         {notiList.map((menu, index) => {
           const menuContent: [JSX.Element, string, string, string, string] =
             getTitle({ menu: menu });
-          const date = dayjs(menu.createdAt).format("YYYY-MM-DD");
+          const date = dayjs(menu.createdAt).format("YYYY.MM.DD");
           return (
             <div key={index}>
               <StyledMenuItem

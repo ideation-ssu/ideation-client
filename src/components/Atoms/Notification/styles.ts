@@ -37,6 +37,10 @@ export const Inner = styled("div")`
   display: flex;
   flex-direction: row;
   gap: 10px;
+
+  span {
+    font-family: Pretendard, sans-serif;
+  }
 `;
 
 export const Content = styled("div")<{ color: string }>`
