@@ -122,7 +122,7 @@ function getTitle({
     case NotiType.PROJECT_INVITED:
       return [
         <ProjectIcon key="project" />,
-        "새로운",
+        "새로운 ",
         "프로젝트",
         "에 초대되었습니다.",
         `/idea/${menu.project.id}`,
@@ -130,7 +130,7 @@ function getTitle({
     case NotiType.PROJECT_CREATED:
       return [
         <ProjectIcon key="project" />,
-        "새로운",
+        "새로운 ",
         "프로젝트",
         "가 등록되었습니다.",
         `/idea/${menu.project.id}`,
@@ -146,7 +146,7 @@ function getTitle({
     case NotiType.VOTE_CREATED:
       return [
         <VoteIcon key="vote" />,
-        "새로운",
+        "새로운 ",
         "투표",
         "가 등록되었습니다.",
         `/idea/${menu.project.id}?tab=4`,
