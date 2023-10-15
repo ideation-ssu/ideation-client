@@ -132,7 +132,8 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
       userId: user.id,
       brainstormingId: brainstormingId,
     };
-    client.current?.send("/app/session/start", {}, JSON.stringify(message));
+    if (brainstorming && !brainstorming.isStarted)
+      client.current?.send("/app/session/start", {}, JSON.stringify(message));
   };
 
   const stompSend = (circle: ICircle) => {
@@ -187,7 +188,6 @@ const BrainstormingSession: NextPage<BrainstormingProps> = ({
       `/topic/session/${brainstormingId}/status`,
       (message) => {
         const status = JSON.parse(message.body);
-        console.log(status.status);
         if (status.status == "STARTED") {
           handleWaitSessionClose();
         }
