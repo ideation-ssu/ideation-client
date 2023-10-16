@@ -67,6 +67,8 @@ export default function VoteDone({ getVote, isOwner, vote }: PropsType) {
     },
   ];
 
+  console.log(vote.votedUsers);
+
   return (
     <>
       <DeleteVoteModal
@@ -112,11 +114,23 @@ export default function VoteDone({ getVote, isOwner, vote }: PropsType) {
 
           <SliderWrap isShow>
             <MessageBox className={"joiner-box"}>
-              {vote.votedUsers.map((user, index) => {
-                return index != vote.votedUsers.length - 1
-                  ? `${user.name}, `
-                  : user.name;
-              })}
+              {
+                vote.votedUsers.reduce<{ ids: string[]; names: string[] }>(
+                  (acc, user, index) => {
+                    const userId = user.id.toString();
+                    if (!acc.ids.includes(userId)) {
+                      acc.ids.push(userId);
+                      acc.names.push(
+                        index !== vote.votedUsers.length - 1
+                          ? `${user.name}, `
+                          : user.name
+                      );
+                    }
+                    return acc;
+                  },
+                  { ids: [], names: [] }
+                ).names
+              }
             </MessageBox>
             <SliderBackground>
               <Slider
