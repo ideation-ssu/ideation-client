@@ -75,6 +75,7 @@ export const DateWrap = styled("div")`
 
 export const IconWrap = styled("div")<{ color: string }>`
   width: 30px;
+  min-width: 30px;
   height: 30px;
   display: flex;
   justify-content: center;
