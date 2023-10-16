@@ -54,7 +54,15 @@ export const Category = styled("div")<{
   border-bottom-left-radius: 5px;
 `;
 
-export const Content = styled("div")`
+export const ContentHeader = styled("div")`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const ContentBody = styled("div")`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -70,6 +78,13 @@ export const Content = styled("div")`
       color: #6e6e6e;
     }
   }
+`;
+
+export const Content = styled("div")`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
 `;
 
 export const DDay = styled("div")<{ isDone: boolean; backgroundColor: string }>`
@@ -95,6 +110,13 @@ export const DDay = styled("div")<{ isDone: boolean; backgroundColor: string }>`
           background-color: ${backgroundColor};
           color: #fff;
         `};
+`;
+
+export const MenuIcon = styled("div")`
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='17' height='12' viewBox='0 0 17 12' fill='none'%3E%3Cpath d='M1.60938 1.125H15.3906M1.60938 6H15.3906M1.60938 10.875H15.3906' stroke='%236E6E6E' stroke-width='2' stroke-miterlimit='10' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-size: cover;
+  width: 17px;
+  height: 12px;
 `;
 
 export const ProjectInfoWrap = styled("div")`
