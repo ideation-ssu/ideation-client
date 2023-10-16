@@ -151,7 +151,7 @@ function WaitSessionModal({
               <RoundButton
                 text={"세션 시작하기"}
                 isFilled={true}
-                onClick={() => setIsStarted(true)}
+                onClick={handleClose}
               />
             )}
           </ButtonWrap>
