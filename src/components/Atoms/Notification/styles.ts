@@ -15,6 +15,14 @@ export const StyledMenu = styled(Menu)`
     padding: 0;
     height: 310px;
     overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 2px;
+      background: #ccc;
+    }
   }
 
   hr {
