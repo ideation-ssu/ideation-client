@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
+import hexToRgba from "hex-to-rgba";
 
 import MenuDrop from "@/components/Atoms/MenuDrop";
 import DeleteProjectModal from "@/components/Molecules/DeleteProjectModal";
-import { IVoteMenuOption } from "@/components/Templates/Idea/Vote";
 import {
   Category,
   Content,
@@ -50,13 +50,16 @@ function Workspace({ projects }: { projects: Project[] }): React.ReactElement {
               <Category isDone={project.done} backgroundColor={project.color} />
               <Content>
                 <ContentHeader>
-                  <DDay isDone={project.done} backgroundColor={project.color}>
+                  <DDay
+                    isDone={project.done}
+                    backgroundColor={hexToRgba(project.color, 0.2)}
+                  >
                     <span>
                       {project.done
                         ? "마감"
                         : project.dday < 0
-                        ? `D+${project.dday * -1}`
-                        : `D${project.dday * -1}`}
+                        ? `D + ${project.dday * -1}`
+                        : `D - ${project.dday}`}
                     </span>
                   </DDay>
                   <MenuDrop

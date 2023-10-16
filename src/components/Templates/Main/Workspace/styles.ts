@@ -46,7 +46,7 @@ export const Category = styled("div")<{
   isDone: boolean;
   backgroundColor: string;
 }>`
-  width: 17px;
+  width: 10px;
   height: 100%;
   background-color: ${({ isDone, backgroundColor }) =>
     isDone ? "#AFAFAF" : backgroundColor};
@@ -63,15 +63,18 @@ export const ContentHeader = styled("div")`
 `;
 
 export const ContentBody = styled("div")`
-  width: 100%;
+  width: calc(100% - 20px);
   display: flex;
   flex-direction: column;
-  margin: 10px;
+  margin: 10px 0;
   gap: 9px;
 
   span {
     &.title {
+      overflow: hidden;
       font-size: 20px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
     &.desc {
       font-size: 12px;
@@ -81,7 +84,7 @@ export const ContentBody = styled("div")`
 `;
 
 export const Content = styled("div")`
-  width: 100%;
+  width: calc(100% - 30px);
   display: flex;
   flex-direction: column;
   margin: 10px;
@@ -108,7 +111,7 @@ export const DDay = styled("div")<{ isDone: boolean; backgroundColor: string }>`
         `
       : css`
           background-color: ${backgroundColor};
-          color: #fff;
+          color: #000;
         `};
 `;
 
