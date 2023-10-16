@@ -10,17 +10,26 @@ import {
   ContentBody,
   ContentHeader,
   DDay,
+  EmptyMessage,
+  EmptyWrap,
   IdeaIcon,
   MenuIcon,
   NotiIcon,
   PersonIcon,
+  ProjectIcon,
   ProjectInfoBox,
   ProjectInfoWrap,
   StyledGrid,
 } from "@/components/Templates/Main/Workspace/styles";
 import { Project } from "@/interfaces/project";
 
-function Workspace({ projects }: { projects: Project[] }): React.ReactElement {
+function Workspace({
+  projects,
+  getProjects,
+}: {
+  projects: Project[];
+  getProjects: () => void;
+}): React.ReactElement {
   const router = useRouter();
 
   const [selectProject, setSelectProject] = useState<Project>();
@@ -36,15 +45,18 @@ function Workspace({ projects }: { projects: Project[] }): React.ReactElement {
 
   return (
     <>
-      <StyledGrid container className={"container"} spacing={1}>
+      <StyledGrid container className="container" spacing={1}>
         {selectProject && (
           <DeleteProjectModal
             projectId={selectProject.id}
             open={deleteProjectOpen}
-            handleClose={handleDeleteProjectClose}
+            handleClose={() => {
+              handleDeleteProjectClose();
+              getProjects();
+            }}
           />
         )}
-        {projects &&
+        {projects && projects.length > 0 ? (
           projects.map((project: Project) => (
             <StyledGrid key={project.id}>
               <Category isDone={project.done} backgroundColor={project.color} />
@@ -76,8 +88,8 @@ function Workspace({ projects }: { projects: Project[] }): React.ReactElement {
                   />
                 </ContentHeader>
                 <ContentBody onClick={() => goIdeaPage(project.id)}>
-                  <span className={"title"}>{project.name}</span>
-                  <span className={"desc"}>{project.desc}</span>
+                  <span className="title">{project.name}</span>
+                  <span className="desc">{project.desc}</span>
                   <ProjectInfoWrap>
                     <ProjectInfoBox>
                       <PersonIcon />
@@ -95,7 +107,16 @@ function Workspace({ projects }: { projects: Project[] }): React.ReactElement {
                 </ContentBody>
               </Content>
             </StyledGrid>
-          ))}
+          ))
+        ) : (
+          <EmptyWrap>
+            <ProjectIcon />
+            <EmptyMessage>
+              내 프로젝트가 없습니다. <span>{"\n프로젝트"}</span>를
+              생성해보세요!
+            </EmptyMessage>
+          </EmptyWrap>
+        )}
       </StyledGrid>
     </>
   );

@@ -103,7 +103,7 @@ function Main(): React.ReactElement {
             </ButtonWrap>
           </RightHeaderWrap>
         </Header>
-        <Workspace projects={projects} />
+        <Workspace projects={projects} getProjects={getProjects} />
       </Content>
     </Container>
   );
