@@ -101,11 +101,11 @@ function IdeaList({
   const [existVote, setExistVote] = useState<boolean>(false);
   const [project, setProject] = useState<Project>();
 
-  const getVote = () => {
+  const getVoteExist = () => {
     axios
       .get(`${process.env.NEXT_PUBLIC_BASEURL}/vote/${projectId}`)
       .then((res) => {
-        setExistVote(!res.data.error);
+        setExistVote(res.data.hasVote);
       });
   };
 
@@ -123,7 +123,7 @@ function IdeaList({
       setSelectedIdeaId(Number(query.detail));
     }
 
-    getVote();
+    getVoteExist();
     getProject();
 
     const animation = requestAnimationFrame(() => setAnimationEnabled(true));
