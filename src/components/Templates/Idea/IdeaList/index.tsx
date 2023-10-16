@@ -41,6 +41,7 @@ import {
   IdeaTop,
   ProcessCard,
   ReactionWrap,
+  StatusBar,
   StatusTitle,
   TitleBar,
   TitleDueDateText,
@@ -62,7 +63,7 @@ function IdeaList({
   setIdeas: Dispatch<SetStateAction<IIdeaByStatus>>;
   updateIdeaList: () => void;
 }): React.ReactElement | null {
-  const { axios } = useAuth();
+  const { user, axios } = useAuth();
   const router = useRouter();
   const query = router.query;
 
@@ -327,6 +328,7 @@ function IdeaList({
                                     </ReactionWrap>
                                   </IdeaBottom>
                                 </IdeaInner>
+                                {idea.id === user.id && <StatusBar />}
                               </IdeaContent>
                             </Idea>
                           )}

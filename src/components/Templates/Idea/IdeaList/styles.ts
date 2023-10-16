@@ -70,9 +70,21 @@ export const ProcessCard = styled("div")`
 
 export const IdeaContent = styled("div")`
   width: 100%;
-  padding: 10px 10px;
+  padding: 11px 10px;
   display: flex;
   flex-direction: row;
+  position: relative;
+`;
+
+export const StatusBar = styled("div")`
+  width: 100%;
+  height: 6px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background-color: #00b18c;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
 `;
 
 export const IdeaHandleIcon = styled("div")`
@@ -87,7 +99,7 @@ export const Idea = styled("div")`
   display: flex;
   gap: 8px;
   user-select: none;
-  margin: 8px;
+  margin: 8px 0;
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 5px;
