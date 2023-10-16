@@ -43,8 +43,10 @@ const Idea: NextPage<IdeaProps> = (props) => {
   const query = router.query;
 
   useEffect(() => {
-    getJoiners();
-    getIdeas();
+    if (projectId && user) {
+      getJoiners();
+      getIdeas();
+    }
   }, [projectId, user]);
 
   useEffect(() => {
@@ -119,39 +121,47 @@ const Idea: NextPage<IdeaProps> = (props) => {
         />
       </StyledTabs>
       <Content>
-        <TabPanel value={tab} index={1}>
-          <TabContainer>
-            <IdeaList
-              projectId={projectId}
-              isOwner={isOwner}
-              joiners={joiners}
-              ideas={ideas}
-              setIdeas={setIdeas}
-              updateIdeaList={getIdeas}
-            />
-          </TabContainer>
-        </TabPanel>
-        <TabPanel value={tab} index={2}>
-          <TabContainer>
-            <Brainstorming projectId={projectId} joiners={joiners} />
-          </TabContainer>
-        </TabPanel>
-        <TabPanel value={tab} index={3}>
-          <TabContainer>
-            <JoinerList
-              projectId={projectId}
-              joiners={joiners}
-              code={code ? code : ""}
-              isOwner={isOwner}
-              getJoiners={getJoiners}
-            />
-          </TabContainer>
-        </TabPanel>
-        <TabPanel value={tab} index={4}>
-          <TabContainer>
-            <Vote projectId={projectId} ideas={ideas} isOwner={isOwner} />
-          </TabContainer>
-        </TabPanel>
+        {tab === 1 && (
+          <TabPanel value={tab} index={1}>
+            <TabContainer>
+              <IdeaList
+                projectId={projectId}
+                isOwner={isOwner}
+                joiners={joiners}
+                ideas={ideas}
+                setIdeas={setIdeas}
+                updateIdeaList={getIdeas}
+              />
+            </TabContainer>
+          </TabPanel>
+        )}
+        {tab === 2 && (
+          <TabPanel value={tab} index={2}>
+            <TabContainer>
+              <Brainstorming projectId={projectId} joiners={joiners} />
+            </TabContainer>
+          </TabPanel>
+        )}
+        {tab === 3 && (
+          <TabPanel value={tab} index={3}>
+            <TabContainer>
+              <JoinerList
+                projectId={projectId}
+                joiners={joiners}
+                code={code ? code : ""}
+                isOwner={isOwner}
+                getJoiners={getJoiners}
+              />
+            </TabContainer>
+          </TabPanel>
+        )}
+        {tab === 4 && (
+          <TabPanel value={tab} index={4}>
+            <TabContainer>
+              <Vote projectId={projectId} ideas={ideas} isOwner={isOwner} />
+            </TabContainer>
+          </TabPanel>
+        )}
       </Content>
     </Container>
   );

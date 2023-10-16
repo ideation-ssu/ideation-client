@@ -110,7 +110,6 @@ function IdeaList({
   };
 
   const getProject = () => {
-    console.log("Get");
     axios
       .get(`${process.env.NEXT_PUBLIC_BASEURL}/project/${projectId}`)
       .then((res) => {
