@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Avatar from "@/components/Atoms/Avatar";
 import AvatarGroup from "@/components/Atoms/AvatarGroup";
 import MenuDrop from "@/components/Atoms/MenuDrop";
+import Notification from "@/components/Atoms/Notification";
 import Profile from "@/components/Atoms/Profile";
 import DeleteVoteModal from "@/components/Molecules/DeleteVoteModal";
 import IdeaDetailModal from "@/components/Molecules/IdeaDetailModal";
@@ -83,6 +84,7 @@ export default function VoteDone({ getVote, isOwner, vote }: PropsType) {
       />
 
       <Header className={"profile"}>
+        {vote && <Notification projectId={vote.project.id} />}
         <Profile />
       </Header>
 

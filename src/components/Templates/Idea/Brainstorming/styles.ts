@@ -51,10 +51,10 @@ export const EmptyMessage = styled("div")`
 
 export const Header = styled("div")`
   display: flex;
-  justify-content: center;
   align-items: center;
   &.profile {
     justify-content: flex-end;
+    gap: 15px;
   }
 
   &.search,

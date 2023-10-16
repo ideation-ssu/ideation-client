@@ -192,7 +192,7 @@ function IdeaList({
   return (
     <>
       <Header className={"profile"}>
-        {project && <Notification />}
+        {project && <Notification projectId={project.id} />}
         <Profile />
       </Header>
       <Header className={"info"}>

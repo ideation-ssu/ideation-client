@@ -45,8 +45,10 @@ export const LogoWrap = styled("div")`
 `;
 
 export const AvatarWrap = styled("div")`
-  width: 40px;
-  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 15px;
   margin-right: 30px;
 `;
 

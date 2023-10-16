@@ -3,6 +3,7 @@ import axios from "axios";
 
 import Avatar from "@/components/Atoms/Avatar";
 import MenuDrop from "@/components/Atoms/MenuDrop";
+import Notification from "@/components/Atoms/Notification";
 import Profile from "@/components/Atoms/Profile";
 import CloseVoteModal from "@/components/Molecules/CloseVoteModal";
 import DeleteVoteModal from "@/components/Molecules/DeleteVoteModal";
@@ -129,6 +130,7 @@ export default function VoteInprogress({ getVote, isOwner, vote }: PropsType) {
       />
 
       <Header className={"profile"}>
+        {vote && <Notification projectId={vote.project.id} />}
         <Profile />
       </Header>
 

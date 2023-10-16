@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import Avatar from "@/components/Atoms/Avatar";
 import MenuDrop from "@/components/Atoms/MenuDrop";
+import Notification from "@/components/Atoms/Notification";
 import Profile from "@/components/Atoms/Profile";
 import RoundButton from "@/components/Atoms/RoundButton";
 import InviteTeamModal from "@/components/Molecules/InviteTeamModal";
@@ -82,6 +83,7 @@ function JoinerList({
         />
       )}
       <Header className={"profile"}>
+        {projectId && <Notification projectId={projectId} />}
         <Profile />
       </Header>
       <Header className={"header"}>

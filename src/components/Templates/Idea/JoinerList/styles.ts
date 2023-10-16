@@ -5,8 +5,10 @@ import { styled } from "@mui/material/styles";
 
 export const Header = styled("div")`
   display: flex;
+  align-items: center;
   &.profile {
     justify-content: flex-end;
+    gap: 15px;
   }
   &.header {
     justify-content: space-between;

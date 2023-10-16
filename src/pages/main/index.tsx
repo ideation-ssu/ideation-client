@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 
+import Notification from "@/components/Atoms/Notification";
 import Profile from "@/components/Atoms/Profile";
 import RoundButton from "@/components/Atoms/RoundButton";
 import CreateProjectModal from "@/components/Molecules/CreateProjectModal";
@@ -73,6 +74,7 @@ function Main(): React.ReactElement {
         </LogoWrap>
         {user && (
           <AvatarWrap>
+            <Notification />
             <Profile />
           </AvatarWrap>
         )}

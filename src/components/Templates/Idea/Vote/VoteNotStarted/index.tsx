@@ -1,5 +1,6 @@
 import React from "react";
 
+import Notification from "@/components/Atoms/Notification";
 import Profile from "@/components/Atoms/Profile";
 import RoundButton from "@/components/Atoms/RoundButton";
 import CreateVoteIdeaModal from "@/components/Molecules/CreateVoteIdeaModal";
@@ -33,6 +34,7 @@ export default function VoteNotStarted({
   return (
     <>
       <Header className={"profile"}>
+        {projectId && <Notification projectId={projectId} />}
         <Profile />
       </Header>
 

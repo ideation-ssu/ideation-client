@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import AvatarGroup from "@/components/Atoms/AvatarGroup";
+import Notification from "@/components/Atoms/Notification";
 import Profile from "@/components/Atoms/Profile";
 import RoundButton from "@/components/Atoms/RoundButton";
 import CreateSessionModal from "@/components/Molecules/CreateSessionModal";
@@ -65,6 +66,7 @@ function Brainstorming({
   return (
     <>
       <Header className={"profile"}>
+        {projectId && <Notification projectId={projectId} />}
         <Profile />
       </Header>
 
