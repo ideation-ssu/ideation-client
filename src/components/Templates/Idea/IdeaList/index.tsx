@@ -328,7 +328,7 @@ function IdeaList({
                                     </ReactionWrap>
                                   </IdeaBottom>
                                 </IdeaInner>
-                                {idea.id === user.id && <StatusBar />}
+                                {idea.userId === user.id && <StatusBar />}
                               </IdeaContent>
                             </Idea>
                           )}
