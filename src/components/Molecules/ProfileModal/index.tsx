@@ -161,7 +161,7 @@ function ProfileModal({
           <Driver />
         </ProfileWrap>
         <InfoWrap>
-          <span className="title">{"내 정보"}</span>
+          <span className="title">{isEdit ? "내 정보" : "세부 정보"}</span>
           <Info>
             <span className="category">{"회사/학교"}</span>
             {editMode ? (
