@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 import Notification from "@/components/Atoms/Notification";
 import Profile from "@/components/Atoms/Profile";
@@ -13,6 +14,8 @@ import {
   Container,
   Content,
   Header,
+  Logo,
+  LogoIcon,
   LogoWrap,
   RightHeaderWrap,
   Search,
@@ -24,9 +27,8 @@ import {
 } from "@/styles/main/styles";
 import { useAuth } from "@/utils/auth";
 
-import { LogoIcon } from "../../../public/icons/Logo/styles.ts";
-
 function Main(): React.ReactElement {
+  const router = useRouter();
   const { user, axios, isLoggedIn } = useAuth();
   const [projects, setProjects] = useState<Project[]>([]);
 
@@ -59,6 +61,10 @@ function Main(): React.ReactElement {
     });
   };
 
+  const goMain = () => {
+    router.push("/main");
+  };
+
   return (
     <Container>
       {projectOpen && (
@@ -70,7 +76,10 @@ function Main(): React.ReactElement {
       <LoginModal open={loginOpen} handleClose={loginModalClose} />
       <Header>
         <LogoWrap>
-          <LogoIcon />
+          <Logo onClick={goMain}>
+            <LogoIcon />
+            {"Ideation"}
+          </Logo>
         </LogoWrap>
         {user && (
           <AvatarWrap>
