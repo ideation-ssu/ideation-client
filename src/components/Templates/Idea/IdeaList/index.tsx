@@ -140,7 +140,6 @@ function IdeaList({
     {
       label: "아이디어 선정하기",
       onClick: () => {
-        console.log(existVote);
         if (existVote)
           toast.error("이미 진행 중인 투표가 있습니다.", {
             autoClose: 2000,
@@ -151,6 +150,10 @@ function IdeaList({
     {
       label: "프로젝트 마감하기",
       onClick: () => {
+        if (project?.done) {
+          toast.error("이미 마감된 프로젝트입니다.");
+          return;
+        }
         projectCloseModalOpen();
       },
     },
