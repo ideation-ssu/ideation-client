@@ -1,4 +1,5 @@
 import React from "react";
+import { useRouter } from "next/router";
 
 import RoundButton from "@/components/Atoms/RoundButton";
 import { useAuth } from "@/utils/auth";
@@ -15,6 +16,7 @@ function CloseProjectModal({
   handleClose: () => void;
 }): React.ReactElement {
   const { axios } = useAuth();
+  const router = useRouter();
 
   const handleCloseProject = () => {
     const data = {
@@ -25,6 +27,7 @@ function CloseProjectModal({
       .put(`${process.env.NEXT_PUBLIC_BASEURL}/project/done`, data)
       .then((res) => {
         handleClose();
+        router.push("/main");
       });
   };
 

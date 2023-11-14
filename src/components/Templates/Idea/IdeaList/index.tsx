@@ -150,7 +150,9 @@ function IdeaList({
     },
     {
       label: "프로젝트 마감하기",
-      onClick: () => projectCloseModalOpen(),
+      onClick: () => {
+        projectCloseModalOpen();
+      },
     },
     {
       label: "프로젝트 삭제하기",
