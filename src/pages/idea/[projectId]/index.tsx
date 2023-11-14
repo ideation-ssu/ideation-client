@@ -30,6 +30,7 @@ interface IdeaProps {
 const Idea: NextPage<IdeaProps> = (props) => {
   const { projectId, code } = props;
   const router = useRouter();
+  const query = router.query;
 
   const { user, axios } = useAuth();
   const [isOwner, setIsOwner] = useState<boolean>(false);
@@ -40,7 +41,6 @@ const Idea: NextPage<IdeaProps> = (props) => {
     DONE: [],
   });
   const [joiners, setJoiners] = useState<Joiner[]>([]);
-  const query = router.query;
 
   useEffect(() => {
     if (projectId && user) {
@@ -92,7 +92,6 @@ const Idea: NextPage<IdeaProps> = (props) => {
       setTab(code ? 3 : 1);
       return;
     }
-
     setTab(Number(query.tab));
   }, [query]);
 

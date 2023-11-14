@@ -193,7 +193,7 @@ function getTitle({
         "새로운 ",
         "아이디어",
         "가 등록되었습니다.",
-        `/idea/${menu.project.id}`,
+        `/idea/${menu.project.id}?detail=${menu.typeId}`,
       ];
     case NotiType.IDEA_RELATED:
       return [
