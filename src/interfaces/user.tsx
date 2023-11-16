@@ -18,5 +18,6 @@ export interface AuthContextType {
   authLogout: () => void;
   isLoggedIn: () => boolean;
   axios: AxiosInstance;
+  token: string;
   setToken: (token: string) => void;
 }

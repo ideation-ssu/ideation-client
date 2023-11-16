@@ -23,6 +23,7 @@ const AuthContext = createContext<AuthContextType | null>({
   authLogout: () => {},
   isLoggedIn: () => false,
   axios: axios.create(),
+  token: "",
   setToken: (string) => {},
 });
 
@@ -127,6 +128,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
         authLogout: authLogout,
         isLoggedIn: isLoggedIn,
         axios,
+        token,
         setToken,
       }}
     >
