@@ -43,7 +43,8 @@ function IdeaCommentPanel(props: TabPanelProps) {
     setComment(event.target.value);
   };
 
-  const handleKeyDownComment = (event: React.KeyboardEvent<HTMLDivElement>) => {
+  const handleKeyUpComment = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (!comment) return;
     if (event.key === "Enter") {
       addComment();
     }
@@ -53,7 +54,8 @@ function IdeaCommentPanel(props: TabPanelProps) {
     setReply(event.target.value);
   };
 
-  const handleKeyDownReply = (event: React.KeyboardEvent<HTMLDivElement>) => {
+  const handleKeyUpReply = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (!reply) return;
     if (event.key === "Enter") {
       addReply();
     }
@@ -137,7 +139,7 @@ function IdeaCommentPanel(props: TabPanelProps) {
                   <StyledInputBox
                     value={reply}
                     onChange={handleOnChangeReply}
-                    onKeyDown={handleKeyDownReply}
+                    onKeyUp={handleKeyUpReply}
                   />
                   <InputButton onClick={addReply}>{"답글 쓰기"}</InputButton>
                 </InputWrap>
@@ -149,7 +151,7 @@ function IdeaCommentPanel(props: TabPanelProps) {
               <StyledInputBox
                 value={comment}
                 onChange={handleOnChangeComment}
-                onKeyDown={handleKeyDownComment}
+                onKeyUp={handleKeyUpComment}
               />
               <InputButton onClick={addComment}>
                 {type === CommentType.Comment ? "댓글 쓰기" : "피드백 쓰기"}
