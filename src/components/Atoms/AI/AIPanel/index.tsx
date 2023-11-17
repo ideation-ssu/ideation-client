@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import { EventSourcePolyfill } from "event-source-polyfill";
 
 import { IChat } from "@/interfaces/chat";
@@ -42,11 +42,6 @@ export default function AIPanel({
 
   const eventSourceRef = useRef<EventSourcePolyfill | null>(null);
   const scrollableElementRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (text && !eventSourceRef.current) {
-    }
-  }, []);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
