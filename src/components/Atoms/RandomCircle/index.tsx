@@ -290,7 +290,7 @@ const RandomCircle = ({
       )}
       {hoverText.visible && (
         <HoverTextWrap x={hoverText.x} y={hoverText.y}>
-          {`${user.name} : ${hoverText.circle.ideaName}`}
+          {`${hoverText.circle.ideaName}`}
         </HoverTextWrap>
       )}
       {selectedCircle && (
