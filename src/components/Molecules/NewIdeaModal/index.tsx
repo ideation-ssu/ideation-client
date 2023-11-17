@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { useRouter } from "next/router";
 
+import AIPanel from "@/components/Atoms/AI/AIPanel";
 import ComboBox from "@/components/Atoms/ComboBox";
 import Driver from "@/components/Atoms/Driver";
 import HashTag from "@/components/Atoms/HashTag";
@@ -9,9 +10,12 @@ import MultiComboBox from "@/components/Atoms/MultiComboBox";
 import RadioGroup from "@/components/Atoms/RadioGroup";
 import RoundButton from "@/components/Atoms/RoundButton";
 import TextArea from "@/components/Atoms/TextArea";
+import { IChat } from "@/interfaces/chat";
 import { IdeaStatus } from "@/interfaces/idea";
 import { Joiner } from "@/interfaces/project";
 import { useAuth } from "@/utils/auth";
+
+import AIButton from "../../Atoms/AI/AIButton";
 
 import {
   AsignIcon,
@@ -57,6 +61,8 @@ function NewIdeaModal({
   const [status, setStatus] = useState<string>("");
   const [err, setErr] = useState("");
 
+  const [msgList, setMsgList] = useState<IChat[]>([]);
+
   const isValid = useMemo(() => {
     if (!title || !category || !content || !status) {
       return false;
@@ -64,6 +70,8 @@ function NewIdeaModal({
 
     return true;
   }, [title, relatedUser, category, content, status]);
+
+  const [AIOpen, setAIOpen] = useState<boolean>(false);
 
   const createIdea = () => {
     if (!title) {
@@ -196,6 +204,13 @@ function NewIdeaModal({
               placeholder={"내용을 입력하세요."}
               text={content}
               setText={setContent}
+            />
+            <AIButton text={"AI 늘려쓰기"} onClick={() => setAIOpen(!AIOpen)} />
+            <AIPanel
+              open={AIOpen}
+              setOpen={setAIOpen}
+              msgList={msgList}
+              setMsgList={setMsgList}
             />
           </Grid>
 
