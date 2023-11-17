@@ -20,3 +20,14 @@ export const ContextItem = styled("div")`
     background: rgba(0, 0, 0, 0.1);
   }
 `;
+
+export const HoverTextWrap = styled("div")<{ x: string; y: string }>`
+  position: absolute;
+  top: ${(props) => props.y};
+  left: ${(props) => props.x};
+  z-index: 9999;
+  background: white;
+  padding: 3px 10px;
+  border-radius: 5px;
+  border: 1px solid #713edc;
+`;

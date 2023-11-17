@@ -6,6 +6,7 @@ import Driver from "@/components/Atoms/Driver";
 import {
   ContextItem,
   ContextMenu,
+  HoverTextWrap,
 } from "@/components/Atoms/RandomCircle/styles";
 import NewIdeaModal from "@/components/Molecules/NewIdeaModal";
 import { ICircle } from "@/interfaces/circle";
@@ -50,6 +51,12 @@ const RandomCircle = ({
     color: "",
   };
   const [contextMenu, setContextMenu] = useState({
+    visible: false,
+    x: "0px",
+    y: "0px",
+    circle: defaultCircle,
+  });
+  const [hoverText, setHoverText] = useState({
     visible: false,
     x: "0px",
     y: "0px",
@@ -173,6 +180,37 @@ const RandomCircle = ({
       handleCloseContextMenu();
   };
 
+  const handleMouseOver = (x: number, y: number, circle: ICircle) => {
+    setHoverText({
+      visible: true,
+      x: `${x}px`,
+      y: `${y}px`,
+      circle: circle,
+    });
+  };
+
+  const handleMouseOut = () => {
+    setHoverText({
+      visible: false,
+      x: "0px",
+      y: "0px",
+      circle: defaultCircle,
+    });
+  };
+
+  function truncateText(text: string, maxWidth: number) {
+    const ellipsis = "...";
+    let truncatedText = text;
+
+    if (text.length > maxWidth / 10) {
+      // 원하는 폰트 크기에 따라 maxWidth를 조절.
+      const maxTextLength = Math.floor((maxWidth / 10) * 0.75); // 말줄임표를 고려하여 최대 길이를 설정
+      truncatedText = text.slice(0, maxTextLength) + ellipsis;
+    }
+
+    return truncatedText;
+  }
+
   return (
     <>
       <Stage
@@ -194,6 +232,14 @@ const RandomCircle = ({
                 onContextMenu={(e: Konva.KonvaEventObject<MouseEvent>) => {
                   handleContextMenu(e, circle);
                 }}
+                onMouseOver={() => {
+                  handleMouseOver(
+                    circle.x,
+                    circle.y + circle.radius * 1.5,
+                    circle
+                  );
+                }}
+                onMouseOut={handleMouseOut}
               >
                 <Circle
                   name={circle.sessionIdeaId}
@@ -202,14 +248,18 @@ const RandomCircle = ({
                   onDblClick={handleDubleClick}
                 />
                 <Text
-                  text={
-                    circle.ideaName.length > (circle.radius * 2) / 10
-                      ? circle.ideaName.slice(0, value.length - 3) + "..."
-                      : circle.ideaName
-                  }
-                  x={0 - (circle.ideaName.length / 2) * 8}
-                  fill="white"
-                  fontSize={10}
+                  text={truncateText(circle.ideaName, circle.radius * 2)}
+                  x={0}
+                  y={circle.radius - 5}
+                  fill="black"
+                  fontSize={13}
+                  fontWeight="bold"
+                  fontFamily="Pretendard"
+                  width={circle.radius * 2}
+                  height={10}
+                  offset={{ x: circle.radius, y: circle.radius }}
+                  align="center"
+                  textOverflow="ellipsis"
                 />
               </Group>
             );
@@ -237,6 +287,11 @@ const RandomCircle = ({
             {"삭제하기"}
           </ContextItem>
         </ContextMenu>
+      )}
+      {hoverText.visible && (
+        <HoverTextWrap x={hoverText.x} y={hoverText.y}>
+          {`${user.name} : ${hoverText.circle.ideaName}`}
+        </HoverTextWrap>
       )}
       {selectedCircle && (
         <NewIdeaModal
