@@ -2,9 +2,9 @@ import IconButton from "@mui/material/IconButton";
 import { styled } from "@mui/material/styles";
 
 export const IconBtn = styled(IconButton)`
-  position: fixed;
-  right: 20px;
-  bottom: 20px;
+  position: absolute;
+  top: 20px;
+  right: -110px;
 
   animation: vibration 0.3s infinite;
 
@@ -31,9 +31,9 @@ export const SpeechBubble = styled("div")`
   display: flex;
   align-items: center;
   justify-content: center;
-  position: fixed;
-  right: 50px;
-  bottom: 115px;
+  position: absolute;
+  right: -300px;
+  top: -20px;
   background: white;
   color: black;
   border-radius: 5px;
@@ -41,12 +41,12 @@ export const SpeechBubble = styled("div")`
 
   :after {
     border-top: 10px solid white;
-    border-left: 25px solid transparent;
-    border-right: 0 solid transparent;
+    border-left: 0 solid transparent;
+    border-right: 30px solid transparent;
     border-bottom: 0 solid transparent;
     content: "";
     position: absolute;
     top: 29px;
-    left: 215px;
+    left: 40px;
   }
 `;

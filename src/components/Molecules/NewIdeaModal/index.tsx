@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
 
 import AIPanel from "@/components/Atoms/AI/AIPanel";
+import CodingButton from "@/components/Atoms/AI/CodingButton";
 import ComboBox from "@/components/Atoms/ComboBox";
 import Driver from "@/components/Atoms/Driver";
 import HashTag from "@/components/Atoms/HashTag";
@@ -152,6 +153,7 @@ function NewIdeaModal({
                 autoComplete={"title"}
                 fontSize={15}
               />
+              <CodingButton idea={title} />
             </Line>
           </Grid>
 

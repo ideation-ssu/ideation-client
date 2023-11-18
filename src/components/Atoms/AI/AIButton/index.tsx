@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { AIBotIcon, IconBtn, SpeechBubble } from "./styles";
 
@@ -12,7 +12,6 @@ function AIButton({
       <IconBtn onClick={onClick}>
         <AIBotIcon />
       </IconBtn>
-
       <SpeechBubble>AI 늘려쓰기를 사용하려면 여길 눌러봐!</SpeechBubble>
     </>
   );

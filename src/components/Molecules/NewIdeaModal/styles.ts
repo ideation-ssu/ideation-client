@@ -12,6 +12,7 @@ export const Container = styled("div")`
   height: 679px;
   background-color: white;
   border-radius: 10px;
+  position: relative;
 `;
 
 export const Title = styled("div")`
