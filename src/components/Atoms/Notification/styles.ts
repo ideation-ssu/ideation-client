@@ -10,6 +10,17 @@ export const NotiIcon = styled("div")`
   cursor: pointer;
 `;
 
+export const NotiNum = styled("div")`
+  padding: 4px;
+  border-radius: 10px;
+  background-color: red;
+  color: white;
+  font-size: 8px;
+  position: absolute;
+  top: -3px;
+  right: -6px;
+`;
+
 export const StyledMenu = styled(Menu)`
   .MuiList-root {
     padding: 0;

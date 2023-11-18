@@ -16,6 +16,7 @@ import {
   Inner,
   MetionIcon,
   NotiIcon,
+  NotiNum,
   ProjectIcon,
   StyledMenu,
   StyledMenuItem,
@@ -65,10 +66,11 @@ function Notification({
     <>
       <IconButton aria-label="delete" size="small" onClick={handleClick}>
         <NotiIcon />
+        {notiList?.length > 0 && <NotiNum>{notiList.length}</NotiNum>}
       </IconButton>
-      <StyledMenu anchorEl={anchorEl} open={open} onClose={handleClose}>
-        {notiList &&
-          notiList
+      {notiList && (
+        <StyledMenu anchorEl={anchorEl} open={open} onClose={handleClose}>
+          {notiList
             .filter((menu) =>
               projectId ? menu.project.id === projectId : menu
             )
@@ -113,7 +115,8 @@ function Notification({
                 </div>
               );
             })}
-      </StyledMenu>
+        </StyledMenu>
+      )}
     </>
   );
 }
