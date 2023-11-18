@@ -14,6 +14,10 @@ export const StyledButton = styled(Button)`
     background-color: #713edc;
     color: white;
   }
+
+  :disabled {
+    background-color: #ccc;
+  }
 `;
 
 export const BetaLabel = styled("div")`

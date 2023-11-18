@@ -51,6 +51,7 @@ const CodingButton = ({ idea }: { idea: string }) => {
   return (
     <>
       <StyledButton
+        disabled={!idea}
         onClick={handleClick}
         onMouseOver={() => onMouseEvent(true)}
         onMouseOut={() => onMouseEvent(false)}
