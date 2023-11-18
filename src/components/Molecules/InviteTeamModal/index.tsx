@@ -1,4 +1,5 @@
 import React, { KeyboardEvent, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 
 import CheckBox from "@/components/Atoms/CheckBox";
@@ -31,7 +32,8 @@ function InviteTeamModal({
   open: boolean;
   handleClose: () => void;
 }): React.ReactElement {
-  const { axios } = useAuth();
+  const { axios, user } = useAuth();
+  const router = useRouter();
 
   const [email, setEmail] = useState<string>("");
   const [projectInfo, setProjectInfo] = useState<null | Project>(null);
@@ -91,6 +93,7 @@ function InviteTeamModal({
           toast.success("프로젝트 참가를 수락했습니다.", {
             autoClose: 2000,
           });
+          router.push(`/idea/${projectId}?tab=3`);
           return;
         }
         toast.success("초대 링크가 전송되었습니다.", {
@@ -111,7 +114,13 @@ function InviteTeamModal({
 
   useEffect(() => {
     if (code) {
-      getProjectName();
+      axios
+        .get(`${process.env.NEXT_PUBLIC_BASEURL}/project/joiner/${projectId}`)
+        .then((res) => {
+          if (res.data.error) getProjectName();
+          else router.push(`/idea/${projectId}?tab=3`);
+        })
+        .catch((err) => console.log(err));
     }
   }, [code]);
 

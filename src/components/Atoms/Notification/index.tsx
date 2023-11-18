@@ -67,49 +67,52 @@ function Notification({
         <NotiIcon />
       </IconButton>
       <StyledMenu anchorEl={anchorEl} open={open} onClose={handleClose}>
-        {notiList
-          .filter((menu) => (projectId ? menu.project.id === projectId : menu))
-          .map((menu, index) => {
-            const menuContent: [JSX.Element, string, string, string, string] =
-              getTitle({ menu: menu });
-            const date = dayjs(menu.createdAt).format("YYYY.MM.DD");
-            return (
-              <div key={index}>
-                <StyledMenuItem
-                  onClick={() => {
-                    handleClose();
-                    handleNoti(menu.notificationId, menuContent[4]);
-                  }}
-                  read={menu.isRead ? "true" : "false"}
-                >
-                  <Inner>
-                    <IconWrap color={menu.project.color}>
-                      {menuContent[0]}
-                    </IconWrap>
-                    <Content color={menu.project.color}>
-                      <span className="sub-title">{menu.project.name}</span>
-                      <span className="title">
-                        <span>{menuContent[1]}</span>
-                        <span className="highlight">{menuContent[2]}</span>
-                        <span>{menuContent[3]}</span>
-                      </span>
-                    </Content>
-                    <DateWrap>
-                      <span>{`${date} | ${detailDate(
-                        menu.secondsAgo,
-                        menu.minutesAgo,
-                        menu.hoursAgo,
-                        menu.daysAgo
-                      )}`}</span>
-                    </DateWrap>
-                  </Inner>
-                </StyledMenuItem>
-                {notiList.length - 1 !== index && (
-                  <Driver key={`driver-${index}`} />
-                )}
-              </div>
-            );
-          })}
+        {notiList &&
+          notiList
+            .filter((menu) =>
+              projectId ? menu.project.id === projectId : menu
+            )
+            .map((menu, index) => {
+              const menuContent: [JSX.Element, string, string, string, string] =
+                getTitle({ menu: menu });
+              const date = dayjs(menu.createdAt).format("YYYY.MM.DD");
+              return (
+                <div key={index}>
+                  <StyledMenuItem
+                    onClick={() => {
+                      handleClose();
+                      handleNoti(menu.notificationId, menuContent[4]);
+                    }}
+                    read={menu.isRead ? "true" : "false"}
+                  >
+                    <Inner>
+                      <IconWrap color={menu.project.color}>
+                        {menuContent[0]}
+                      </IconWrap>
+                      <Content color={menu.project.color}>
+                        <span className="sub-title">{menu.project.name}</span>
+                        <span className="title">
+                          <span>{menuContent[1]}</span>
+                          <span className="highlight">{menuContent[2]}</span>
+                          <span>{menuContent[3]}</span>
+                        </span>
+                      </Content>
+                      <DateWrap>
+                        <span>{`${date} | ${detailDate(
+                          menu.secondsAgo,
+                          menu.minutesAgo,
+                          menu.hoursAgo,
+                          menu.daysAgo
+                        )}`}</span>
+                      </DateWrap>
+                    </Inner>
+                  </StyledMenuItem>
+                  {notiList.length - 1 !== index && (
+                    <Driver key={`driver-${index}`} />
+                  )}
+                </div>
+              );
+            })}
       </StyledMenu>
     </>
   );

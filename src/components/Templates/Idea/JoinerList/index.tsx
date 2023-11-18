@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Avatar from "@/components/Atoms/Avatar";
 import MenuDrop from "@/components/Atoms/MenuDrop";
@@ -43,12 +43,12 @@ function JoinerList({
   isOwner: boolean;
   getJoiners: () => void;
 }): React.ReactElement | null {
-  const { user } = useAuth();
+  const { axios, user } = useAuth();
 
   const [selectedUser, setSelectedUser] = useState<User>();
 
   // invite team members
-  const [open, setOpen] = React.useState<boolean>(!!code);
+  const [open, setOpen] = React.useState<boolean>(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -64,6 +64,15 @@ function JoinerList({
   const [removeMemberInfo, setRemoveMemberInfo] = React.useState<null | User>(
     null
   );
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_BASEURL}/project/joiner/${projectId}`)
+      .then((res) => {
+        if (res.data.error) handleOpen();
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <>
