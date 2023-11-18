@@ -53,8 +53,9 @@ export default function AIPanel({
     setText(e.target.value);
   };
 
-  const handleKeyUp = (event: React.KeyboardEvent<HTMLDivElement>) => {
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === "Enter") {
+      console.log(text);
       getStretchedIdea();
     }
   };
@@ -169,7 +170,7 @@ export default function AIPanel({
           variant="standard"
           value={text}
           onChange={handleChange}
-          onKeyUp={handleKeyUp}
+          onKeyPress={handleKeyPress}
           disabled={isDisabled}
         />
         <ButtonWrap>
