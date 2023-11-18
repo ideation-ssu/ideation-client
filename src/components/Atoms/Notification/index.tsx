@@ -66,7 +66,9 @@ function Notification({
     <>
       <IconButton aria-label="delete" size="small" onClick={handleClick}>
         <NotiIcon />
-        {notiList?.length > 0 && <NotiNum>{notiList.length}</NotiNum>}
+        {notiList?.length > 0 && (
+          <NotiNum>{notiList.filter((noti) => !noti.isRead).length}</NotiNum>
+        )}
       </IconButton>
       {notiList && (
         <StyledMenu anchorEl={anchorEl} open={open} onClose={handleClose}>
