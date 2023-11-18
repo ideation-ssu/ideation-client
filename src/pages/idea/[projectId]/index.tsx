@@ -215,7 +215,7 @@ interface TabContainerProps {
 const TabContainer: React.FC<TabContainerProps> = ({ children }) => {
   return (
     <StyledTabContainer container className="container" spacing={1}>
-      <FlexWrap gap={35}>{children}</FlexWrap>
+      <FlexWrap gap={20}>{children}</FlexWrap>
     </StyledTabContainer>
   );
 };

@@ -72,15 +72,15 @@ export const StyledGrid = styled(Grid)`
 
   &.container {
     width: 100%;
-    height: 70vh;
-    gap: 25px;
+    height: 50vh;
+    gap: 0 25px;
     display: flex;
     flex-direction: row;
     background-color: transparent;
     cursor: auto;
     box-shadow: none;
     overflow-y: auto;
-    margin: 20px;
+    margin: 10px 20px;
 
     &::-webkit-scrollbar {
       width: 4px;
@@ -110,7 +110,7 @@ export const Card = styled("div")`
 `;
 
 export const ColorBar = styled("div")<{ color: string }>`
-  width: 17px;
+  width: 10px;
   height: 100%;
   background-color: ${(props) => props.color};
   border-top-left-radius: 5px;

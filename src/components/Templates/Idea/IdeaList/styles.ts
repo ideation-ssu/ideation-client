@@ -53,7 +53,7 @@ export const CardContainer = styled("div")`
 
 export const ProcessCard = styled("div")`
   width: 33%;
-  max-height: 68vh;
+  max-height: 75vh;
   padding: 15px;
   border-radius: 5px;
   background-color: #ffffff;
