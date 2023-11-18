@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
 
 import AIPanel from "@/components/Atoms/AI/AIPanel";
@@ -57,7 +57,8 @@ function NewIdeaModal({
   >([]);
   const [category, setCategory] = useState<string>(categorys[0]);
   const [tags, setTags] = useState<string[]>([]);
-  const [content, setContent] = useState<string>("");
+  const [copyText, setCopyText] = useState<string>("");
+  const [content, setContent] = useState<string>(copyText);
   const [status, setStatus] = useState<string>("");
   const [err, setErr] = useState("");
 
@@ -72,6 +73,10 @@ function NewIdeaModal({
   }, [title, relatedUser, category, content, status]);
 
   const [AIOpen, setAIOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    setContent(content + copyText);
+  }, [copyText]);
 
   const createIdea = () => {
     if (!title) {
@@ -205,13 +210,6 @@ function NewIdeaModal({
               text={content}
               setText={setContent}
             />
-            <AIButton text={"AI 늘려쓰기"} onClick={() => setAIOpen(!AIOpen)} />
-            <AIPanel
-              open={AIOpen}
-              setOpen={setAIOpen}
-              msgList={msgList}
-              setMsgList={setMsgList}
-            />
           </Grid>
 
           <ButtonWrap>
@@ -238,6 +236,15 @@ function NewIdeaModal({
               />
             </div>
           </ButtonWrap>
+
+          <AIButton onClick={() => setAIOpen(!AIOpen)} />
+          <AIPanel
+            open={AIOpen}
+            setOpen={setAIOpen}
+            msgList={msgList}
+            setMsgList={setMsgList}
+            setCopyText={setCopyText}
+          />
         </Content>
       </Container>
     </StyledModal>

@@ -1,22 +1,32 @@
-import React, { ReactNode } from "react";
+import React, { useState } from "react";
 
-import { StyledButton } from "./styles";
+import { AIBotIcon, IconBtn, SpeechBubble } from "./styles";
 
 function AIButton({
-  text,
   onClick,
 }: {
-  text: string;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }): React.ReactElement {
+  const [showSpeech, setShowSpeech] = useState<boolean>(false);
+
+  const handleMouse = (isShow: boolean) => {
+    setShowSpeech(isShow);
+    console.log(isShow);
+  };
+
   return (
-    <StyledButton
-      variant="contained"
-      onClick={onClick}
-      // startIcon={}
-    >
-      <span>{text}</span>
-    </StyledButton>
+    <>
+      <IconBtn
+        onClick={onClick}
+        onMouseOver={() => handleMouse(true)}
+        onMouseOut={() => handleMouse(false)}
+      >
+        <AIBotIcon />
+      </IconBtn>
+      {showSpeech && (
+        <SpeechBubble>AI 늘려쓰기를 사용하려면 여길 눌러봐!</SpeechBubble>
+      )}
+    </>
   );
 }
 
